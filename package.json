@@ -1,10 +1,15 @@
 {
 	"name": "BCMS-Web",
 	"version": "0.0.0",
+	"description": "Visualization of Bandung complaint tweets",
 	"private": true,
 	"scripts": {
-		"start": "node ./bin/www"
+		"start": "nodemon ./bin/www",
+	    "browserify": "browserify client.js | uglifyjs > public/javascripts/bundle.js",
+	    "build": "npm run browserify "
 	},
+	"author": "Kevin Winata",
+  	"license": "Apache License 2.0",
 	"dependencies": {
 		"body-parser": "~1.10.2",
 		"cookie-parser": "~1.3.3",
@@ -12,7 +17,22 @@
 		"ejs": "~2.2.3",
 		"express": "~4.11.1",
 		"less-middleware": "1.0.x",
+	    "mongoose": "^3.8.17",
+	    "node-jsx": "~0.11.0",
+    	"react": "~0.12.2",
 		"morgan": "~1.5.1",
+		"material-ui": "~0.7.0",
 		"serve-favicon": "~2.2.0"
+	},
+	"devDependencies": {
+		"browserify": "~6.0.3",
+    	"nodemon": "^1.2.1",
+		"reactify": "~0.14.0",
+		"uglify-js": "~2.4.15"
+	},
+	"browserify": {
+		"transform": [
+		  "reactify"
+		]
 	}
 }
