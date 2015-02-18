@@ -4,9 +4,11 @@
 	"description": "Visualization of Bandung complaint tweets",
 	"private": true,
 	"scripts": {
-		"start": "nodemon ./bin/www",
-	    "browserify": "browserify client.js | uglifyjs > public/javascripts/bundle.js",
-	    "build": "npm run browserify "
+		"watch": "watchify client.js -o public/js/bundle.js -v",
+		"browserify": "browserify client.js | uglifyjs > public/js/bundle.js",
+		"autoless": "autoless --no-watch styles public/css/",
+		"build": "npm run browserify & npm run autoless",
+		"start": "nodemon ./bin/www"
 	},
 	"author": "Kevin Winata",
   	"license": "Apache License 2.0",
@@ -21,14 +23,16 @@
 	    "node-jsx": "~0.11.0",
     	"react": "~0.12.2",
 		"morgan": "~1.5.1",
-		"material-ui": "~0.7.0",
+		"material-ui": "^0.7.0",
 		"serve-favicon": "~2.2.0"
 	},
 	"devDependencies": {
 		"browserify": "~6.0.3",
     	"nodemon": "^1.2.1",
 		"reactify": "~0.14.0",
-		"uglify-js": "~2.4.15"
+		"uglify-js": "~2.4.15",
+		"watchify": "~2.0.0",
+		"autoless": "^0.1.6"
 	},
 	"browserify": {
 		"transform": [
