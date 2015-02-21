@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"watch": "watchify client.js -o public/js/bundle.js -v",
-		"browserify": "browserify client.js | uglifyjs > public/js/bundle.js",
+		"browserify": "browserify client.jsx | uglifyjs > public/js/bundle.js",
 		"autoless": "autoless --no-watch styles public/css/",
 		"build": "npm run browserify & npm run autoless",
 		"start": "nodemon ./bin/www"

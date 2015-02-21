@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/css/style.css' />
-  </head>
-  <body>
-  <script>
-    var WebFontConfig = {
-      google: { families: [ 'Roboto:400,300,500:latin' ] }
-    };
-    (function() {
-      var wf = document.createElement('script');
-      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })();
-  </script>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+	<head>
+		<title><%= title %></title>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+		<link rel='stylesheet' href='/css/style.css' />
+	</head>
+	<body>
+		<div class="nav-main">
+			<div class="wrap">
+				<a class="nav-home" href="/react/index.html">
+					<img class="nav-logo" src="/images/logo.svg" width="50" height="50">
+					BCMS
+				</a>
+				<ul class="nav-site">
+					<li><a href="index.html" class="active">home</a></li>
+					<li><a href="index.html">support</a></li>
+					<li><a href="index.html">about</a></li>
+					<li><a href="http://github.com/kevinwinata/BCMS-Web">github</a>
+				</ul>
+			</div>
+		</div>
+		<h2>Visualisasi data keluhan masyarakat bandung</h2>
+		<div id="bcms-toolbar"></div>
+		<div id="bcms-visualization"></div>
+		<script src="/js/bundle.js"></script>
+	</body>
 </html>

@@ -2607,10 +2607,69 @@ hr {
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-leave-active {
   transform: translate3d(0, 100%, 0);
 }
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.nav-main {
+  background: #607d8b;
+  color: #9e9e9e;
+  position: fixed;
+  top: 0;
+  height: 50px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  z-index: 100;
 }
-a {
-  color: #00B7FF;
+.nav-main .nav-home {
+  color: #fafafa;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  line-height: 50px;
+  height: 50px;
+  display: inline-block;
+  text-decoration: none;
+}
+.nav-main .nav-site {
+  float: right;
+  margin: 0;
+}
+.nav-main .nav-site a {
+  padding: 0 8px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 50px;
+  display: inline-block;
+  height: 50px;
+  color: #eceff1;
+  text-decoration: none;
+}
+.nav-main .nav-site a .active {
+  color: #eceff1;
+  border-bottom: 3px solid #03a9f4;
+  background: #333;
+}
+.nav-main .nav-logo {
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: 0px;
+}
+.nav-main ul,
+.nav-main li {
+  display: inline;
+  margin-left: 20px;
+}
+.wrap {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#bcms-toolbar {
+  margin-left: 32px;
+  margin-right: 32px;
+}
+.toolbar-parameter > div {
+  float: left;
+}
+.toolbar-parameter > div > div {
+  margin-top: 3px;
 }
