@@ -2670,6 +2670,12 @@ hr {
 .toolbar-parameter > div {
   float: left;
 }
-.toolbar-parameter > div > div {
+#bcms-visualization {
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-top: 20px;
+}
+.mui-date-picker {
   margin-top: 3px;
+  width: 128px;
 }

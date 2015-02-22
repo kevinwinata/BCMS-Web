@@ -2,7 +2,7 @@
 
 var React = require('react'),
 	mui = require('material-ui'),
-	Container = mui.Paper;
+	Container = mui.Paper,
 	Toolbar = mui.Toolbar,
 	ToolbarGroup = mui.ToolbarGroup,
 	DateFrom = mui.DatePicker,
@@ -19,14 +19,13 @@ var React = require('react'),
 var BCMSToolbar = React.createClass({
 
 	render: function() {
-
 		return (
 			<Container zDepth={1}>
 				<Toolbar>
 					<ToolbarGroup key={0} float="left">
 						<div className="toolbar-parameter">
 							<Mode menuItems={menuItems} />
-							<DateFrom hintText='Dari Tanggal..' style={{width:150}}/>
+							<DateFrom hintText='Dari Tanggal..' />
 							<DateTo hintText='Hingga Tanggal..' />
 						</div>
 					</ToolbarGroup>
