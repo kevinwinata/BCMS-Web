@@ -1,28 +1,30 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-(function () {
-	var React = require('react'),
-		injectTapEventPlugin = require("react-tap-event-plugin"),
-		BCMSToolbar = require('./components/bcmstoolbar.jsx'),
-		MapVisualization = require('./components/mapvisualization.jsx'),
-		TimeVisualization = require('./components/timevisualization.jsx'),
-		WordVisualization = require('./components/wordvisualization.jsx');
+var React = require('react'),
+	injectTapEventPlugin = require("react-tap-event-plugin"),
+	BCMSToolbar = require('./components/bcmstoolbar.jsx'),
+	MapVisualization = require('./components/mapvisualization.jsx'),
+	TimeVisualization = require('./components/timevisualization.jsx'),
+	WordVisualization = require('./components/wordvisualization.jsx');
 
-	window.React = React;
+window.React = React;
 
-	injectTapEventPlugin();
+injectTapEventPlugin();
 
-	React.render(React.createElement(BCMSToolbar, null), document.getElementById('bcms-toolbar'));
-	var i = 2;
-	if (i == 0) {
-		var data = [
-            [500, 200, 10], [480, 90, 20], [250, 500, 30], [800, 33, 40], [330, 95, 50],
-            [410, 12, 60], [475, 244, 70], [725, 670, 80], [85, 210, 90], [720, 488, 100]
-	    ];
+React.render(React.createElement(BCMSToolbar, null), document.getElementById('bcms-toolbar'));
+
+
+$("#button-post").click(function() {
+	var str = $( ".mui-menu-label" ).text()
+	if (str == "Berdasarkan Lokasi") {
+	var data = [
+			[500, 200, 10], [480, 90, 20], [250, 500, 30], [800, 33, 40], [330, 95, 50],
+			[410, 12, 60], [475, 244, 70], [725, 670, 80], [85, 210, 90], [720, 488, 100]
+		];
 		React.render(React.createElement(MapVisualization, {data: data}), document.getElementById('bcms-visualization'));
 	}
-	else if (i == 1) {
+	else if (str == "Berdasarkan Waktu") {
 		var data = [
-			['AR',0.1,'01/08/13'],['AR',0.15,'01/09/13'],['AR',0.35,'01/10/13'],['AR',0.38,'01/11/13'],['AR',0.22,'01/12/13'],['AR',0.16,'01/13/13'],['AR',0.07,'01/14/13'],['AR',0.02,'01/15/13'],['AR',0.17,'01/16/13'],['AR',0.33,'01/17/13'],['AR',0.4,'01/18/13'],['AR',0.32,'01/19/13'],['AR',0.26,'01/20/13'],['AR',0.35,'01/21/13'],['AR',0.4,'01/22/13'],['AR',0.32,'01/23/13'],['AR',0.26,'01/24/13'],['AR',0.22,'01/25/13'],['AR',0.16,'01/26/13'],['AR',0.22,'01/27/13'],['AR',0.1,'01/28/13'],['DJ',0.35,'01/08/13'],['DJ',0.36,'01/09/13'],['DJ',0.37,'01/10/13'],['DJ',0.22,'01/11/13'],['DJ',0.24,'01/12/13'],['DJ',0.26,'01/13/13'],['DJ',0.34,'01/14/13'],['DJ',0.21,'01/15/13'],['DJ',0.18,'01/16/13'],['DJ',0.45,'01/17/13'],['DJ',0.32,'01/18/13'],['DJ',0.35,'01/19/13'],['DJ',0.3,'01/20/13'],['DJ',0.28,'01/21/13'],['DJ',0.27,'01/22/13'],['DJ',0.26,'01/23/13'],['DJ',0.15,'01/24/13'],['DJ',0.3,'01/25/13'],['DJ',0.35,'01/26/13'],['DJ',0.42,'01/27/13'],['DJ',0.42,'01/28/13'],['MS',0.21,'01/08/13'],['MS',0.25,'01/09/13'],['MS',0.27,'01/10/13'],['MS',0.23,'01/11/13'],['MS',0.24,'01/12/13'],['MS',0.21,'01/13/13'],['MS',0.35,'01/14/13'],['MS',0.39,'01/15/13'],['MS',0.4,'01/16/13'],['MS',0.36,'01/17/13'],['MS',0.33,'01/18/13'],['MS',0.43,'01/19/13'],['MS',0.4,'01/20/13'],['MS',0.34,'01/21/13'],['MS',0.28,'01/22/13'],['MS',0.26,'01/23/13'],['MS',0.37,'01/24/13'],['MS',0.41,'01/25/13'],['MS',0.46,'01/26/13'],['MS',0.47,'01/27/13'],['MS',0.41,'01/28/13'],['RC',0.1,'01/08/13'],['RC',0.15,'01/09/13'],['RC',0.35,'01/10/13'],['RC',0.38,'01/11/13'],['RC',0.22,'01/12/13'],['RC',0.16,'01/13/13'],['RC',0.07,'01/14/13'],['RC',0.02,'01/15/13'],['RC',0.17,'01/16/13'],['RC',0.33,'01/17/13'],['RC',0.4,'01/18/13'],['RC',0.32,'01/19/13'],['RC',0.26,'01/20/13'],['RC',0.35,'01/21/13'],['RC',0.4,'01/22/13'],['RC',0.32,'01/23/13'],['RC',0.26,'01/24/13'],['RC',0.22,'01/25/13'],['RC',0.16,'01/26/13'],['RC',0.22,'01/27/13'],['RC',0.1,'01/28/13'],['CG',0.1,'01/08/13'],['CG',0.15,'01/09/13'],['CG',0.35,'01/10/13'],['CG',0.38,'01/11/13'],['CG',0.22,'01/12/13'],['CG',0.16,'01/13/13'],['CG',0.07,'01/14/13'],['CG',0.02,'01/15/13'],['CG',0.17,'01/16/13'],['CG',0.33,'01/17/13'],['CG',0.4,'01/18/13'],['CG',0.32,'01/19/13'],['CG',0.26,'01/20/13'],['CG',0.35,'01/21/13'],['CG',0.4,'01/22/13'],['CG',0.32,'01/23/13'],['CG',0.26,'01/24/13'],['CG',0.22,'01/25/13'],['CG',0.16,'01/26/13'],['CG',0.22,'01/27/13'],['CG',0.1,'01/28/13'],['RI',0.1,'01/08/13'],['RI',0.15,'01/09/13'],['RI',0.35,'01/10/13'],['RI',0.38,'01/11/13'],['RI',0.22,'01/12/13'],['RI',0.16,'01/13/13'],['RI',0.07,'01/14/13'],['RI',0.02,'01/15/13'],['RI',0.17,'01/16/13'],['RI',0.33,'01/17/13'],['RI',0.4,'01/18/13'],['RI',0.32,'01/19/13'],['RI',0.26,'01/20/13'],['RI',0.35,'01/21/13'],['RI',0.4,'01/22/13'],['RI',0.32,'01/23/13'],['RI',0.26,'01/24/13'],['RI',0.22,'01/25/13'],['RI',0.16,'01/26/13'],['RI',0.22,'01/27/13'],['RI',0.1,'01/28/13']
+			{ key: 'Jalan Rusak', value: 1, date: '01/08/13' }, { key: 'Jalan Rusak', value: 15, date: '01/09/13' }, { key: 'Jalan Rusak', value: 35, date: '01/10/13' }, { key: 'Jalan Rusak', value: 38, date: '01/11/13' }, { key: 'Jalan Rusak', value: 22, date: '01/12/13' }, { key: 'Jalan Rusak', value: 16, date: '01/13/13' }, { key: 'Jalan Rusak', value: 07, date: '01/14/13' }, { key: 'Jalan Rusak', value: 02, date: '01/15/13' }, { key: 'Jalan Rusak', value: 17, date: '01/16/13' }, { key: 'Jalan Rusak', value: 33, date: '01/17/13' }, { key: 'Jalan Rusak', value: 4, date: '01/18/13' }, { key: 'Jalan Rusak', value: 32, date: '01/19/13' }, { key: 'Jalan Rusak', value: 26, date: '01/20/13' }, { key: 'Jalan Rusak', value: 35, date: '01/21/13' }, { key: 'Jalan Rusak', value: 4, date: '01/22/13' }, { key: 'Jalan Rusak', value: 32, date: '01/23/13' }, { key: 'Jalan Rusak', value: 26, date: '01/24/13' }, { key: 'Jalan Rusak', value: 22, date: '01/25/13' }, { key: 'Jalan Rusak', value: 16, date: '01/26/13' }, { key: 'Jalan Rusak', value: 22, date: '01/27/13' }, { key: 'Jalan Rusak', value: 1, date: '01/28/13' }, { key: 'Banjir', value: 35, date: '01/08/13' }, { key: 'Banjir', value: 36, date: '01/09/13' }, { key: 'Banjir', value: 37, date: '01/10/13' }, { key: 'Banjir', value: 22, date: '01/11/13' }, { key: 'Banjir', value: 24, date: '01/12/13' }, { key: 'Banjir', value: 26, date: '01/13/13' }, { key: 'Banjir', value: 34, date: '01/14/13' }, { key: 'Banjir', value: 21, date: '01/15/13' }, { key: 'Banjir', value: 18, date: '01/16/13' }, { key: 'Banjir', value: 45, date: '01/17/13' }, { key: 'Banjir', value: 32, date: '01/18/13' }, { key: 'Banjir', value: 35, date: '01/19/13' }, { key: 'Banjir', value: 3, date: '01/20/13' }, { key: 'Banjir', value: 28, date: '01/21/13' }, { key: 'Banjir', value: 27, date: '01/22/13' }, { key: 'Banjir', value: 26, date: '01/23/13' }, { key: 'Banjir', value: 15, date: '01/24/13' }, { key: 'Banjir', value: 3, date: '01/25/13' }, { key: 'Banjir', value: 35, date: '01/26/13' }, { key: 'Banjir', value: 42, date: '01/27/13' }, { key: 'Banjir', value: 42, date: '01/28/13' }, { key: 'Sampah', value: 21, date: '01/08/13' }, { key: 'Sampah', value: 25, date: '01/09/13' }, { key: 'Sampah', value: 27, date: '01/10/13' }, { key: 'Sampah', value: 23, date: '01/11/13' }, { key: 'Sampah', value: 24, date: '01/12/13' }, { key: 'Sampah', value: 21, date: '01/13/13' }, { key: 'Sampah', value: 35, date: '01/14/13' }, { key: 'Sampah', value: 39, date: '01/15/13' }, { key: 'Sampah', value: 4, date: '01/16/13' }, { key: 'Sampah', value: 36, date: '01/17/13' }, { key: 'Sampah', value: 33, date: '01/18/13' }, { key: 'Sampah', value: 43, date: '01/19/13' }, { key: 'Sampah', value: 4, date: '01/20/13' }, { key: 'Sampah', value: 34, date: '01/21/13' }, { key: 'Sampah', value: 28, date: '01/22/13' }, { key: 'Sampah', value: 26, date: '01/23/13' }, { key: 'Sampah', value: 37, date: '01/24/13' }, { key: 'Sampah', value: 41, date: '01/25/13' }, { key: 'Sampah', value: 46, date: '01/26/13' }, { key: 'Sampah', value: 47, date: '01/27/13' }, { key: 'Sampah', value: 41, date: '01/28/13' }, { key: 'Macet', value: 1, date: '01/08/13' }, { key: 'Macet', value: 15, date: '01/09/13' }, { key: 'Macet', value: 35, date: '01/10/13' }, { key: 'Macet', value: 38, date: '01/11/13' }, { key: 'Macet', value: 22, date: '01/12/13' }, { key: 'Macet', value: 16, date: '01/13/13' }, { key: 'Macet', value: 07, date: '01/14/13' }, { key: 'Macet', value: 02, date: '01/15/13' }, { key: 'Macet', value: 17, date: '01/16/13' }, { key: 'Macet', value: 33, date: '01/17/13' }, { key: 'Macet', value: 4, date: '01/18/13' }, { key: 'Macet', value: 32, date: '01/19/13' }, { key: 'Macet', value: 26, date: '01/20/13' }, { key: 'Macet', value: 35, date: '01/21/13' }, { key: 'Macet', value: 4, date: '01/22/13' }, { key: 'Macet', value: 32, date: '01/23/13' }, { key: 'Macet', value: 26, date: '01/24/13' }, { key: 'Macet', value: 22, date: '01/25/13' }, { key: 'Macet', value: 16, date: '01/26/13' }, { key: 'Macet', value: 22, date: '01/27/13' }, { key: 'Macet', value: 1, date: '01/28/13' }, { key: 'Polusi', value: 1, date: '01/08/13' }, { key: 'Polusi', value: 15, date: '01/09/13' }, { key: 'Polusi', value: 35, date: '01/10/13' }, { key: 'Polusi', value: 38, date: '01/11/13' }, { key: 'Polusi', value: 22, date: '01/12/13' }, { key: 'Polusi', value: 16, date: '01/13/13' }, { key: 'Polusi', value: 07, date: '01/14/13' }, { key: 'Polusi', value: 02, date: '01/15/13' }, { key: 'Polusi', value: 17, date: '01/16/13' }, { key: 'Polusi', value: 33, date: '01/17/13' }, { key: 'Polusi', value: 4, date: '01/18/13' }, { key: 'Polusi', value: 32, date: '01/19/13' }, { key: 'Polusi', value: 26, date: '01/20/13' }, { key: 'Polusi', value: 35, date: '01/21/13' }, { key: 'Polusi', value: 4, date: '01/22/13' }, { key: 'Polusi', value: 32, date: '01/23/13' }, { key: 'Polusi', value: 26, date: '01/24/13' }, { key: 'Polusi', value: 22, date: '01/25/13' }, { key: 'Polusi', value: 16, date: '01/26/13' }, { key: 'Polusi', value: 22, date: '01/27/13' }, { key: 'Polusi', value: 1, date: '01/28/13' }, { key: 'Keamanan', value: 1, date: '01/08/13' }, { key: 'Keamanan', value: 15, date: '01/09/13' }, { key: 'Keamanan', value: 35, date: '01/10/13' }, { key: 'Keamanan', value: 38, date: '01/11/13' }, { key: 'Keamanan', value: 22, date: '01/12/13' }, { key: 'Keamanan', value: 16, date: '01/13/13' }, { key: 'Keamanan', value: 07, date: '01/14/13' }, { key: 'Keamanan', value: 02, date: '01/15/13' }, { key: 'Keamanan', value: 17, date: '01/16/13' }, { key: 'Keamanan', value: 33, date: '01/17/13' }, { key: 'Keamanan', value: 4, date: '01/18/13' }, { key: 'Keamanan', value: 32, date: '01/19/13' }, { key: 'Keamanan', value: 26, date: '01/20/13' }, { key: 'Keamanan', value: 35, date: '01/21/13' }, { key: 'Keamanan', value: 4, date: '01/22/13' }, { key: 'Keamanan', value: 32, date: '01/23/13' }, { key: 'Keamanan', value: 26, date: '01/24/13' }, { key: 'Keamanan', value: 22, date: '01/25/13' }, { key: 'Keamanan', value: 16, date: '01/26/13' }, { key: 'Keamanan', value: 22, date: '01/27/13' }, { key: 'Keamanan', value: 1, date: '01/28/13'}
 		];
 		React.render(React.createElement(TimeVisualization, {data: data}), document.getElementById('bcms-visualization'));
 	}
@@ -32,7 +34,8 @@
 		];
 		React.render(React.createElement(WordVisualization, {data: data}), document.getElementById('bcms-visualization'));
 	}
-})();
+});
+
 
 },{"./components/bcmstoolbar.jsx":2,"./components/mapvisualization.jsx":4,"./components/timevisualization.jsx":6,"./components/wordvisualization.jsx":7,"react":243,"react-tap-event-plugin":81}],2:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
@@ -68,15 +71,11 @@ var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 					), 
 					React.createElement(ToolbarGroup, {key: 1, float: "right"}, 
 						React.createElement("span", {className: "mui-toolbar-separator"}, " "), 
-						React.createElement(PostButton, {label: "Tampilkan", onTouchTap: this._handleTouchTap})
+						React.createElement(PostButton, {label: "Tampilkan", id: "button-post"})
 					)
 				)
 			)
 		);
-	},
-
-	_handleTouchTap: function() {
-		alert('1-2-3-4-5');
 	}
 	
 });
@@ -639,43 +638,33 @@ var TimeVisualization = React.createClass({displayName: "TimeVisualization",
 });
 
 function createChart(dom, props){
-	var width = props.width;
-	var height = props.height;
 	var data = props.data;
 
 	var format = d3.time.format("%m/%d/%y");
-	var datearray = [];
 
-	var margin = {top: 20, right: 40, bottom: 30, left: 30};
-
-	var tooltip = d3.select(dom)
-			.append("div")
-			.attr("class", "remove")
-			.style("position", "absolute")
-			.style("z-index", "20")
-			.style("visibility", "hidden")
-			.style("top", "30px")
-			.style("left", "55px");
+	var margin = {top: 20, right: 30, bottom: 30, left: 40},
+			width = props.width - margin.left - margin.right,
+			height = props.height - margin.top - margin.bottom;
 
 	var x = d3.time.scale()
 			.range([0, width]);
 
 	var y = d3.scale.linear()
-			.range([height-10, 0]);
+			.range([height, 0]);
+
+	var z = d3.scale.category20c();
 
 	var xAxis = d3.svg.axis()
 			.scale(x)
 			.orient("bottom")
-			.ticks(d3.time.weeks);
+			.ticks(d3.time.days, 5);
 
 	var yAxis = d3.svg.axis()
-			.scale(y);
-
-	var yAxisr = d3.svg.axis()
-			.scale(y);
+			.scale(y)
+			.orient("left");
 
 	var stack = d3.layout.stack()
-			.offset("silhouette")
+			.offset("zero")
 			.values(function(d) { return d.values; })
 			.x(function(d) { return d.date; })
 			.y(function(d) { return d.value; });
@@ -695,101 +684,33 @@ function createChart(dom, props){
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var graph = function() {
-		data.forEach(function(d) {
-			d.date = format.parse(d.date);
-			d.value = +d.value;
-		});
+	data.forEach(function(d) {
+		d.date = format.parse(d.date);
+		d.value = +d.value;
+	});
 
-		var layers = stack(nest.entries(data));
+	var layers = stack(nest.entries(data));
 
-		x.domain(d3.extent(data, function(d) { return d.date; }));
-		y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+	x.domain(d3.extent(data, function(d) { return d.date; }));
+	y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
 
-		svg.selectAll(".layer")
-				.data(layers)
-				.enter().append("path")
-				.attr("class", "layer")
-				.attr("d", function(d) { return area(d.values); })
-				.style("fill", function(d, i) { return palette.getColor(i); });
+	svg.selectAll(".layer")
+			.data(layers)
+		.enter().append("path")
+			.attr("class", "layer")
+			.attr("d", function(d) { return area(d.values); })
+			.style("fill", function(d, i) { return z(i); });
 
+	svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.style({'stroke-width': '1px'})
+			.call(xAxis);
 
-		svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(0," + height + ")")
-				.call(xAxis);
-
-		svg.append("g")
-				.attr("class", "y axis")
-				.attr("transform", "translate(" + width + ", 0)")
-				.call(yAxis.orient("right"));
-
-		svg.append("g")
-				.attr("class", "y axis")
-				.call(yAxis.orient("left"));
-
-		svg.selectAll(".layer")
-			.attr("opacity", 1)
-			.on("mouseover", function(d, i) {
-				svg.selectAll(".layer").transition()
-				.duration(250)
-				.attr("opacity", function(d, j) {
-					return j != i ? 0.6 : 1;
-			})})
-
-			.on("mousemove", function(d, i) {
-				mousex = d3.mouse(this);
-				mousex = mousex[0];
-				var invertedx = x.invert(mousex);
-				invertedx = invertedx.getMonth() + invertedx.getDate();
-				var selected = (d.values);
-				for (var k = 0; k < selected.length; k++) {
-					datearray[k] = selected[k].date
-					datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
-				}
-
-				mousedate = datearray.indexOf(invertedx);
-				pro = d.values[mousedate].value;
-
-				d3.select(this)
-				.classed("hover", true)
-				.attr("stroke", strokecolor)
-				.attr("stroke-width", "0.5px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
-				
-			})
-			.on("mouseout", function(d, i) {
-			 svg.selectAll(".layer")
-				.transition()
-				.duration(250)
-				.attr("opacity", "1");
-				d3.select(this)
-				.classed("hover", false)
-				.attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
-		})
-			
-		var vertical = d3.select(dom)
-					.append("div")
-					.attr("class", "remove")
-					.style("position", "absolute")
-					.style("z-index", "19")
-					.style("width", "1px")
-					.style("height", "380px")
-					.style("top", "10px")
-					.style("bottom", "30px")
-					.style("left", "0px")
-					.style("background", "#fff");
-
-		d3.select(dom)
-				.on("mousemove", function(){  
-					 mousex = d3.mouse(this);
-					 mousex = mousex[0] + 5;
-					 vertical.style("left", mousex + "px" )})
-				.on("mouseover", function(){  
-					 mousex = d3.mouse(this);
-					 mousex = mousex[0] + 5;
-					 vertical.style("left", mousex + "px")});
-	}
+	svg.append("g")
+			.attr("class", "y axis")
+			.style({'stroke-width': '1px'})
+			.call(yAxis);
  
 };
 

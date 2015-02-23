@@ -41,43 +41,33 @@ var TimeVisualization = React.createClass({
 });
 
 function createChart(dom, props){
-	var width = props.width;
-	var height = props.height;
 	var data = props.data;
 
 	var format = d3.time.format("%m/%d/%y");
-	var datearray = [];
 
-	var margin = {top: 20, right: 40, bottom: 30, left: 30};
-
-	var tooltip = d3.select(dom)
-			.append("div")
-			.attr("class", "remove")
-			.style("position", "absolute")
-			.style("z-index", "20")
-			.style("visibility", "hidden")
-			.style("top", "30px")
-			.style("left", "55px");
+	var margin = {top: 20, right: 30, bottom: 30, left: 40},
+			width = props.width - margin.left - margin.right,
+			height = props.height - margin.top - margin.bottom;
 
 	var x = d3.time.scale()
 			.range([0, width]);
 
 	var y = d3.scale.linear()
-			.range([height-10, 0]);
+			.range([height, 0]);
+
+	var z = d3.scale.category20c();
 
 	var xAxis = d3.svg.axis()
 			.scale(x)
 			.orient("bottom")
-			.ticks(d3.time.weeks);
+			.ticks(d3.time.days, 5);
 
 	var yAxis = d3.svg.axis()
-			.scale(y);
-
-	var yAxisr = d3.svg.axis()
-			.scale(y);
+			.scale(y)
+			.orient("left");
 
 	var stack = d3.layout.stack()
-			.offset("silhouette")
+			.offset("zero")
 			.values(function(d) { return d.values; })
 			.x(function(d) { return d.date; })
 			.y(function(d) { return d.value; });
@@ -97,101 +87,31 @@ function createChart(dom, props){
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var graph = function() {
-		data.forEach(function(d) {
-			d.date = format.parse(d.date);
-			d.value = +d.value;
-		});
+	data.forEach(function(d) {
+		d.date = format.parse(d.date);
+		d.value = +d.value;
+	});
 
-		var layers = stack(nest.entries(data));
+	var layers = stack(nest.entries(data));
 
-		x.domain(d3.extent(data, function(d) { return d.date; }));
-		y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+	x.domain(d3.extent(data, function(d) { return d.date; }));
+	y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
 
-		svg.selectAll(".layer")
-				.data(layers)
-				.enter().append("path")
-				.attr("class", "layer")
-				.attr("d", function(d) { return area(d.values); })
-				.style("fill", function(d, i) { return palette.getColor(i); });
+	svg.selectAll(".layer")
+			.data(layers)
+		.enter().append("path")
+			.attr("class", "layer")
+			.attr("d", function(d) { return area(d.values); })
+			.style("fill", function(d, i) { return z(i); });
 
+	svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis);
 
-		svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(0," + height + ")")
-				.call(xAxis);
-
-		svg.append("g")
-				.attr("class", "y axis")
-				.attr("transform", "translate(" + width + ", 0)")
-				.call(yAxis.orient("right"));
-
-		svg.append("g")
-				.attr("class", "y axis")
-				.call(yAxis.orient("left"));
-
-		svg.selectAll(".layer")
-			.attr("opacity", 1)
-			.on("mouseover", function(d, i) {
-				svg.selectAll(".layer").transition()
-				.duration(250)
-				.attr("opacity", function(d, j) {
-					return j != i ? 0.6 : 1;
-			})})
-
-			.on("mousemove", function(d, i) {
-				mousex = d3.mouse(this);
-				mousex = mousex[0];
-				var invertedx = x.invert(mousex);
-				invertedx = invertedx.getMonth() + invertedx.getDate();
-				var selected = (d.values);
-				for (var k = 0; k < selected.length; k++) {
-					datearray[k] = selected[k].date
-					datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
-				}
-
-				mousedate = datearray.indexOf(invertedx);
-				pro = d.values[mousedate].value;
-
-				d3.select(this)
-				.classed("hover", true)
-				.attr("stroke", strokecolor)
-				.attr("stroke-width", "0.5px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
-				
-			})
-			.on("mouseout", function(d, i) {
-			 svg.selectAll(".layer")
-				.transition()
-				.duration(250)
-				.attr("opacity", "1");
-				d3.select(this)
-				.classed("hover", false)
-				.attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
-		})
-			
-		var vertical = d3.select(dom)
-					.append("div")
-					.attr("class", "remove")
-					.style("position", "absolute")
-					.style("z-index", "19")
-					.style("width", "1px")
-					.style("height", "380px")
-					.style("top", "10px")
-					.style("bottom", "30px")
-					.style("left", "0px")
-					.style("background", "#fff");
-
-		d3.select(dom)
-				.on("mousemove", function(){  
-					 mousex = d3.mouse(this);
-					 mousex = mousex[0] + 5;
-					 vertical.style("left", mousex + "px" )})
-				.on("mouseover", function(){  
-					 mousex = d3.mouse(this);
-					 mousex = mousex[0] + 5;
-					 vertical.style("left", mousex + "px")});
-	}
+	svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis);
  
 };
 

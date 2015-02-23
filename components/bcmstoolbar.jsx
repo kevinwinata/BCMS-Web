@@ -31,15 +31,11 @@ var BCMSToolbar = React.createClass({
 					</ToolbarGroup>
 					<ToolbarGroup key={1} float="right">
 						<span className="mui-toolbar-separator">&nbsp;</span>
-						<PostButton label="Tampilkan" onTouchTap={this._handleTouchTap} />
+						<PostButton label="Tampilkan" id="button-post" />
 					</ToolbarGroup>
 				</Toolbar>
 			</Container>
 		);
-	},
-
-	_handleTouchTap: function() {
-		alert('1-2-3-4-5');
 	}
 	
 });
