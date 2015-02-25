@@ -1,5 +1,4 @@
 var React = require('react'),
-	d3 = require('d3'),
 	palette = require('./palette.js');
 
 var MapVisualization = React.createClass({	

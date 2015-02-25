@@ -1,6 +1,5 @@
 var React = require('react'),
-	d3 = require('d3'),
-	cloud = require('./d3.layout.cloud.js')
+	cloud = require('./d3.layout.cloud.js'),
 	palette = require('./palette.js');
 
 var WordVisualization = React.createClass({	

@@ -1,5 +1,4 @@
 var React = require('react'),
-	d3 = require('d3'),
 	palette = require('./palette.js');
 
 var TimeVisualization = React.createClass({	
@@ -55,8 +54,6 @@ function createChart(dom, props){
 	var y = d3.scale.linear()
 			.range([height, 0]);
 
-	var z = d3.scale.category20c();
-
 	var xAxis = d3.svg.axis()
 			.scale(x)
 			.orient("bottom")
@@ -102,7 +99,7 @@ function createChart(dom, props){
 		.enter().append("path")
 			.attr("class", "layer")
 			.attr("d", function(d) { return area(d.values); })
-			.style("fill", function(d, i) { return z(i); });
+			.style("fill", function(d, i) { return palette.getColor(i); });
 
 	svg.append("g")
 			.attr("class", "x axis")
