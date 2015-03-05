@@ -27,10 +27,17 @@ var mapChart = function(dom, props) {
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
 			})
-			.attr("fill-opacity", 0.7);
+			.attr("fill-opacity", 0.7)
+			.on("click", function(d){
+				alert(d[3]);
+			});
 
 	svg.selectAll("circle")
 			.transition()
+			.delay(function(d, i) {
+				return i * 1000 / data.length;
+			})
+			.duration(1000)
 			.attr("r", function(d,i) {
 				return data[i][2];
 			});
@@ -40,7 +47,7 @@ var mapChart = function(dom, props) {
 			.enter()
 			.append("text")
 			.text(function(d) {
-				return d[2];
+				return d[3];
 			})
 			.attr("text-anchor", "middle")
 			.attr("x", function(d, i) {
@@ -51,7 +58,7 @@ var mapChart = function(dom, props) {
 			})
 			.attr("font-family", "Roboto")
 			.attr("font-size", function(d) {
-				return (30-(200/d[2]))+"px"
+				return (20-(150/d[2]))+"px"
 			})
 			.attr("fill", "white");
 

@@ -26713,10 +26713,17 @@ var mapChart = function(dom, props) {
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
 			})
-			.attr("fill-opacity", 0.7);
+			.attr("fill-opacity", 0.7)
+			.on("click", function(d){
+				alert(d[3]);
+			});
 
 	svg.selectAll("circle")
 			.transition()
+			.delay(function(d, i) {
+				return i * 1000 / data.length;
+			})
+			.duration(1000)
 			.attr("r", function(d,i) {
 				return data[i][2];
 			});
@@ -26726,7 +26733,7 @@ var mapChart = function(dom, props) {
 			.enter()
 			.append("text")
 			.text(function(d) {
-				return d[2];
+				return d[3];
 			})
 			.attr("text-anchor", "middle")
 			.attr("x", function(d, i) {
@@ -26737,7 +26744,7 @@ var mapChart = function(dom, props) {
 			})
 			.attr("font-family", "Roboto")
 			.attr("font-size", function(d) {
-				return (30-(200/d[2]))+"px"
+				return (20-(150/d[2]))+"px"
 			})
 			.attr("fill", "white");
 
@@ -26828,17 +26835,19 @@ var streamChart = function(dom, props) {
 
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
-	var width = props.width - margin.left - margin.right;;
+	var width = props.width - margin.left - margin.right;
 	var height = props.height - margin.top - margin.bottom;
 
 	var tooltip = d3.select(dom)
 		.append("div")
 		.attr("class", "remove")
 		.style("position", "absolute")
+		.style("background", "lightsteelblue")
+		.style("opacity", 0.8)
+		.style("border", "0px") 
+ 		.style("border-radius", "8px")
 		.style("z-index", "20")
-		.style("visibility", "hidden")
-		.style("top", "30px")
-		.style("left", "55px");
+		.style("visibility", "hidden");
 
 	var x = d3.time.scale()
 			.range([0, width]);
@@ -26940,7 +26949,10 @@ var streamChart = function(dom, props) {
 			.classed("hover", true)
 			.attr("stroke", strokecolor)
 			.attr("stroke-width", "0.5px"), 
-			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
+			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+			.style("visibility", "visible")
+			.style("left", d3.mouse(this)[0] + "px")
+			.style("top", d3.mouse(this)[1] + "px");
 			
 		})
 		.on("mouseout", function(d, i) {
@@ -26950,7 +26962,9 @@ var streamChart = function(dom, props) {
 			.attr("opacity", "1");
 			d3.select(this)
 			.classed("hover", false)
-			.attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
+			.attr("stroke-width", "0px"), 
+			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+			.style("visibility", "hidden");
 	})
 		
 	var vertical = d3.select(dom)
@@ -27005,6 +27019,11 @@ var wordChart = function(dom, props) {
 			.selectAll("text")
 				.data(words)
 			.enter().append("text")
+				.transition()
+				.delay(function(d, i) {
+					return i * 1000 / words.length;
+				})
+				.duration(1000)
 				.style("font-size", function(d) { return d.size + "px"; })
 				.style("font-family", "Roboto")
 				.style("fill", function(d, i) { return fill(i); })

@@ -24,6 +24,11 @@ var wordChart = function(dom, props) {
 			.selectAll("text")
 				.data(words)
 			.enter().append("text")
+				.transition()
+				.delay(function(d, i) {
+					return i * 1000 / words.length;
+				})
+				.duration(1000)
 				.style("font-size", function(d) { return d.size + "px"; })
 				.style("font-family", "Roboto")
 				.style("fill", function(d, i) { return fill(i); })

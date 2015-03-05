@@ -10,8 +10,16 @@ router.get('/map', function(req, res) {
     var datefrom = Date.parse(req.query.from);
     var dateto = Date.parse(req.query.to);
     var data = [
-		[500, 200, 10], [480, 90, 20], [250, 500, 30], [800, 33, 40], [330, 95, 50],
-		[410, 12, 60], [475, 244, 70], [725, 670, 80], [85, 210, 90], [720, 488, 100]
+		[500, 200, 10, "RS A"],
+		[480, 90, 20, "Jalan B"],
+		[250, 500, 30, "Jalan C"],
+		[800, 33, 40, "Taman X"],
+		[330, 95, 50, "Gang Y"],
+		[410, 12, 60, "Jembatan Z"],
+		[475, 244, 70, "Gedung A"],
+		[400, 540, 80, "Jalan D"],
+		[85, 210, 90, "Jalan E"],
+		[720, 488, 100, "Jalan F"]
 	];
     res.json(data);
 });

@@ -56,7 +56,7 @@ var palette = {
 
 	getRandomMid: function(i) {
 		var swatch = palette.colors[i%palette.colors.length];
-		return swatch[5+Math.floor(Math.random() * (swatch.length-3))];
+		return swatch[3 + Math.floor(Math.random() * (swatch.length-3))];
 	},
 
 	getRandomColor: function() {
