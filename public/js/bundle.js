@@ -116,41 +116,43 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 	componentDidMount: function() {
 		var dom =  this.getDOMNode();
-		switch(this.props.mode) {
-			case 0: 
-				alert('mount mapchart');
-				mapChart(dom, this.props);
-				break;
-			case 1: 
-				alert('mount streamchart');
-				streamChart(dom, this.props);
-				break;
-			case 2: 
-				alert('mount wordchart');
-				wordChart(dom, this.props);
-				break;
-		}
-	},
-
-	shouldComponentUpdate: function() {
-		var dom =  this.getDOMNode();
 		while (dom.lastChild) {
 			dom.removeChild(dom.lastChild);
 		}
 		switch(this.props.mode) {
 			case 0: 
-				alert('update mapchart');
 				mapChart(dom, this.props);
 				break;
 			case 1: 
-				alert('update streamchart');
 				streamChart(dom, this.props);
 				break;
 			case 2: 
-				alert('update wordchart');
 				wordChart(dom, this.props);
 				break;
 		}
+	},
+
+	componentWillReceiveProps: function() {
+		var dom =  this.getDOMNode();
+		while (dom.lastChild) {
+			dom.removeChild(dom.lastChild);
+		}
+	},
+
+	componentDidUpdate: function() {
+		var dom =  this.getDOMNode();
+		switch(this.props.mode) {
+			case 0: 
+				mapChart(dom, this.props);
+				break;
+			case 1: 
+				streamChart(dom, this.props);
+				break;
+			case 2: 
+				wordChart(dom, this.props);
+				break;
+		}
+		return false;
 	},
 
 	render: function() {
