@@ -46,7 +46,17 @@ var palette = {
 	},
 
 	getSwatch: function(i) {
-		return palette.colors[i];
+		return palette.colors[i%palette.colors.length];
+	},
+
+	getRandomFromSwatch: function(i) {
+		var swatch = palette.colors[i%palette.colors.length];
+		return swatch[Math.floor(Math.random() * swatch.length)];
+	},
+
+	getRandomMid: function(i) {
+		var swatch = palette.colors[i%palette.colors.length];
+		return swatch[5+Math.floor(Math.random() * (swatch.length-3))];
 	},
 
 	getRandomColor: function() {

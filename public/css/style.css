@@ -2688,3 +2688,10 @@ hr {
 .mui-date-picker .mui-text-field .mui-text-field-underline {
   width: 128px;
 }
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
