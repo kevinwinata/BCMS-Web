@@ -1,46 +1,7 @@
-var React = require('react'),
-	cloud = require('./d3.layout.cloud.js'),
-	palette = require('./palette.js');
+var palette = require('./palette.js'),
+	cloud = require('./d3.layout.cloud.js');
 
-var WordVisualization = React.createClass({	
-
-	getInitialState: function() {
-		return {data: []};
-	},
-
-	propTypes: {
-		width: React.PropTypes.number,
-		height: React.PropTypes.number,
-		data: React.PropTypes.array.isRequired
-	},
-	
-	getDefaultProps: function() {
-		return {
-			width: 943,
-			height: 648
-		};
-	},
-
-	componentDidMount: function() {
-		var dom =  this.getDOMNode();
-		createChart(dom, this.props);
-	},
-
-	shouldComponentUpdate: function() {
-		var dom =  this.getDOMNode();
-		createChart(dom, this.props);
-		return false;
-	},
-
-	render: function() {
-		return (
-			<div />
-		);
-	}
-
-});
-
-function createChart(dom, props){
+var wordChart = function(dom, props) {
 
 	var fill = d3.scale.category20();
 
@@ -74,4 +35,4 @@ function createChart(dom, props){
 	}
 }
 
-module.exports = WordVisualization;
+module.exports = wordChart;

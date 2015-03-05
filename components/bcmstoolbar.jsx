@@ -25,17 +25,24 @@ var BCMSToolbar = React.createClass({
 					<ToolbarGroup key={0} float="left">
 						<div className="toolbar-parameter">
 							<Mode menuItems={menuItems} />
-							<DateFrom hintText='Dari Tanggal..' />
-							<DateTo hintText='Hingga Tanggal..' />
+							<DateFrom hintText='Dari Tanggal..' formatDate={this.dformat}/>
+							<DateTo hintText='Hingga Tanggal..' formatDate={this.dformat}/>
 						</div>
 					</ToolbarGroup>
 					<ToolbarGroup key={1} float="right">
 						<span className="mui-toolbar-separator">&nbsp;</span>
-						<PostButton label="Tampilkan" id="button-post" />
+						<PostButton label="Tampilkan" id="button-post"/>
 					</ToolbarGroup>
 				</Toolbar>
 			</Container>
 		);
+	},
+
+	dformat: function(date) {
+		var d = date.getDate();
+		var m = date.getMonth() + 1;
+		var y = date.getFullYear();
+		return d + '/' + m + '/' + y;
 	}
 	
 });

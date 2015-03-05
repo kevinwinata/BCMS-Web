@@ -2679,3 +2679,12 @@ hr {
   margin-top: 3px;
   width: 128px;
 }
+.mui-date-picker .mui-text-field {
+  width: 128px;
+}
+.mui-date-picker .mui-text-field .mui-text-field-input {
+  width: 128px;
+}
+.mui-date-picker .mui-text-field .mui-text-field-underline {
+  width: 128px;
+}

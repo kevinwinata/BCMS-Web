@@ -16,7 +16,7 @@ router.get('/map', function(req, res) {
     res.json(data);
 });
 
-router.get('/time', function(req, res) {
+router.get('/stream', function(req, res) {
     var datefrom = Date.parse(req.query.from);
     var dateto = Date.parse(req.query.to);
     var data = [

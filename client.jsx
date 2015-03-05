@@ -1,9 +1,7 @@
 var React = require('react'),
 	injectTapEventPlugin = require("react-tap-event-plugin"),
 	BCMSToolbar = require('./components/bcmstoolbar.jsx'),
-	MapVisualization = require('./components/mapvisualization.jsx'),
-	TimeVisualization = require('./components/timevisualization.jsx'),
-	WordVisualization = require('./components/wordvisualization.jsx');
+	Visualization = require('./components/visualization.jsx');
 
 window.React = React;
 
@@ -18,19 +16,19 @@ $("#button-post").click(function() {
 
 	if (str == "Berdasarkan Lokasi") {
 		$.get('/map', { datefrom: df, dateto: dt }, function(data) {
-			React.render(<MapVisualization data={data}/>, 
+			React.render(<Visualization mode={0} data={data}/>, 
 				document.getElementById('bcms-visualization'));
 		});
 	}
 	else if (str == "Berdasarkan Waktu") {
-		$.get('/time', { datefrom: df, dateto: dt }, function(data) {
-			React.render(<TimeVisualization data={data}/>, 
+		$.get('/stream', { datefrom: df, dateto: dt }, function(data) {
+			React.render(<Visualization mode={1} data={data}/>, 
 				document.getElementById('bcms-visualization'));
 		});
 	}
 	else if (str == "Berdasarkan Frekuensi") {
 		$.get('/word', { datefrom: df, dateto: dt }, function(data) {
-			React.render(<WordVisualization data={data}/>, 
+			React.render(<Visualization mode={2} data={data}/>, 
 				document.getElementById('bcms-visualization'));
 		});
 	}
