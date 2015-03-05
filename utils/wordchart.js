@@ -20,7 +20,7 @@ var wordChart = function(dom, props) {
 				.attr("width", props.width)
 				.attr("height", props.height)
 			.append("g")
-				.attr("transform", "translate(300,300)")
+				.attr("transform", "translate(500,250)")
 			.selectAll("text")
 				.data(words)
 			.enter().append("text")

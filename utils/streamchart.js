@@ -126,7 +126,7 @@ var streamChart = function(dom, props) {
 			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
 			.style("visibility", "visible")
 			.style("left", d3.mouse(this)[0] + "px")
-			.style("top", d3.mouse(this)[1] + "px");
+			.style("top", d3.mouse(this)[1] + 100 + "px");
 			
 		})
 		.on("mouseout", function(d, i) {
@@ -141,27 +141,27 @@ var streamChart = function(dom, props) {
 			.style("visibility", "hidden");
 	})
 		
-	var vertical = d3.select(dom)
-				.append("div")
-				.attr("class", "remove")
-				.style("position", "absolute")
-				.style("z-index", "19")
-				.style("width", "1px")
-				.style("height", "380px")
-				.style("top", "10px")
-				.style("bottom", "30px")
-				.style("left", "0px")
-				.style("background", "#fff");
+	// var vertical = d3.select(dom)
+	// 			.append("div")
+	// 			.attr("class", "remove")
+	// 			.style("position", "absolute")
+	// 			.style("z-index", "19")
+	// 			.style("width", "1px")
+	// 			.style("height", "380px")
+	// 			.style("top", "200px")
+	// 			.style("bottom", "30px")
+	// 			.style("left", "0px")
+	// 			.style("background", "#fff");
 
-	d3.select(dom)
-			.on("mousemove", function(){  
-				 mousex = d3.mouse(this);
-				 mousex = mousex[0] + 5;
-				 vertical.style("left", mousex + "px" )})
-			.on("mouseover", function(){  
-				 mousex = d3.mouse(this);
-				 mousex = mousex[0] + 5;
-				 vertical.style("left", mousex + "px")});
+	// d3.select(dom)
+	// 		.on("mousemove", function(){  
+	// 			 mousex = d3.mouse(this);
+	// 			 mousex = mousex[0] + 5;
+	// 			 vertical.style("left", mousex + "px" )})
+	// 		.on("mouseover", function(){  
+	// 			 mousex = d3.mouse(this);
+	// 			 mousex = mousex[0] + 5;
+	// 			 vertical.style("left", mousex + "px")});
 };
 
 module.exports = streamChart;
