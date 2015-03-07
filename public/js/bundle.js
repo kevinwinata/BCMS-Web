@@ -15,19 +15,19 @@ $("#button-post").click(function() {
 	var df = "2/2/2015";
 	var dt = "2/3/2015";
 
-	if (str == "Berdasarkan Lokasi") {
+	if (str == "Peta") {
 		$.get('/map', { datefrom: df, dateto: dt }, function(data) {
 			React.render(React.createElement(Visualization, {mode: 0, data: data}), 
 				document.getElementById('bcms-visualization'));
 		});
 	}
-	else if (str == "Berdasarkan Waktu") {
+	else if (str == "Arus") {
 		$.get('/stream', { datefrom: df, dateto: dt }, function(data) {
 			React.render(React.createElement(Visualization, {mode: 1, data: data}), 
 				document.getElementById('bcms-visualization'));
 		});
 	}
-	else if (str == "Berdasarkan Frekuensi") {
+	else if (str == "Kata") {
 		$.get('/word', { datefrom: df, dateto: dt }, function(data) {
 			React.render(React.createElement(Visualization, {mode: 2, data: data}), 
 				document.getElementById('bcms-visualization'));
@@ -42,37 +42,40 @@ $("#button-post").click(function() {
 var React = require('react'),
 	mui = require('material-ui'),
 	Container = mui.Paper,
-	Toolbar = mui.Toolbar,
-	ToolbarGroup = mui.ToolbarGroup,
 	DateFrom = mui.DatePicker,
 	DateTo = mui.DatePicker,
+	NormalButton = mui.RaisedButton,
 	PostButton = mui.RaisedButton,
 	Mode = mui.DropDownMenu,
+	Menu = mui.Menu,
 	menuItems = [
-		{ payload: '1', text: '-- Pilih Mode Visualisasi --' },
-		{ payload: '2', text: 'Berdasarkan Lokasi' },
-		{ payload: '3', text: 'Berdasarkan Waktu' },
-		{ payload: '4', text: 'Berdasarkan Frekuensi' }
-	]; 
+		{ payload: '1', text: 'Peta' },
+		{ payload: '2', text: 'Arus' },
+		{ payload: '3', text: 'Kata' }
+	],
+	today = new Date(),
+	nextweek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
 var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 
 	render: function() {
+		var center = {
+			marginLeft:'auto',
+			marginRight:'auto'
+		}
 		return (
 			React.createElement(Container, {zDepth: 1}, 
-				React.createElement(Toolbar, null, 
-					React.createElement(ToolbarGroup, {key: 0, float: "left"}, 
-						React.createElement("div", {className: "toolbar-parameter"}, 
-							React.createElement(Mode, {menuItems: menuItems}), 
-							React.createElement(DateFrom, {hintText: "Dari Tanggal..", formatDate: this.dformat}), 
-							React.createElement(DateTo, {hintText: "Hingga Tanggal..", formatDate: this.dformat})
-						)
-					), 
-					React.createElement(ToolbarGroup, {key: 1, float: "right"}, 
-						React.createElement("span", {className: "mui-toolbar-separator"}, " "), 
-						React.createElement(PostButton, {label: "Tampilkan", id: "button-post"})
-					)
-				)
+				React.createElement("p", null, "Mode Visualisasi : "), 
+				React.createElement(Mode, {menuItems: menuItems, style: center}), 
+				React.createElement("p", null, "Dari Tanggal :  "), 
+				React.createElement(DateFrom, {defaultDate: today, formatDate: this.dformat, style: center}), 
+				React.createElement("p", null, "Hingga Tanggal : "), 
+				React.createElement(DateTo, {defaultDate: nextweek, formatDate: this.dformat, style: center}), 
+				React.createElement("p", null, "Dinas : "), 
+				React.createElement(NormalButton, {label: "Pilih", id: "button-dinas", style: center}), 
+				React.createElement("p", null), 
+				React.createElement(PostButton, {label: "Visualisasi", secondary: true, id: "button-post", style: center}), 
+				React.createElement("p", null)
 			)
 		);
 	},
@@ -26691,6 +26694,12 @@ var mapChart = function(dom, props) {
 	var height = props.height;
 	var data = props.data;
 
+	d3.selection.prototype.moveToFront = function() {
+		return this.each(function(){
+			this.parentNode.appendChild(this);
+		});
+	};
+
 	var svg = d3.select(dom)
 			.append("svg")
 			.attr("width", width)
@@ -26708,24 +26717,33 @@ var mapChart = function(dom, props) {
 				return d[1];
 			})
 			.attr("r", function(d) {
-				return 1;
+				return d[2];
 			})
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
 			})
 			.attr("fill-opacity", 0.7)
+			.attr("stroke-width", "0px")
+			.attr("stroke", "#FFFFFF")
 			.on("click", function(d){
-				alert(d[3]);
-			});
-
-	svg.selectAll("circle")
-			.transition()
-			.delay(function(d, i) {
-				return i * 1000 / data.length;
+				var self = d3.select(this);
+				self.moveToFront();
+				self.transition()
+					.attr("cx", width/2)
+					.attr("cy", height/2)
+					.attr("r", height/2 - 40)
+					.attr("fill-opacity", 1)
+					.each('end',  function(d){  });
 			})
-			.duration(1000)
-			.attr("r", function(d,i) {
-				return data[i][2];
+			.on("mouseover", function(d) {
+				d3.select(this)
+					.attr("fill-opacity", 1)
+					.attr("stroke-width", "2px");
+			})
+			.on("mouseout", function(d) {
+				d3.select(this)
+					.attr("fill-opacity", 0.7)
+					.attr("stroke-width", "0px");
 			});
 
 	svg.selectAll("text")

@@ -3,37 +3,40 @@
 var React = require('react'),
 	mui = require('material-ui'),
 	Container = mui.Paper,
-	Toolbar = mui.Toolbar,
-	ToolbarGroup = mui.ToolbarGroup,
 	DateFrom = mui.DatePicker,
 	DateTo = mui.DatePicker,
+	NormalButton = mui.RaisedButton,
 	PostButton = mui.RaisedButton,
 	Mode = mui.DropDownMenu,
+	Menu = mui.Menu,
 	menuItems = [
-		{ payload: '1', text: '-- Pilih Mode Visualisasi --' },
-		{ payload: '2', text: 'Berdasarkan Lokasi' },
-		{ payload: '3', text: 'Berdasarkan Waktu' },
-		{ payload: '4', text: 'Berdasarkan Frekuensi' }
-	]; 
+		{ payload: '1', text: 'Peta' },
+		{ payload: '2', text: 'Arus' },
+		{ payload: '3', text: 'Kata' }
+	],
+	today = new Date(),
+	nextweek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
 var BCMSToolbar = React.createClass({
 
 	render: function() {
+		var center = {
+			marginLeft:'auto',
+			marginRight:'auto'
+		}
 		return (
 			<Container zDepth={1}>
-				<Toolbar>
-					<ToolbarGroup key={0} float="left">
-						<div className="toolbar-parameter">
-							<Mode menuItems={menuItems} />
-							<DateFrom hintText='Dari Tanggal..' formatDate={this.dformat}/>
-							<DateTo hintText='Hingga Tanggal..' formatDate={this.dformat}/>
-						</div>
-					</ToolbarGroup>
-					<ToolbarGroup key={1} float="right">
-						<span className="mui-toolbar-separator">&nbsp;</span>
-						<PostButton label="Tampilkan" id="button-post"/>
-					</ToolbarGroup>
-				</Toolbar>
+				<p>Mode Visualisasi : </p>
+				<Mode menuItems={menuItems} style={center}/>
+				<p>Dari Tanggal :  </p>
+				<DateFrom defaultDate={today} formatDate={this.dformat} style={center}/>
+				<p>Hingga Tanggal : </p>
+				<DateTo defaultDate={nextweek} formatDate={this.dformat} style={center}/>
+				<p>Dinas : </p>
+				<NormalButton label="Pilih" id="button-dinas" style={center}/>
+				<p/>
+				<PostButton label="Visualisasi" secondary={true} id="button-post" style={center}/>
+				<p/>
 			</Container>
 		);
 	},

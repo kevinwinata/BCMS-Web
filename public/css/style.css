@@ -2663,30 +2663,34 @@ hr {
   padding-left: 20px;
   padding-right: 20px;
 }
-#bcms-toolbar {
-  margin-left: 32px;
-  margin-right: 32px;
+section {
+  width: 100%;
+  margin: auto;
+  padding: 10px;
 }
-.toolbar-parameter > div {
+div#bcms-toolbar {
+  width: 25%;
   float: left;
 }
-#bcms-visualization {
-  margin-left: 32px;
-  margin-right: 32px;
-  margin-top: 20px;
+div#bcms-toolbar .mui-paper-container * {
+  margin-left: auto;
+  margin-right: auto;
+}
+div#bcms-visualization {
+  margin-left: 25%;
 }
 .mui-date-picker {
   margin-top: 3px;
-  width: 128px;
+  width: 100px;
 }
 .mui-date-picker .mui-text-field {
-  width: 128px;
+  width: 100px;
 }
 .mui-date-picker .mui-text-field .mui-text-field-input {
-  width: 128px;
+  width: 100px;
 }
 .mui-date-picker .mui-text-field .mui-text-field-underline {
-  width: 128px;
+  width: 100px;
 }
 .axis path,
 .axis line {
