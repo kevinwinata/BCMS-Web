@@ -2669,7 +2669,7 @@ section {
   padding: 10px;
 }
 div#bcms-toolbar {
-  width: 25%;
+  width: 20%;
   float: left;
 }
 div#bcms-toolbar .mui-paper-container * {
@@ -2677,7 +2677,7 @@ div#bcms-toolbar .mui-paper-container * {
   margin-right: auto;
 }
 div#bcms-visualization {
-  margin-left: 25%;
+  margin-left: 21%;
 }
 .mui-date-picker {
   margin-top: 3px;
