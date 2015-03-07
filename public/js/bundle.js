@@ -11,31 +11,6 @@ injectTapEventPlugin();
 
 React.render(React.createElement(BCMSToolbar, null), document.getElementById('bcms-toolbar'));
 
-// $("#button-post").click(function() {
-// 	var str = $( ".mui-menu-label" ).text();
-// 	var df = Date.parse(datefrom);
-// 	var dt = Date.parse(dateto);
-
-// 	if (str == "Peta") {
-// 		$.get('/map', { datefrom: df, dateto: dt }, function(data) {
-// 			React.render(<Visualization mode={0} data={data}/>, 
-// 				document.getElementById('bcms-visualization'));
-// 		});
-// 	}
-// 	else if (str == "Arus") {
-// 		$.get('/stream', { datefrom: df, dateto: dt }, function(data) {
-// 			React.render(<Visualization mode={1} data={data}/>, 
-// 				document.getElementById('bcms-visualization'));
-// 		});
-// 	}
-// 	else if (str == "Kata") {
-// 		$.get('/word', { datefrom: df, dateto: dt }, function(data) {
-// 			React.render(<Visualization mode={2} data={data}/>, 
-// 				document.getElementById('bcms-visualization'));
-// 		});
-// 	}
-// });
-
 
 },{"./components/bcmstoolbar.jsx":2,"./components/visualization.jsx":3,"react":238,"react-tap-event-plugin":76}],2:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
@@ -72,16 +47,16 @@ var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 				React.createElement("p", null, "Hingga Tanggal : "), 
 				React.createElement(DatePicker, {ref: "dateTo", defaultDate: nextweek, formatDate: this.dformat}), 
 				React.createElement("p", null, "Dinas : "), 
-				React.createElement(Checkbox, {value: "check0", label: "Transportasi"}), 
-				React.createElement(Checkbox, {value: "check1", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {value: "check2", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {value: "check3", label: "Transportasi"}), 
-				React.createElement(Checkbox, {value: "check4", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {value: "check5", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {value: "check6", label: "Transportasi"}), 
-				React.createElement(Checkbox, {value: "check7", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {value: "check8", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {value: "check9", label: "Transportasi"}), 
+				React.createElement(Checkbox, {ref: "check0", label: "Transportasi"}), 
+				React.createElement(Checkbox, {ref: "check1", label: "Kesehatan"}), 
+				React.createElement(Checkbox, {ref: "check2", label: "Perhubungan"}), 
+				React.createElement(Checkbox, {ref: "check3", label: "Transportasi"}), 
+				React.createElement(Checkbox, {ref: "check4", label: "Kesehatan"}), 
+				React.createElement(Checkbox, {ref: "check5", label: "Perhubungan"}), 
+				React.createElement(Checkbox, {ref: "check6", label: "Transportasi"}), 
+				React.createElement(Checkbox, {ref: "check7", label: "Kesehatan"}), 
+				React.createElement(Checkbox, {ref: "check8", label: "Perhubungan"}), 
+				React.createElement(Checkbox, {ref: "check9", label: "Transportasi"}), 
 				React.createElement("p", null), 
 				React.createElement(PostButton, {label: "Visualisasi", secondary: true, id: "button-post", onTouchTap: this.handleViz}), 
 				React.createElement("p", null)
@@ -100,27 +75,43 @@ var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 		return d + '/' + m + '/' + y;
 	},
 
+	checkboxesString: function() {
+		var str = "";
+		str += this.refs.check0.isChecked() ? "1" : "0";
+		str += this.refs.check1.isChecked() ? "1" : "0";
+		str += this.refs.check2.isChecked() ? "1" : "0";
+		str += this.refs.check3.isChecked() ? "1" : "0";
+		str += this.refs.check4.isChecked() ? "1" : "0";
+		str += this.refs.check5.isChecked() ? "1" : "0";
+		str += this.refs.check6.isChecked() ? "1" : "0";
+		str += this.refs.check7.isChecked() ? "1" : "0";
+		str += this.refs.check8.isChecked() ? "1" : "0";
+		str += this.refs.check9.isChecked() ? "1" : "0";
+		return str;
+	},
+
 	handleViz: function() {
 		var df = Date.parse(this.refs.dateFrom.getDate());
 		var dt = Date.parse(this.refs.dateTo.getDate());
+		var dom = document.getElementById('bcms-visualization');
+		var c = this.checkboxesString();
 
-		if (selectedItems == 0) {
-			$.get('/map', { datefrom: df, dateto: dt }, function(data) {
-				React.render(React.createElement(Visualization, {mode: 0, data: data}), 
-					document.getElementById('bcms-visualization'));
-			});
-		}
-		else if (selectedItems == 1) {
-			$.get('/stream', { datefrom: df, dateto: dt }, function(data) {
-				React.render(React.createElement(Visualization, {mode: 1, data: data}), 
-					document.getElementById('bcms-visualization'));
-			});
-		}
-		else if (selectedItems == 2) {
-			$.get('/word', { datefrom: df, dateto: dt }, function(data) {
-				React.render(React.createElement(Visualization, {mode: 2, data: data}), 
-					document.getElementById('bcms-visualization'));
-			});
+		switch(selectedItems) {
+			case 0:
+				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+					React.render(React.createElement(Visualization, {mode: 0, data: data}), dom);
+				});
+				break;
+			case 1:
+				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+					React.render(React.createElement(Visualization, {mode: 1, data: data}), dom);
+				});
+				break;
+			case 2:
+				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+					React.render(React.createElement(Visualization, {mode: 2, data: data}), dom);
+				});
+				break;
 		}
 	}
 	

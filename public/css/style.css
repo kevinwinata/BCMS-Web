@@ -2672,24 +2672,19 @@ div#bcms-toolbar {
   width: 20%;
   float: left;
 }
-div#bcms-toolbar .mui-paper-container * {
-  margin-left: auto;
-  margin-right: auto;
+div#bcms-toolbar .mui-paper-container .mui-date-picker * {
+  margin-left: 10%;
+}
+div#bcms-toolbar .mui-paper-container p,
+div#bcms-toolbar .mui-paper-container .mui-drop-down-menu,
+div#bcms-toolbar .mui-paper-container .mui-checkbox * {
+  margin-left: 5%;
 }
 div#bcms-visualization {
   margin-left: 21%;
 }
-.mui-date-picker {
+.mui-date-picker * {
   margin-top: 3px;
-  width: 100px;
-}
-.mui-date-picker .mui-text-field {
-  width: 100px;
-}
-.mui-date-picker .mui-text-field .mui-text-field-input {
-  width: 100px;
-}
-.mui-date-picker .mui-text-field .mui-text-field-underline {
   width: 100px;
 }
 .axis path,
