@@ -67,19 +67,7 @@ var Visualization = React.createClass({
 	},
 
 	render: function() {
-		if (this.props.mode == 0) {
-			var divStyle = {
-				width: this.props.width,
-				height: this.props.height,
-				backgroundImage: 'url(' + '/images/bandung.svg' + ')',
-				backgroundSize: '100% 100%',
-				backgroundRepeat: 'no-repeat'
-			};
-			return ( <Paper zDepth={1} className="bandung-map" style={divStyle} /> );
-		}
-		else {
-			return ( <Paper zDepth={1} /> );
-		}
+		return ( <Paper zDepth={1} /> );
 	}
 
 });
