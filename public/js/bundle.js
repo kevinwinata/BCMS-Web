@@ -190,19 +190,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 	},
 
 	render: function() {
-		// if (this.props.mode == 0) {
-		// 	var divStyle = {
-		// 		width: this.props.width,
-		// 		height: this.props.height,
-		// 		backgroundImage: 'url(' + '/images/bandung.svg' + ')',
-		// 		backgroundSize: '100% 100%',
-		// 		backgroundRepeat: 'no-repeat'
-		// 	};
-		// 	return ( <Paper zDepth={1} className="bandung-map" style={divStyle} /> );
-		// }
-		// else {
-			return ( React.createElement(Paper, {zDepth: 1}) );
-		// }
+		return ( React.createElement(Paper, {zDepth: 1}) );
 	}
 
 });
@@ -26721,8 +26709,8 @@ module.exports = require('./lib/React');
 var palette = require('./palette.js');
 
 var mapChart = function(dom, props) {
-	var width = props.width;
-	var height = props.height;
+	var width = dom.offsetWidth;
+	var height = width/1.457;
 	var data = props.data;
 
 	d3.selection.prototype.moveToFront = function() {
@@ -26732,10 +26720,10 @@ var mapChart = function(dom, props) {
 	};
 
 	var svg = d3.select(dom)
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height)
-			.attr("id", "mapvisualization");
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("id", "mapvisualization");
 
 	var zoom = d3.behavior.zoom()
 		.scaleExtent([1, 10])
@@ -26750,69 +26738,103 @@ var mapChart = function(dom, props) {
 		d3.select("#map").node().appendChild(importedNode);
 
 		g.selectAll("circle")
-				.data(data)
-				.enter()
-				.append("circle")
-				.attr("cx", function(d) {
-					return d[0];
-				})
-				.attr("cy", function(d) {
-					return d[1];
-				})
-				.attr("r", function(d) {
-					return d[2];
-				})
-				.attr("fill", function(d,i) {
-					return palette.getRandomMid(i);
-				})
-				.attr("fill-opacity", 0.7)
-				.attr("stroke-width", "0px")
-				.attr("stroke", "#FFFFFF")
-				.on("click", function(d){
-					var self = d3.select(this);
-					self.moveToFront();
-					self.transition()
-						.attr("cx", width/2)
-						.attr("cy", height/2)
-						.attr("r", height/2 - 40)
-						.attr("fill-opacity", 1)
-						.each('end',  function(d){  });
-				})
-				.on("mouseover", function(d) {
-					d3.select(this)
-						.attr("fill-opacity", 1)
-						.attr("stroke-width", "2px");
-				})
-				.on("mouseout", function(d) {
-					d3.select(this)
-						.attr("fill-opacity", 0.7)
-						.attr("stroke-width", "0px");
-				});
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("cx", function(d) {
+				return d[0];
+			})
+			.attr("cy", function(d) {
+				return d[1];
+			})
+			.attr("r", function(d) {
+				return d[2];
+			})
+			.attr("fill", function(d,i) {
+				return palette.getRandomMid(i);
+			})
+			.attr("fill-opacity", 0.7)
+			.attr("stroke-width", "0px")
+			.attr("stroke", "#FFFFFF")
+			.on("click", circleClick)
+			.on("mouseover", circleOver)
+			.on("mouseout", circleOut);
 
 
 		g.selectAll("t")
-				.data(data)
-				.enter()
-				.append("text")
-				.text(function(d) {
-					return d[3];
-				})
-				.attr("text-anchor", "middle")
-				.attr("x", function(d, i) {
-					return d[0];
-				})
-				.attr("y", function(d) {
-					return d[1];
-				})
-				.attr("font-family", "Roboto")
-				.attr("font-size", function(d) {
-					return (20-(150/d[2]))+"px"
-				})
-				.attr("fill", "white");
+			.data(data)
+			.enter()
+			.append("text")
+			.text(function(d) {
+				return d[3];
+			})
+			.attr("text-anchor", "middle")
+			.attr("x", function(d, i) {
+				return d[0];
+			})
+			.attr("y", function(d) {
+				return d[1];
+			})
+			.attr("font-family", "Roboto")
+			.attr("font-size", function(d) {
+				return (20-(150/d[2]))+"px"
+			})
+			.attr("fill", "white");
 	});
 
 	function zoomed() {
 		g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+	}
+
+	function circleClick() {
+		var self = d3.select(this);
+		g.append("rect")
+			.attr("id", "rect")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("cx", 0)
+			.attr("cy", 0)
+			.attr("fill", "#FFFFFF")
+			.attr("fill-opacity", 0.7)
+			.on("click", rectClick);
+		var clone = g.append("circle")
+			.attr("id", "clone")
+			.attr("cx", self.attr("cx"))
+			.attr("cy", self.attr("cy"))
+			.attr("r", self.attr("r"))
+			.attr("fill", self.attr("fill"));
+		clone.transition()
+			.duration(500)
+			.attr("cx", width/2)
+			.attr("cy", height/2)
+			.attr("r", height/2 - 40)
+			.attr("fill-opacity", 1);
+			//.each('end',  function(){  });
+	}
+
+	function circleOver() {
+		d3.select(this)
+			.attr("fill-opacity", 1)
+			.attr("stroke-width", "2px");
+	}
+
+	function circleOut() {
+		d3.select(this)
+			.attr("fill-opacity", 0.7)
+			.attr("stroke-width", "0px");
+	}
+
+	function rectClick() {
+		var clone = d3.select("#clone")
+		clone.transition()
+			.duration(500)
+			.attr("fill-opacity", 0)
+			.each('end', function(){ this.remove() });
+		var rect = d3.select("#rect");
+		rect.transition()
+			.duration(500)
+			.attr("fill-opacity", 0)
+			.each('end', function(){ this.remove() });
 	}
 
 };
@@ -26902,8 +26924,9 @@ var streamChart = function(dom, props) {
 
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
-	var width = props.width - margin.left - margin.right;
-	var height = props.height - margin.top - margin.bottom;
+	var width = dom.offsetWidth - margin.left - margin.right;
+	var height = document.getElementById("bcms-toolbar").offsetHeight
+				 - margin.top - margin.bottom;
 
 	var tooltip = d3.select(dom)
 		.append("div")
@@ -27064,10 +27087,11 @@ var palette = require('./palette.js'),
 	cloud = require('./d3.layout.cloud.js');
 
 var wordChart = function(dom, props) {
-
+	var width = dom.offsetWidth;
+	var height = document.getElementById("bcms-toolbar").offsetHeight;
 	var fill = d3.scale.category20();
 
-	cloud().size([props.width, props.height])
+	cloud().size([width, height])
 			.words(props.data.map(function(d) {
 				return {text: d[0], size: d[1]*10 };
 			}))

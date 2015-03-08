@@ -9,8 +9,9 @@ var streamChart = function(dom, props) {
 
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
-	var width = props.width - margin.left - margin.right;
-	var height = props.height - margin.top - margin.bottom;
+	var width = dom.offsetWidth - margin.left - margin.right;
+	var height = document.getElementById("bcms-toolbar").offsetHeight
+				 - margin.top - margin.bottom;
 
 	var tooltip = d3.select(dom)
 		.append("div")

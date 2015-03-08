@@ -2,10 +2,11 @@ var palette = require('./palette.js'),
 	cloud = require('./d3.layout.cloud.js');
 
 var wordChart = function(dom, props) {
-
+	var width = dom.offsetWidth;
+	var height = document.getElementById("bcms-toolbar").offsetHeight;
 	var fill = d3.scale.category20();
 
-	cloud().size([props.width, props.height])
+	cloud().size([width, height])
 			.words(props.data.map(function(d) {
 				return {text: d[0], size: d[1]*10 };
 			}))
