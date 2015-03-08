@@ -6,7 +6,7 @@
 	color: @grey-500;
 	position: fixed;
 	top: 0;
-	height: 50px;
+	height: 53px;
 	box-shadow: 0 0 5px rgba(0,0,0,0.5);
 	width: 100%;
 	z-index: 100;
@@ -68,9 +68,6 @@ div#bcms-toolbar {
 	width: 20%;
     float: left;
 	.mui-paper-container {
-		.mui-date-picker * {
-			margin-left:10%;
-		}
 		p, .mui-drop-down-menu, .mui-checkbox * {
 			margin-left:5%;
 		}
@@ -81,9 +78,26 @@ div#bcms-visualization {
 	margin-left: 21%;
 }
 
-.mui-date-picker * {
+.mui-date-picker {
 	margin-top: 3px;
+	margin-left: 8%;
 	width: 100px;
+	.mui-text-field {
+		width: 100px;
+		margin-left: 8%;
+		.mui-text-field-input {
+			width: 100px;
+			margin-left: 8%;
+		}
+		.mui-text-field-underline {
+			width: 100px;
+			margin-left: 8%;
+		}
+	}
+}
+
+#vis-button {
+	margin-left: 20%;
 }
 
 .axis path, .axis line {

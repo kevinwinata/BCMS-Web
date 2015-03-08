@@ -2612,7 +2612,7 @@ hr {
   color: #9e9e9e;
   position: fixed;
   top: 0;
-  height: 50px;
+  height: 53px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   width: 100%;
   z-index: 100;
@@ -2672,9 +2672,6 @@ div#bcms-toolbar {
   width: 20%;
   float: left;
 }
-div#bcms-toolbar .mui-paper-container .mui-date-picker * {
-  margin-left: 10%;
-}
 div#bcms-toolbar .mui-paper-container p,
 div#bcms-toolbar .mui-paper-container .mui-drop-down-menu,
 div#bcms-toolbar .mui-paper-container .mui-checkbox * {
@@ -2683,9 +2680,25 @@ div#bcms-toolbar .mui-paper-container .mui-checkbox * {
 div#bcms-visualization {
   margin-left: 21%;
 }
-.mui-date-picker * {
+.mui-date-picker {
   margin-top: 3px;
+  margin-left: 8%;
   width: 100px;
+}
+.mui-date-picker .mui-text-field {
+  width: 100px;
+  margin-left: 8%;
+}
+.mui-date-picker .mui-text-field .mui-text-field-input {
+  width: 100px;
+  margin-left: 8%;
+}
+.mui-date-picker .mui-text-field .mui-text-field-underline {
+  width: 100px;
+  margin-left: 8%;
+}
+#vis-button {
+  margin-left: 20%;
 }
 .axis path,
 .axis line {

@@ -3,12 +3,11 @@
 var React = require('react'),
 	Visualization = require('./visualization.jsx'),
 	mui = require('material-ui'),
-	Container = mui.Paper,
+	Paper = mui.Paper,
 	DatePicker = mui.DatePicker,
 	FlatButton = mui.FlatButton,
-	PostButton = mui.RaisedButton,
-	Mode = mui.DropDownMenu,
-	Menu = mui.Menu,
+	RaisedButton = mui.RaisedButton,
+	DropDownMenu = mui.DropDownMenu,
 	Checkbox = mui.Checkbox,
 	Dialog = mui.Dialog,
 	menuItems = [
@@ -24,9 +23,9 @@ var BCMSToolbar = React.createClass({
 
 	render: function() {
 		return (
-			<Container zDepth={1}>
+			<Paper zDepth={1}>
 				<p>Mode Visualisasi : </p>
-				<Mode menuItems={menuItems} onChange={this.modeChange}/>
+				<DropDownMenu menuItems={menuItems} onChange={this.modeChange}/>
 				<p>Dari Tanggal :  </p>
 				<DatePicker ref="dateFrom" defaultDate={today} formatDate={this.dformat}  />
 				<p>Hingga Tanggal : </p>
@@ -43,9 +42,11 @@ var BCMSToolbar = React.createClass({
 				<Checkbox ref="check8" label="Perhubungan" />
 				<Checkbox ref="check9" label="Transportasi" />
 				<p/>
-				<PostButton label="Visualisasi" secondary={true} id="button-post" onTouchTap={this.handleViz}/>
+				<div id="vis-button">
+				<RaisedButton label="Visualisasi" secondary={true} onTouchTap={this.handleViz}/>
+				</div>
 				<p/>
-			</Container>
+			</Paper>
 		);
 	},
 

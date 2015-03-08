@@ -1,4 +1,6 @@
 var React = require('react'),
+	mui = require('material-ui'),
+	Paper = mui.Paper,
 	mapChart = require('../utils/mapchart.js'),
 	streamChart = require('../utils/streamchart.js'),
 	wordChart = require('../utils/wordchart.js');
@@ -73,10 +75,10 @@ var Visualization = React.createClass({
 				backgroundSize: '100% 100%',
 				backgroundRepeat: 'no-repeat'
 			};
-			return ( <div className="bandung-map" style={divStyle} /> );
+			return ( <Paper zDepth={1} className="bandung-map" style={divStyle} /> );
 		}
 		else {
-			return ( <div /> );
+			return ( <Paper zDepth={1} /> );
 		}
 	}
 

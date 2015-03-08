@@ -18,12 +18,11 @@ React.render(React.createElement(BCMSToolbar, null), document.getElementById('bc
 var React = require('react'),
 	Visualization = require('./visualization.jsx'),
 	mui = require('material-ui'),
-	Container = mui.Paper,
+	Paper = mui.Paper,
 	DatePicker = mui.DatePicker,
 	FlatButton = mui.FlatButton,
-	PostButton = mui.RaisedButton,
-	Mode = mui.DropDownMenu,
-	Menu = mui.Menu,
+	RaisedButton = mui.RaisedButton,
+	DropDownMenu = mui.DropDownMenu,
 	Checkbox = mui.Checkbox,
 	Dialog = mui.Dialog,
 	menuItems = [
@@ -39,9 +38,9 @@ var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 
 	render: function() {
 		return (
-			React.createElement(Container, {zDepth: 1}, 
+			React.createElement(Paper, {zDepth: 1}, 
 				React.createElement("p", null, "Mode Visualisasi : "), 
-				React.createElement(Mode, {menuItems: menuItems, onChange: this.modeChange}), 
+				React.createElement(DropDownMenu, {menuItems: menuItems, onChange: this.modeChange}), 
 				React.createElement("p", null, "Dari Tanggal :  "), 
 				React.createElement(DatePicker, {ref: "dateFrom", defaultDate: today, formatDate: this.dformat}), 
 				React.createElement("p", null, "Hingga Tanggal : "), 
@@ -58,7 +57,9 @@ var BCMSToolbar = React.createClass({displayName: "BCMSToolbar",
 				React.createElement(Checkbox, {ref: "check8", label: "Perhubungan"}), 
 				React.createElement(Checkbox, {ref: "check9", label: "Transportasi"}), 
 				React.createElement("p", null), 
-				React.createElement(PostButton, {label: "Visualisasi", secondary: true, id: "button-post", onTouchTap: this.handleViz}), 
+				React.createElement("div", {id: "vis-button"}, 
+				React.createElement(RaisedButton, {label: "Visualisasi", secondary: true, onTouchTap: this.handleViz})
+				), 
 				React.createElement("p", null)
 			)
 		);
@@ -121,6 +122,8 @@ module.exports = BCMSToolbar;
 
 },{"./visualization.jsx":3,"material-ui":5,"react":238}],3:[function(require,module,exports){
 var React = require('react'),
+	mui = require('material-ui'),
+	Paper = mui.Paper,
 	mapChart = require('../utils/mapchart.js'),
 	streamChart = require('../utils/streamchart.js'),
 	wordChart = require('../utils/wordchart.js');
@@ -195,10 +198,10 @@ var Visualization = React.createClass({displayName: "Visualization",
 				backgroundSize: '100% 100%',
 				backgroundRepeat: 'no-repeat'
 			};
-			return ( React.createElement("div", {className: "bandung-map", style: divStyle}) );
+			return ( React.createElement(Paper, {zDepth: 1, className: "bandung-map", style: divStyle}) );
 		}
 		else {
-			return ( React.createElement("div", null) );
+			return ( React.createElement(Paper, {zDepth: 1}) );
 		}
 	}
 
@@ -206,7 +209,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../utils/mapchart.js":240,"../utils/streamchart.js":242,"../utils/wordchart.js":243,"react":238}],4:[function(require,module,exports){
+},{"../utils/mapchart.js":240,"../utils/streamchart.js":242,"../utils/wordchart.js":243,"material-ui":5,"react":238}],4:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
