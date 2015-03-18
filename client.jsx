@@ -1,11 +1,10 @@
 var React = require('react'),
 	injectTapEventPlugin = require("react-tap-event-plugin"),
-	BCMSToolbar = require('./components/bcmstoolbar.jsx'),
-	Visualization = require('./components/visualization.jsx'),
-	datefrom = new Date(), 
-	dateto = new Date();
+	Navbar = require('./components/navbar.jsx'),
+	Toolbar = require('./components/toolbar.jsx');
 
 window.React = React;
 injectTapEventPlugin();
 
-React.render(<BCMSToolbar />, document.getElementById('bcms-toolbar'));
+React.render(<Navbar />, document.getElementById('navbar'));
+React.render(<Toolbar />, document.getElementById('toolbar'));

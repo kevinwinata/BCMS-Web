@@ -84,8 +84,8 @@ var mapChart = function(dom, props) {
 			.attr("id", "rect")
 			.attr("width", width)
 			.attr("height", height)
-			.attr("cx", 0)
-			.attr("cy", 0)
+			.attr("x", 0)
+			.attr("y", 0)
 			.attr("fill", "#FFFFFF")
 			.attr("fill-opacity", 0.7)
 			.on("click", rectClick);

@@ -1,70 +1,47 @@
 @import "./node_modules/material-ui/src/less/scaffolding.less";
 @import "./node_modules/material-ui/src/less/components.less";
 
-.nav-main {
-	background: @blue-grey-500;
-	color: @grey-500;
-	position: fixed;
-	top: 0;
-	height: 53px;
-	box-shadow: 0 0 5px rgba(0,0,0,0.5);
-	width: 100%;
-	z-index: 100;
-	.nav-home {
-		color: @grey-50;
-		font-family: 'Roboto', sans-serif;
-		font-size: 24px;
-		line-height: 50px;
-		height: 50px;
-		display: inline-block;
-		text-decoration: none;
+div#navbar {
+	height: 100px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: relative;
+	max-width: 100%;
+	overflow-x: visible;
+	overflow-y: visible;
+
+	#nav-paper {
+		height: 100px;
 	}
-	.nav-site {
+
+	div.item-left {
+		float: left;
+		margin-left: 10%;
+		margin-top: 50px;
+	}
+
+	div.item-right {
 		float: right;
-		margin: 0;
-		a {
-			padding: 0 8px;
-			font-family: 'Roboto', sans-serif;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			line-height: 50px;
-			display: inline-block;
-			height: 50px;
-			color: @blue-grey-50;
-			text-decoration: none;
-		}
-		a .active {
-			color: @blue-grey-50;
-			border-bottom: 3px solid @light-blue-500;
-			background: #333;
-		}
+		margin-right: 10%;
+		margin-top: 50px;
 	}
-	.nav-logo {
-		vertical-align: middle;
+
+	div.item-logo {
+		position: absolute;
+		left: 50%;
+		margin-left: -62px;
+		margin-top: 10px;
+		padding: 0;
+		width: 125px;
+		height: 125px;
 		display: inline-block;
-		margin-top: 0px;
-	}
-	ul, li {
-		display: inline;
-		margin-left: 20px;
+		z-index: 9999;
+		background: url(../images/bcms-circle.svg);
 	}
 }
 
-.wrap {
-	width: 960px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
-section {
-    width: 100%;
-    margin: auto;
-    padding: 10px;
-}
-
-div#bcms-toolbar {
+div#toolbar {
 	width: 20%;
     float: left;
 	.mui-paper-container {
@@ -74,7 +51,8 @@ div#bcms-toolbar {
 	}
 }
 
-div#bcms-visualization {
+div#visualization {
+	margin-top: 40px;
 	margin-left: 21%;
 }
 

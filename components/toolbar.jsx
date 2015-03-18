@@ -1,5 +1,3 @@
-/** In this file, we create a React component which incorporates components provided by material-ui */
-
 var React = require('react'),
 	Visualization = require('./visualization.jsx'),
 	mui = require('material-ui'),
@@ -19,7 +17,7 @@ var React = require('react'),
 	today = new Date(),
 	nextweek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-var BCMSToolbar = React.createClass({
+var Toolbar = React.createClass({
 
 	render: function() {
 		return (
@@ -56,9 +54,23 @@ var BCMSToolbar = React.createClass({
 
 	dformat: function(date) {
 		var d = date.getDate();
-		var m = date.getMonth() + 1;
+		var m;
+		switch(date.getMonth()) {
+			case 0 : m = "Jan"; break;
+			case 1 : m = "Feb"; break;
+			case 2 : m = "Mar"; break;
+			case 3 : m = "Apr"; break;
+			case 4 : m = "Mei"; break;
+			case 5 : m = "Jun"; break;
+			case 6 : m = "Jul"; break;
+			case 7 : m = "Agu"; break;
+			case 8 : m = "Sep"; break;
+			case 9 : m = "Okt"; break;
+			case 10 : m = "Nov"; break;
+			case 11 : m = "Des"; break;
+		}
 		var y = date.getFullYear();
-		return d + '/' + m + '/' + y;
+		return d + " " + m + " " + y;
 	},
 
 	checkboxesString: function() {
@@ -79,7 +91,7 @@ var BCMSToolbar = React.createClass({
 	handleViz: function() {
 		var df = Date.parse(this.refs.dateFrom.getDate());
 		var dt = Date.parse(this.refs.dateTo.getDate());
-		var dom = document.getElementById('bcms-visualization');
+		var dom = document.getElementById('visualization');
 		var c = this.checkboxesString();
 
 		switch(selectedItems) {
@@ -103,4 +115,4 @@ var BCMSToolbar = React.createClass({
 	
 });
 
-module.exports = BCMSToolbar;
+module.exports = Toolbar;
