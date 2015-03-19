@@ -58,10 +58,15 @@ var mapChart = function(dom, props) {
 			.attr("id", "map")
 			.call(zoom);
 
+		var clickedCircle;
+
 		g.selectAll("circle")
 			.data(data)
 			.enter()
 			.append("circle")
+			.attr("id",function(d,i) {
+				return "c"+i;
+			})
 			.attr("cx", function(d) {
 				return d[0];
 			})
@@ -131,6 +136,7 @@ var mapChart = function(dom, props) {
 
 		function circleClick() {
 			var self = d3.select(this);
+			clickedCircle = parseInt(self.attr("id").substring(1,2));
 			svg.append("rect")
 				.attr("id", "rect")
 				.attr("width", width)
@@ -151,9 +157,46 @@ var mapChart = function(dom, props) {
 				.attr("cx", width/2)
 				.attr("cy", height/2)
 				.attr("r", height/2 - 40)
-				.attr("fill-opacity", 1);
-				//.each('end',  function(){  });
+				.attr("fill-opacity", 1)
+				.each('end', drawPie);
 		}
+
+		function drawPie() { 
+			var color = d3.scale.ordinal()
+				.range(palette.getSwatch(clickedCircle));
+			
+			var arc = d3.svg.arc()
+				.outerRadius(height/2 - 39)
+				.innerRadius(height/2 - 200);
+			
+			var pie = d3.layout.pie()
+				.sort(null)
+				.value(function(d) { return d[1]; });
+
+			var dat = data[clickedCircle][4];
+
+			var piechart = svg.append("g")
+				.attr("id", "piechart")
+				.attr("width", width)
+				.attr("height", height)
+				.append("g")
+				.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			
+			var pg = piechart.selectAll(".arc")
+				.data(pie(dat))
+				.enter().append("g")
+				.attr("class", "arc");
+
+			pg.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return color(d.data[0]); });
+
+			pg.append("text")
+				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+				.attr("dy", ".35em")
+				.style("text-anchor", "middle")
+				.text(function(d) { return d.data[0]; });
+		 }
 
 		function circleOver() {
 			d3.select(this)
@@ -170,6 +213,11 @@ var mapChart = function(dom, props) {
 		function rectClick() {
 			var clone = d3.select("#clone")
 			clone.transition()
+				.duration(500)
+				.attr("fill-opacity", 0)
+				.each('end', function(){ this.remove() });
+			var piechart = d3.select("#piechart")
+			piechart.transition()
 				.duration(500)
 				.attr("fill-opacity", 0)
 				.each('end', function(){ this.remove() });

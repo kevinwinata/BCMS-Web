@@ -49,6 +49,14 @@ var palette = {
 		return palette.colors[i%palette.colors.length];
 	},
 
+	searchSwatch: function(color) {
+		for (var i = 0; i < palette.colors.length; i++) {
+			if(palette.colors[i].indexOf(color) >= 0)
+				return palette.colors[i];
+		}
+		return [];
+	},
+
 	getRandomFromSwatch: function(i) {
 		var swatch = palette.colors[i%palette.colors.length];
 		return swatch[Math.floor(Math.random() * swatch.length)];
