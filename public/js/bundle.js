@@ -16,17 +16,10 @@ var React = require('react'),
 	mui = require('material-ui'),
 	FlatButton = mui.FlatButton,
 	Paper = mui.Paper,
-	IconButton = mui.IconButton,
-	SvgIcon = mui.SvgIcon,
-	CircleLogo = React.createClass({displayName: "CircleLogo",
-		render: function() {
-			return (
-				React.createElement(SvgIcon, React.__spread({},  this.props), 
-					React.createElement("circle", {fill: "none", stroke: "#FFFFFF", "stroke-width": "3", "stroke-miterlimit": "10", cx: "62.826", cy: "62.053", r: "62.5"})
-				)
-			);
-		}
-	});
+	Dialog = mui.Dialog,
+	standardActions = [
+		{ text: 'Tutup' }
+	];
 
 var Navbar = React.createClass({displayName: "Navbar",
 
@@ -35,22 +28,60 @@ var Navbar = React.createClass({displayName: "Navbar",
 			React.createElement(Paper, {id: "nav-paper", rounded: false, zDepth: 1}, 
 				React.createElement("ul", {className: "nav-site"}, 
 					React.createElement("div", {className: "item-left"}, 
-						React.createElement(FlatButton, {label: "FAQ", linkButton: true, href: "/"})
+						React.createElement(FlatButton, {label: "Tentang kami", onTouchTap: this.openAbout})
 					), 
 					React.createElement("div", {className: "item-left"}, 
-						React.createElement(FlatButton, {label: "About", linkButton: true, href: "/"})
+						React.createElement(FlatButton, {label: "FAQ", onTouchTap: this.openFAQ})
 					), 
 					React.createElement("div", {className: "item-logo"}
 					), 
 					React.createElement("div", {className: "item-right"}, 
-						React.createElement(FlatButton, {label: "Contact", linkButton: true, href: "/"})
+						React.createElement(FlatButton, {label: "Github", linkButton: true, 
+							href: "/https://github.com/kevinwinata/BCMS-Web"})
 					), 
 					React.createElement("div", {className: "item-right"}, 
-						React.createElement(FlatButton, {label: "Github", linkButton: true, href: "/"})
+						React.createElement(FlatButton, {label: "Kontak", onTouchTap: this.openContact})
 					)
+				), 
+				React.createElement(Dialog, {title: "FAQ", ref: "faqDialog", actions: standardActions}, 
+					React.createElement("b", null, " Q: Lorem ipsum dolor sit amet, et percipit petentium vis. "), React.createElement("br", null), 
+					"A: Inani habemus mea in. ", React.createElement("br", null), 
+					React.createElement("b", null, " Q: Nonumes convenire at nam, vix ea consul dolorem. "), React.createElement("br", null), 
+					"A: An ullum voluptatum inciderint eos, no doming feugait persecuti per. ", React.createElement("br", null), 
+					React.createElement("b", null, " Q: Vix aeque luptatum tincidunt et, rebum melius latine ea sit. "), React.createElement("br", null), 
+					"A: Qui ea offendit persecuti, sale albucius vis et, virtute imperdiet id sit. ", React.createElement("br", null), 
+					React.createElement("b", null, " Q: Per ad omnium scaevola complectitur, salutandi conclusionemque no cum. "), React.createElement("br", null), 
+					"A: Vivendo probatus eu est, quo ne option labitur utroque."
+				), 
+
+				React.createElement(Dialog, {title: "Tentang Kami", ref: "aboutDialog", actions: standardActions}, 
+					"Lorem ipsum dolor sit amet, et percipit petentium vis. ", React.createElement("br", null), 
+					"Inani habemus mea in. ", React.createElement("br", null), 
+					"Nonumes convenire at nam, vix ea consul dolorem. ", React.createElement("br", null), 
+					"An ullum voluptatum inciderint eos, no doming feugait persecuti per. ", React.createElement("br", null), 
+					"Vix aeque luptatum tincidunt et, rebum melius latine ea sit. ", React.createElement("br", null), 
+					"Qui ea offendit persecuti, sale albucius vis et, virtute imperdiet id sit."
+				), 
+
+				React.createElement(Dialog, {title: "Kontak", ref: "contactDialog", actions: standardActions}, 
+					"Email : asdf@gmail.com ", React.createElement("br", null), 
+					"No. Telepon : +62-22-123456"
 				)
 			)
+
 		);
+	},
+
+	openAbout: function() {
+		this.refs.aboutDialog.show();
+	},
+
+	openFAQ: function() {
+		this.refs.faqDialog.show();
+	},
+
+	openContact: function() {
+		this.refs.contactDialog.show();
 	}
 	
 });
@@ -27027,6 +27058,9 @@ var streamChart = function(dom, props) {
 	var height = document.getElementById("toolbar").offsetHeight
 				 - margin.top - margin.bottom;
 
+	var mouseOffsetX = document.getElementById("toolbar").offsetWidth;
+	var mouseOffsetY = 100;
+
 	var tooltip = d3.select(dom)
 		.append("div")
 		.attr("class", "remove")
@@ -27140,8 +27174,8 @@ var streamChart = function(dom, props) {
 			.attr("stroke-width", "0.5px"), 
 			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
 			.style("visibility", "visible")
-			.style("left", d3.mouse(this)[0] + "px")
-			.style("top", d3.mouse(this)[1] + 100 + "px");
+			.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
+			.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
 			
 		})
 		.on("mouseout", function(d, i) {

@@ -13,6 +13,9 @@ var streamChart = function(dom, props) {
 	var height = document.getElementById("toolbar").offsetHeight
 				 - margin.top - margin.bottom;
 
+	var mouseOffsetX = document.getElementById("toolbar").offsetWidth;
+	var mouseOffsetY = 100;
+
 	var tooltip = d3.select(dom)
 		.append("div")
 		.attr("class", "remove")
@@ -126,8 +129,8 @@ var streamChart = function(dom, props) {
 			.attr("stroke-width", "0.5px"), 
 			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
 			.style("visibility", "visible")
-			.style("left", d3.mouse(this)[0] + "px")
-			.style("top", d3.mouse(this)[1] + 100 + "px");
+			.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
+			.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
 			
 		})
 		.on("mouseout", function(d, i) {

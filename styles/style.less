@@ -1,6 +1,18 @@
 @import "./node_modules/material-ui/src/less/scaffolding.less";
 @import "./node_modules/material-ui/src/less/components.less";
 
+html, body, #fullheight {
+	min-height: 100% !important;
+	height: 100%;
+	background-color: @grey-200;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+#fullheight {
+	width: 250px;
+}
+
 div#navbar {
 	height: 100px;
 	margin: 0;
@@ -41,9 +53,13 @@ div#navbar {
 	}
 }
 
+section {
+	background-color: @grey-200;
+}
+
 div#toolbar {
-	width: 20%;
-    float: left;
+	width: 18%;
+	float: left;
 	.mui-paper-container {
 		p, .mui-drop-down-menu, .mui-checkbox * {
 			margin-left:5%;
@@ -54,6 +70,15 @@ div#toolbar {
 div#visualization {
 	margin-top: 40px;
 	margin-left: 21%;
+	margin-right: 1%;
+}
+
+.mui-paper-container {
+	background-color: #FFF;
+}
+
+.mui-paper {
+	background-color: #FFF;
 }
 
 .mui-date-picker {
