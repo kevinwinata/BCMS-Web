@@ -26865,7 +26865,7 @@ var mapChart = function(dom, props) {
 				return d[1];
 			})
 			.attr("r", function(d) {
-				return d[2];
+				return d[2]/10;
 			})
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
@@ -26876,6 +26876,16 @@ var mapChart = function(dom, props) {
 			.on("click", circleClick)
 			.on("mouseover", circleOver)
 			.on("mouseout", circleOut);
+
+		g.selectAll("circle")
+			.transition()
+			.delay(function(d, i) {
+				return i * 300 / data.length;
+			})
+			.duration(1000)
+			.attr("r", function(d,i) {
+				return data[i][2];
+			});
 
 
 		g.selectAll("t")
@@ -27190,27 +27200,17 @@ var streamChart = function(dom, props) {
 			.style("visibility", "hidden");
 	})
 		
-	// var vertical = d3.select(dom)
-	// 			.append("div")
-	// 			.attr("class", "remove")
-	// 			.style("position", "absolute")
-	// 			.style("z-index", "19")
-	// 			.style("width", "1px")
-	// 			.style("height", "380px")
-	// 			.style("top", "200px")
-	// 			.style("bottom", "30px")
-	// 			.style("left", "0px")
-	// 			.style("background", "#fff");
+	var rect = svg.append("rect")
+		.attr("id", "rect")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("fill", "#FFFFFF");
 
-	// d3.select(dom)
-	// 		.on("mousemove", function(){  
-	// 			 mousex = d3.mouse(this);
-	// 			 mousex = mousex[0] + 5;
-	// 			 vertical.style("left", mousex + "px" )})
-	// 		.on("mouseover", function(){  
-	// 			 mousex = d3.mouse(this);
-	// 			 mousex = mousex[0] + 5;
-	// 			 vertical.style("left", mousex + "px")});
+	rect.transition()
+		.duration(2000)
+		.attr("x", width + 200);
 };
 
 module.exports = streamChart;
@@ -27239,7 +27239,7 @@ var wordChart = function(dom, props) {
 				.attr("width", props.width)
 				.attr("height", props.height)
 			.append("g")
-				.attr("transform", "translate(500,250)")
+				.attr("transform", "translate(400,320)")
 			.selectAll("text")
 				.data(words)
 			.enter().append("text")

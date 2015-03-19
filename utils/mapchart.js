@@ -69,7 +69,7 @@ var mapChart = function(dom, props) {
 				return d[1];
 			})
 			.attr("r", function(d) {
-				return d[2];
+				return d[2]/10;
 			})
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
@@ -80,6 +80,16 @@ var mapChart = function(dom, props) {
 			.on("click", circleClick)
 			.on("mouseover", circleOver)
 			.on("mouseout", circleOut);
+
+		g.selectAll("circle")
+			.transition()
+			.delay(function(d, i) {
+				return i * 300 / data.length;
+			})
+			.duration(1000)
+			.attr("r", function(d,i) {
+				return data[i][2];
+			});
 
 
 		g.selectAll("t")

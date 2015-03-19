@@ -145,27 +145,17 @@ var streamChart = function(dom, props) {
 			.style("visibility", "hidden");
 	})
 		
-	// var vertical = d3.select(dom)
-	// 			.append("div")
-	// 			.attr("class", "remove")
-	// 			.style("position", "absolute")
-	// 			.style("z-index", "19")
-	// 			.style("width", "1px")
-	// 			.style("height", "380px")
-	// 			.style("top", "200px")
-	// 			.style("bottom", "30px")
-	// 			.style("left", "0px")
-	// 			.style("background", "#fff");
+	var rect = svg.append("rect")
+		.attr("id", "rect")
+		.attr("width", width)
+		.attr("height", height)
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("fill", "#FFFFFF");
 
-	// d3.select(dom)
-	// 		.on("mousemove", function(){  
-	// 			 mousex = d3.mouse(this);
-	// 			 mousex = mousex[0] + 5;
-	// 			 vertical.style("left", mousex + "px" )})
-	// 		.on("mouseover", function(){  
-	// 			 mousex = d3.mouse(this);
-	// 			 mousex = mousex[0] + 5;
-	// 			 vertical.style("left", mousex + "px")});
+	rect.transition()
+		.duration(2000)
+		.attr("x", width + 200);
 };
 
 module.exports = streamChart;
