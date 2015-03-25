@@ -29,16 +29,16 @@ var Toolbar = React.createClass({
 				<p>Hingga Tanggal : </p>
 				<DatePicker ref="dateTo" defaultDate={nextweek} formatDate={this.dformat} />
 				<p>Dinas : </p>
-				<Checkbox ref="check0" defaultChecked={true} label="Transportasi" />
-				<Checkbox ref="check1" defaultChecked={true} label="Kesehatan" />
-				<Checkbox ref="check2" defaultChecked={true} label="Perhubungan" />
-				<Checkbox ref="check3" defaultChecked={true} label="Transportasi" />
-				<Checkbox ref="check4" defaultChecked={true} label="Kesehatan" />
-				<Checkbox ref="check5" defaultChecked={true} label="Perhubungan" />
-				<Checkbox ref="check6" defaultChecked={true} label="Transportasi" />
-				<Checkbox ref="check7" defaultChecked={true} label="Kesehatan" />
+				<Checkbox ref="check0" defaultChecked={true} label="Bina Marga" />
+				<Checkbox ref="check1" defaultChecked={true} label="Kebakaran" />
+				<Checkbox ref="check2" defaultChecked={true} label="Kebudayaan" />
+				<Checkbox ref="check3" defaultChecked={true} label="Kesehatan" />
+				<Checkbox ref="check4" defaultChecked={true} label="Komunikasi" />
+				<Checkbox ref="check5" defaultChecked={true} label="Pajak" />
+				<Checkbox ref="check6" defaultChecked={true} label="Pertamanan" />
+				<Checkbox ref="check7" defaultChecked={true} label="Pendidikan" />
 				<Checkbox ref="check8" defaultChecked={true} label="Perhubungan" />
-				<Checkbox ref="check9" defaultChecked={true} label="Transportasi" />
+				<Checkbox ref="check9" defaultChecked={true} label="Sosial" />
 				<p/>
 				<div id="vis-button">
 				<RaisedButton label="Visualisasi" secondary={true} onTouchTap={this.handleViz}/>

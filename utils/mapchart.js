@@ -135,8 +135,9 @@ var mapChart = function(dom, props) {
 		}
 
 		function circleClick() {
-			var self = d3.select(this);
-			clickedCircle = parseInt(self.attr("id").substring(1,2));
+			var self = d3.select(this),
+				id = self.attr("id");
+			clickedCircle = parseInt(id.substring(1,id.length));
 			svg.append("rect")
 				.attr("id", "rect")
 				.attr("width", width)

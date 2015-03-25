@@ -120,16 +120,16 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 				React.createElement("p", null, "Hingga Tanggal : "), 
 				React.createElement(DatePicker, {ref: "dateTo", defaultDate: nextweek, formatDate: this.dformat}), 
 				React.createElement("p", null, "Dinas : "), 
-				React.createElement(Checkbox, {ref: "check0", label: "Transportasi"}), 
-				React.createElement(Checkbox, {ref: "check1", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {ref: "check2", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {ref: "check3", label: "Transportasi"}), 
-				React.createElement(Checkbox, {ref: "check4", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {ref: "check5", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {ref: "check6", label: "Transportasi"}), 
-				React.createElement(Checkbox, {ref: "check7", label: "Kesehatan"}), 
-				React.createElement(Checkbox, {ref: "check8", label: "Perhubungan"}), 
-				React.createElement(Checkbox, {ref: "check9", label: "Transportasi"}), 
+				React.createElement(Checkbox, {ref: "check0", defaultChecked: true, label: "Bina Marga"}), 
+				React.createElement(Checkbox, {ref: "check1", defaultChecked: true, label: "Kebakaran"}), 
+				React.createElement(Checkbox, {ref: "check2", defaultChecked: true, label: "Kebudayaan"}), 
+				React.createElement(Checkbox, {ref: "check3", defaultChecked: true, label: "Kesehatan"}), 
+				React.createElement(Checkbox, {ref: "check4", defaultChecked: true, label: "Komunikasi"}), 
+				React.createElement(Checkbox, {ref: "check5", defaultChecked: true, label: "Pajak"}), 
+				React.createElement(Checkbox, {ref: "check6", defaultChecked: true, label: "Pertamanan"}), 
+				React.createElement(Checkbox, {ref: "check7", defaultChecked: true, label: "Pendidikan"}), 
+				React.createElement(Checkbox, {ref: "check8", defaultChecked: true, label: "Perhubungan"}), 
+				React.createElement(Checkbox, {ref: "check9", defaultChecked: true, label: "Sosial"}), 
 				React.createElement("p", null), 
 				React.createElement("div", {id: "vis-button"}, 
 				React.createElement(RaisedButton, {label: "Visualisasi", secondary: true, onTouchTap: this.handleViz})
@@ -26931,8 +26931,9 @@ var mapChart = function(dom, props) {
 		}
 
 		function circleClick() {
-			var self = d3.select(this);
-			clickedCircle = parseInt(self.attr("id").substring(1,2));
+			var self = d3.select(this),
+				id = self.attr("id");
+			clickedCircle = parseInt(id.substring(1,id.length));
 			svg.append("rect")
 				.attr("id", "rect")
 				.attr("width", width)
@@ -27279,9 +27280,10 @@ var wordChart = function(dom, props) {
 	var width = dom.offsetWidth;
 	var height = document.getElementById("toolbar").offsetHeight;
 	var fill = d3.scale.category20();
+	var data = props.data;
 
 	cloud().size([width, height])
-			.words(props.data.map(function(d) {
+			.words(data.map(function(d) {
 				return {text: d[0], size: d[1]*10 };
 			}))
 			.padding(5)
@@ -27291,27 +27293,128 @@ var wordChart = function(dom, props) {
 			.start();
 
 	function draw(words) {
-		d3.select(dom).append("svg")
-				.attr("width", props.width)
-				.attr("height", props.height)
-			.append("g")
-				.attr("transform", "translate(400,320)")
-			.selectAll("text")
-				.data(words)
+		var svg = d3.select(dom).append("svg")
+				.attr("width", width)
+				.attr("height", height);
+
+		var g = svg.append("g")
+				.attr("transform", "translate("+width/2+","+height/2+")");
+
+		g.selectAll("t")
+			.data(words)
 			.enter().append("text")
-				.transition()
-				.delay(function(d, i) {
-					return i * 1000 / words.length;
-				})
-				.duration(1000)
-				.style("font-size", function(d) { return d.size + "px"; })
-				.style("font-family", "Roboto")
-				.style("fill", function(d, i) { return fill(i); })
-				.attr("text-anchor", "middle")
-				.attr("transform", function(d) {
-					return "translate(" + [d.x, d.y] + ")";
-				})
-				.text(function(d) { return d.text; });
+			.transition()
+			.delay(function(d, i) {
+				return i * 1000 / words.length;
+			})
+			.duration(1000)
+			.style("font-size", function(d) { 
+				return d.size + "px"; 
+			})
+			.style("font-family", "Roboto")
+			.style("fill", function(d, i) { 
+				return fill(i); 
+			})
+			.attr("id",function(d,i) {
+				return "c"+i;
+			})
+			.attr("text-anchor", "middle")
+			.attr("transform", function(d) {
+				return "translate(" + [d.x, d.y] + ")";
+			})
+			.text(function(d) { return d.text; });
+
+		g.selectAll("text")
+			.on("click", drawLines);
+
+		function drawLines() {
+			var self = d3.select(this);
+			var id = self.attr("id");
+			var clickedWord = parseInt(id.substring(1,id.length));
+			var dat = data[clickedWord][2];
+
+			svg.append("rect")
+				.attr("id", "rect")
+				.attr("width", width)
+				.attr("height", height)
+				.attr("x", 0)
+				.attr("y", 0)
+				.attr("fill", "#FFFFFF")
+				.attr("fill-opacity", 0.85)
+				.on("click", function(){ 
+					var xAxis = d3.select("#xAxis");
+					xAxis.transition()
+						.duration(500)
+						.attr("fill-opacity", 0)
+						.each('end', function(){ this.remove() });
+					var yAxis = d3.select("#yAxis");
+					yAxis.transition()
+						.duration(500)
+						.attr("fill-opacity", 0)
+						.each('end', function(){ this.remove() });
+					var path = d3.select("#path");
+					path.transition()
+						.duration(500)
+						.attr("fill-opacity", 0)
+						.each('end', function(){ this.remove() });
+					var rect = d3.select("#rect");
+					rect.transition()
+						.duration(500)
+						.attr("fill-opacity", 0)
+						.each('end', function(){ this.remove() });
+				});
+
+			var parseDate = d3.time.format("%m/%d/%y").parse;
+
+			var x = d3.time.scale()
+				.range([30, width-30]);
+
+			var y = d3.scale.linear()
+				.range([height-30, 30]);
+
+			var xAxis = d3.svg.axis()
+				.scale(x)
+				.orient("bottom");
+
+			var yAxis = d3.svg.axis()
+				.scale(y)
+				.orient("left");
+
+			var line = d3.svg.line()
+				.x(function(d) { return x(d.date); })
+				.y(function(d) { return y(d.value); });
+
+			dat.forEach(function(d) {
+				d.date = parseDate(d.date);
+				d.value = +d.value;
+			});
+
+			x.domain(d3.extent(dat, function(d) { return d.date; }));
+			y.domain([0,d3.max(dat, function(d) { return d.value; })]);
+
+			svg.append("g")
+					.attr("id", "xAxis")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0,"+100+")")
+					.call(xAxis);
+
+			svg.append("g")
+					.attr("id", "yAxis")
+					.attr("class", "y axis")
+					.call(yAxis)
+				.append("text")
+					.attr("transform", "translate(100,100)rotate(-90)")
+					.attr("y", 6)
+					.attr("dy", ".71em")
+					.style("text-anchor", "end")
+
+			svg.append("path")
+					.datum(dat)
+					.attr("id", "path")
+					.attr("class", "line")
+					.attr("d", line);
+
+		}
 	}
 }
 

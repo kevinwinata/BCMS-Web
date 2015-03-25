@@ -161,16 +161,25 @@ router.get('/stream', function(req, res) {
 router.get('/word', function(req, res) {
     var datefrom = Date.parse(req.query.from);
     var dateto = Date.parse(req.query.to);
+    var trend = [ 	{value: 25, date: '01/09/13'},
+					{value: 35, date: '01/10/13'},
+					{value: 38, date: '01/11/13'},
+					{value: 22, date: '01/12/13'},
+					{value: 26, date: '01/13/13'},
+					{value: 27, date: '01/14/13'},
+					{value: 22, date: '01/15/13'},
+					{value: 27, date: '01/16/13'},
+					{value: 33, date: '01/17/13'} ];
     var data = [
-		['The', 2], ['key', 3], ['function', 5], ['also', ], ['determines', 1], 
-		['the', 7], ['enter', 7], ['and', 4], ['exit', 8], ['selections', 1], 
-		['the', 4], ['new', 1], ['data', 5], ['for', 6], ['which', 5], ['there', 8], 
-		['is', 1], ['no', 1], ['corresponding', 4], ['key', 2], ['in', 1], ['the', 3], 
-		['old', 2], ['data', 9], ['become', 1], ['the', 1], ['enter', 5], 
-		['selection', 7], ['and', 8], ['the', 6], ['old', 3], ['data', 5], ['for', 1], 
-		['which', 4], ['there', 1], ['is', 2], ['no', 1], ['corresponding', 1], 
-		['key', 1], ['in', 2], ['the', 1], ['new', 2], ['data', 6], ['become', 1], 
-		['the', 6], ['exit', 8], ['selection', 1]
+		['The', 2, trend], ['key', 3, trend], ['function', 5, trend], ['also', , trend], ['determines', 1, trend], 
+		['the', 7, trend], ['enter', 7, trend], ['and', 4, trend], ['exit', 8, trend], ['selections', 1, trend], 
+		['the', 4, trend], ['new', 1, trend], ['data', 5, trend], ['for', 6, trend], ['which', 5, trend], ['there', 8, trend], 
+		['is', 1, trend], ['no', 1, trend], ['corresponding', 4, trend], ['key', 2, trend], ['in', 1, trend], ['the', 3, trend], 
+		['old', 2, trend], ['data', 9, trend], ['become', 1, trend], ['the', 1, trend], ['enter', 5, trend], 
+		['selection', 7, trend], ['and', 8, trend], ['the', 6, trend], ['old', 3, trend], ['data', 5, trend], ['for', 1, trend], 
+		['which', 4, trend], ['there', 1, trend], ['is', 2, trend], ['no', 1, trend], ['corresponding', 1, trend], 
+		['key', 1, trend], ['in', 2, trend], ['the', 1, trend], ['new', 2, trend], ['data', 6, trend], ['become', 1, trend], 
+		['the', 6, trend], ['exit', 8, trend], ['selection', 1, trend]
 	];
     res.json(data);
 });

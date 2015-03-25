@@ -2642,9 +2642,6 @@ div#navbar div.item-logo {
   z-index: 9999;
   background: url(../images/bcms-circle.svg);
 }
-section {
-  background-color: #eeeeee;
-}
 div#toolbar {
   width: 18%;
   float: left;
@@ -2684,6 +2681,11 @@ div#visualization {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }
 html,
 body,
