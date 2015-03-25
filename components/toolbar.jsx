@@ -29,16 +29,16 @@ var Toolbar = React.createClass({
 				<p>Hingga Tanggal : </p>
 				<DatePicker ref="dateTo" defaultDate={nextweek} formatDate={this.dformat} />
 				<p>Dinas : </p>
-				<Checkbox ref="check0" label="Transportasi" />
-				<Checkbox ref="check1" label="Kesehatan" />
-				<Checkbox ref="check2" label="Perhubungan" />
-				<Checkbox ref="check3" label="Transportasi" />
-				<Checkbox ref="check4" label="Kesehatan" />
-				<Checkbox ref="check5" label="Perhubungan" />
-				<Checkbox ref="check6" label="Transportasi" />
-				<Checkbox ref="check7" label="Kesehatan" />
-				<Checkbox ref="check8" label="Perhubungan" />
-				<Checkbox ref="check9" label="Transportasi" />
+				<Checkbox ref="check0" defaultChecked={true} label="Transportasi" />
+				<Checkbox ref="check1" defaultChecked={true} label="Kesehatan" />
+				<Checkbox ref="check2" defaultChecked={true} label="Perhubungan" />
+				<Checkbox ref="check3" defaultChecked={true} label="Transportasi" />
+				<Checkbox ref="check4" defaultChecked={true} label="Kesehatan" />
+				<Checkbox ref="check5" defaultChecked={true} label="Perhubungan" />
+				<Checkbox ref="check6" defaultChecked={true} label="Transportasi" />
+				<Checkbox ref="check7" defaultChecked={true} label="Kesehatan" />
+				<Checkbox ref="check8" defaultChecked={true} label="Perhubungan" />
+				<Checkbox ref="check9" defaultChecked={true} label="Transportasi" />
 				<p/>
 				<div id="vis-button">
 				<RaisedButton label="Visualisasi" secondary={true} onTouchTap={this.handleViz}/>

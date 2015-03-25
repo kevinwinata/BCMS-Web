@@ -1,0 +1,23 @@
+div#navbar {
+  height: 100px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  max-width: 100%;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+div#navbar #nav-paper {
+  height: 100px;
+}
+div#navbar div.item-left {
+  float: left;
+  margin-left: 10%;
+  margin-top: 50px;
+}
+div#navbar div.item-right {
+  float: right;
+  margin-right: 10%;
+  margin-top: 50px;
+}

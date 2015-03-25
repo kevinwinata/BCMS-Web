@@ -1,76 +1,19 @@
 @import "./node_modules/material-ui/src/less/scaffolding.less";
 @import "./node_modules/material-ui/src/less/components.less";
+@import "./navbar.less";
+@import "./toolbar.less";
+@import "./visualization.less";
 
 html, body, #fullheight {
 	min-height: 100% !important;
 	height: 100%;
-	background-color: @grey-200;
-	background-repeat: no-repeat;
+	background-image: url("../images/shattered.png");
+	background-color: @grey-500;
 	background-attachment: fixed;
 }
 
 #fullheight {
 	width: 250px;
-}
-
-div#navbar {
-	height: 100px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	position: relative;
-	max-width: 100%;
-	overflow-x: visible;
-	overflow-y: visible;
-
-	#nav-paper {
-		height: 100px;
-	}
-
-	div.item-left {
-		float: left;
-		margin-left: 10%;
-		margin-top: 50px;
-	}
-
-	div.item-right {
-		float: right;
-		margin-right: 10%;
-		margin-top: 50px;
-	}
-
-	div.item-logo {
-		position: absolute;
-		left: 50%;
-		margin-left: -62px;
-		margin-top: 10px;
-		padding: 0;
-		width: 125px;
-		height: 125px;
-		display: inline-block;
-		z-index: 9999;
-		background: url(../images/bcms-circle.svg);
-	}
-}
-
-section {
-	background-color: @grey-200;
-}
-
-div#toolbar {
-	width: 18%;
-	float: left;
-	.mui-paper-container {
-		p, .mui-drop-down-menu, .mui-checkbox * {
-			margin-left:5%;
-		}
-	}
-}
-
-div#visualization {
-	margin-top: 40px;
-	margin-left: 21%;
-	margin-right: 1%;
 }
 
 .mui-paper-container {
@@ -79,33 +22,4 @@ div#visualization {
 
 .mui-paper {
 	background-color: #FFF;
-}
-
-.mui-date-picker {
-	margin-top: 3px;
-	margin-left: 8%;
-	width: 100px;
-	.mui-text-field {
-		width: 100px;
-		margin-left: 8%;
-		.mui-text-field-input {
-			width: 100px;
-			margin-left: 8%;
-		}
-		.mui-text-field-underline {
-			width: 100px;
-			margin-left: 8%;
-		}
-	}
-}
-
-#vis-button {
-	margin-left: 20%;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2px;
-  shape-rendering: crispEdges;
 }
