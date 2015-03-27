@@ -65,7 +65,7 @@ var wordChart = function(dom, props) {
 				.attr("x", 0)
 				.attr("y", 0)
 				.attr("fill", "#FFFFFF")
-				.attr("fill-opacity", 0.85)
+				.attr("fill-opacity", 0.95)
 				.on("click", function(){ 
 					var xAxis = d3.select("#xAxis");
 					xAxis.transition()
@@ -103,7 +103,7 @@ var wordChart = function(dom, props) {
 
 			var yAxis = d3.svg.axis()
 				.scale(y)
-				.orient("left");
+				.orient("right");
 
 			var line = d3.svg.line()
 				.x(function(d) { return x(d.date); })
@@ -120,7 +120,6 @@ var wordChart = function(dom, props) {
 			svg.append("g")
 					.attr("id", "xAxis")
 					.attr("class", "x axis")
-					.attr("transform", "translate(0,"+100+")")
 					.call(xAxis);
 
 			svg.append("g")
@@ -128,7 +127,7 @@ var wordChart = function(dom, props) {
 					.attr("class", "y axis")
 					.call(yAxis)
 				.append("text")
-					.attr("transform", "translate(100,100)rotate(-90)")
+					.attr("transform", "rotate(-90)")
 					.attr("y", 6)
 					.attr("dy", ".71em")
 					.style("text-anchor", "end")
