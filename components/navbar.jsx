@@ -23,7 +23,7 @@ var Navbar = React.createClass({
 					</div>
 					<div className="item-right">
 						<FlatButton label="Github" linkButton={true} 
-							href="/https://github.com/kevinwinata/BCMS-Web" />
+							href="https://github.com/kevinwinata/BCMS-Web" />
 					</div>
 					<div className="item-right">
 						<FlatButton label="Kontak" onTouchTap={this.openContact} />

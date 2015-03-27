@@ -29,18 +29,43 @@ var Toolbar = React.createClass({
 				<p>Hingga Tanggal : </p>
 				<DatePicker ref="dateTo" defaultDate={nextweek} formatDate={this.dformat} />
 				<p>Dinas : </p>
-				<Checkbox ref="check0" defaultChecked={true} label="Bina Marga" />
-				<Checkbox ref="check1" defaultChecked={true} label="Kebakaran" />
-				<Checkbox ref="check2" defaultChecked={true} label="Kebudayaan" />
-				<Checkbox ref="check3" defaultChecked={true} label="Kesehatan" />
-				<Checkbox ref="check4" defaultChecked={true} label="Komunikasi" />
-				<Checkbox ref="check5" defaultChecked={true} label="Pajak" />
-				<Checkbox ref="check6" defaultChecked={true} label="Pertamanan" />
-				<Checkbox ref="check7" defaultChecked={true} label="Pendidikan" />
-				<Checkbox ref="check8" defaultChecked={true} label="Perhubungan" />
-				<Checkbox ref="check9" defaultChecked={true} label="Sosial" />
-				<p/>
-				<div id="vis-button">
+				<div className="tool-button">
+				<FlatButton label="Pilih Dinas" onTouchTap={this.openCheckDialog}/>
+				</div>
+				<Dialog ref="checkDialog" title="Pilih Dinas" actions={[
+					<section>
+					<div id="check1col">
+					<Checkbox ref="check0" defaultSwitched={true} label="Badan Kepegawaian Daerah" />
+					<Checkbox ref="check1" defaultSwitched={true} label="Badan Pengelolaan Lingkungan Hidup" />
+					<Checkbox ref="check2" defaultSwitched={true} label="Dinas Bina Marga dan Pengairan" />
+					<Checkbox ref="check3" defaultSwitched={true} label="Dinas Kebakaran" />
+					<Checkbox ref="check4" defaultSwitched={true} label="Dinas Kebudayaan dan Pariwisata" />
+					<Checkbox ref="check5" defaultSwitched={true} label="Dinas Kesehatan" />
+					<Checkbox ref="check6" defaultSwitched={true} label="Dinas Komunikasi dan Informatika" />
+					<Checkbox ref="check7" defaultSwitched={true} label="Dinas Pelayanan Pajak" />
+					<Checkbox ref="check8" defaultSwitched={true} label="Dinas Pemakaman dan Pertamanan" />
+					</div>
+					<div id="check2col">
+					<Checkbox ref="check9" defaultSwitched={true} label="Dinas Pendidikan" />
+					<Checkbox ref="check10" defaultSwitched={true} label="Dinas Perhubungan" />
+					<Checkbox ref="check11" defaultSwitched={true} label="Dinas Sosial" />
+					<Checkbox ref="check12" defaultSwitched={true} label="Dinas Tata Ruang dan Cipta Karya" />
+					<Checkbox ref="check13" defaultSwitched={true} label="PDAM Tirtawening" />
+					<Checkbox ref="check14" defaultSwitched={true} label="PD Kebersihan" />
+					<Checkbox ref="check15" defaultSwitched={true} label="PD Pasar Bermartabat" />
+					<Checkbox ref="check16" defaultSwitched={true} label="Satpol PP" />
+					<br></br>
+					</div>
+					</section>,
+					<FlatButton
+						label="Tutup"
+						secondary={true}
+						onTouchTap={this.closeCheckDialog} />
+					]}>
+					Dinas yang tidak tercentang tak akan diikutsertakan dalam visualisasi.
+				</Dialog>
+				<p/><p/>
+				<div className="tool-button">
 				<RaisedButton label="Visualisasi" secondary={true} onTouchTap={this.handleViz}/>
 				</div>
 				<p/>
@@ -75,16 +100,9 @@ var Toolbar = React.createClass({
 
 	checkboxesString: function() {
 		var str = "";
-		str += this.refs.check0.isChecked() ? "1" : "0";
-		str += this.refs.check1.isChecked() ? "1" : "0";
-		str += this.refs.check2.isChecked() ? "1" : "0";
-		str += this.refs.check3.isChecked() ? "1" : "0";
-		str += this.refs.check4.isChecked() ? "1" : "0";
-		str += this.refs.check5.isChecked() ? "1" : "0";
-		str += this.refs.check6.isChecked() ? "1" : "0";
-		str += this.refs.check7.isChecked() ? "1" : "0";
-		str += this.refs.check8.isChecked() ? "1" : "0";
-		str += this.refs.check9.isChecked() ? "1" : "0";
+		for (var i = 0; i < 17; i++) {
+			str += this.refs["check"+i].isChecked() ? "1" : "0";
+		}
 		return str;
 	},
 
@@ -111,6 +129,14 @@ var Toolbar = React.createClass({
 				});
 				break;
 		}
+	},
+
+	openCheckDialog: function() {
+		this.refs.checkDialog.show();
+	},
+
+	closeCheckDialog: function() {
+		this.refs.checkDialog.dismiss();
 	}
 	
 });

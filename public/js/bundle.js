@@ -37,7 +37,7 @@ var Navbar = React.createClass({displayName: "Navbar",
 					), 
 					React.createElement("div", {className: "item-right"}, 
 						React.createElement(FlatButton, {label: "Github", linkButton: true, 
-							href: "/https://github.com/kevinwinata/BCMS-Web"})
+							href: "https://github.com/kevinwinata/BCMS-Web"})
 					), 
 					React.createElement("div", {className: "item-right"}, 
 						React.createElement(FlatButton, {label: "Kontak", onTouchTap: this.openContact})
@@ -120,18 +120,43 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 				React.createElement("p", null, "Hingga Tanggal : "), 
 				React.createElement(DatePicker, {ref: "dateTo", defaultDate: nextweek, formatDate: this.dformat}), 
 				React.createElement("p", null, "Dinas : "), 
-				React.createElement(Checkbox, {ref: "check0", defaultChecked: true, label: "Bina Marga"}), 
-				React.createElement(Checkbox, {ref: "check1", defaultChecked: true, label: "Kebakaran"}), 
-				React.createElement(Checkbox, {ref: "check2", defaultChecked: true, label: "Kebudayaan"}), 
-				React.createElement(Checkbox, {ref: "check3", defaultChecked: true, label: "Kesehatan"}), 
-				React.createElement(Checkbox, {ref: "check4", defaultChecked: true, label: "Komunikasi"}), 
-				React.createElement(Checkbox, {ref: "check5", defaultChecked: true, label: "Pajak"}), 
-				React.createElement(Checkbox, {ref: "check6", defaultChecked: true, label: "Pertamanan"}), 
-				React.createElement(Checkbox, {ref: "check7", defaultChecked: true, label: "Pendidikan"}), 
-				React.createElement(Checkbox, {ref: "check8", defaultChecked: true, label: "Perhubungan"}), 
-				React.createElement(Checkbox, {ref: "check9", defaultChecked: true, label: "Sosial"}), 
-				React.createElement("p", null), 
-				React.createElement("div", {id: "vis-button"}, 
+				React.createElement("div", {className: "tool-button"}, 
+				React.createElement(FlatButton, {label: "Pilih Dinas", onTouchTap: this.openCheckDialog})
+				), 
+				React.createElement(Dialog, {ref: "checkDialog", title: "Pilih Dinas", actions: [
+					React.createElement("section", null, 
+					React.createElement("div", {id: "check1col"}, 
+					React.createElement(Checkbox, {ref: "check0", defaultSwitched: true, label: "Badan Kepegawaian Daerah"}), 
+					React.createElement(Checkbox, {ref: "check1", defaultSwitched: true, label: "Badan Pengelolaan Lingkungan Hidup"}), 
+					React.createElement(Checkbox, {ref: "check2", defaultSwitched: true, label: "Dinas Bina Marga dan Pengairan"}), 
+					React.createElement(Checkbox, {ref: "check3", defaultSwitched: true, label: "Dinas Kebakaran"}), 
+					React.createElement(Checkbox, {ref: "check4", defaultSwitched: true, label: "Dinas Kebudayaan dan Pariwisata"}), 
+					React.createElement(Checkbox, {ref: "check5", defaultSwitched: true, label: "Dinas Kesehatan"}), 
+					React.createElement(Checkbox, {ref: "check6", defaultSwitched: true, label: "Dinas Komunikasi dan Informatika"}), 
+					React.createElement(Checkbox, {ref: "check7", defaultSwitched: true, label: "Dinas Pelayanan Pajak"}), 
+					React.createElement(Checkbox, {ref: "check8", defaultSwitched: true, label: "Dinas Pemakaman dan Pertamanan"})
+					), 
+					React.createElement("div", {id: "check2col"}, 
+					React.createElement(Checkbox, {ref: "check9", defaultSwitched: true, label: "Dinas Pendidikan"}), 
+					React.createElement(Checkbox, {ref: "check10", defaultSwitched: true, label: "Dinas Perhubungan"}), 
+					React.createElement(Checkbox, {ref: "check11", defaultSwitched: true, label: "Dinas Sosial"}), 
+					React.createElement(Checkbox, {ref: "check12", defaultSwitched: true, label: "Dinas Tata Ruang dan Cipta Karya"}), 
+					React.createElement(Checkbox, {ref: "check13", defaultSwitched: true, label: "PDAM Tirtawening"}), 
+					React.createElement(Checkbox, {ref: "check14", defaultSwitched: true, label: "PD Kebersihan"}), 
+					React.createElement(Checkbox, {ref: "check15", defaultSwitched: true, label: "PD Pasar Bermartabat"}), 
+					React.createElement(Checkbox, {ref: "check16", defaultSwitched: true, label: "Satpol PP"}), 
+					React.createElement("br", null)
+					)
+					),
+					React.createElement(FlatButton, {
+						label: "Tutup", 
+						secondary: true, 
+						onTouchTap: this.closeCheckDialog})
+					]}, 
+					"Dinas yang tidak tercentang tak akan diikutsertakan dalam visualisasi."
+				), 
+				React.createElement("p", null), React.createElement("p", null), 
+				React.createElement("div", {className: "tool-button"}, 
 				React.createElement(RaisedButton, {label: "Visualisasi", secondary: true, onTouchTap: this.handleViz})
 				), 
 				React.createElement("p", null)
@@ -166,16 +191,9 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 
 	checkboxesString: function() {
 		var str = "";
-		str += this.refs.check0.isChecked() ? "1" : "0";
-		str += this.refs.check1.isChecked() ? "1" : "0";
-		str += this.refs.check2.isChecked() ? "1" : "0";
-		str += this.refs.check3.isChecked() ? "1" : "0";
-		str += this.refs.check4.isChecked() ? "1" : "0";
-		str += this.refs.check5.isChecked() ? "1" : "0";
-		str += this.refs.check6.isChecked() ? "1" : "0";
-		str += this.refs.check7.isChecked() ? "1" : "0";
-		str += this.refs.check8.isChecked() ? "1" : "0";
-		str += this.refs.check9.isChecked() ? "1" : "0";
+		for (var i = 0; i < 17; i++) {
+			str += this.refs["check"+i].isChecked() ? "1" : "0";
+		}
 		return str;
 	},
 
@@ -202,6 +220,14 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 				});
 				break;
 		}
+	},
+
+	openCheckDialog: function() {
+		this.refs.checkDialog.show();
+	},
+
+	closeCheckDialog: function() {
+		this.refs.checkDialog.dismiss();
 	}
 	
 });
@@ -26799,7 +26825,7 @@ var palette = require('./palette.js'),
 
 var mapChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height = width/1.457;
+	var height =  width/1.457 - 50;
 	var data = props.data;
 
 	d3.selection.prototype.moveToFront = function() {
@@ -26847,7 +26873,7 @@ var mapChart = function(dom, props) {
 			.attr("id", "mapvisualization")
 			.call(zoom)
 			.style("position","absolute")
-			.style("top",rect.top + 105)
+			.style("top",rect.top)
 			.style("left",rect.left);
 
 		var g = svg.append("g")
@@ -27122,8 +27148,7 @@ var streamChart = function(dom, props) {
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
 	var width = dom.offsetWidth - margin.left - margin.right;
-	var height = document.getElementById("toolbar").offsetHeight
-				 - margin.top - margin.bottom;
+	var height =  width/1.457 - margin.top - margin.bottom;
 
 	var mouseOffsetX = document.getElementById("toolbar").offsetWidth;
 	var mouseOffsetY = 100;
@@ -27278,7 +27303,7 @@ var palette = require('./palette.js'),
 
 var wordChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height = document.getElementById("toolbar").offsetHeight;
+	var height =  width/1.457 - 50;
 	var fill = d3.scale.category20();
 	var data = props.data;
 

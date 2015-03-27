@@ -3,7 +3,7 @@ var palette = require('./palette.js'),
 
 var mapChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height = width/1.457;
+	var height =  width/1.457 - 50;
 	var data = props.data;
 
 	d3.selection.prototype.moveToFront = function() {
@@ -51,7 +51,7 @@ var mapChart = function(dom, props) {
 			.attr("id", "mapvisualization")
 			.call(zoom)
 			.style("position","absolute")
-			.style("top",rect.top + 105)
+			.style("top",rect.top)
 			.style("left",rect.left);
 
 		var g = svg.append("g")

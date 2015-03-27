@@ -3,7 +3,7 @@ var palette = require('./palette.js'),
 
 var wordChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height = document.getElementById("toolbar").offsetHeight;
+	var height =  width/1.457 - 50;
 	var fill = d3.scale.category20();
 	var data = props.data;
 

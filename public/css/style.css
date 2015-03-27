@@ -2647,8 +2647,7 @@ div#toolbar {
   float: left;
 }
 div#toolbar .mui-paper-container p,
-div#toolbar .mui-paper-container .mui-drop-down-menu,
-div#toolbar .mui-paper-container .mui-checkbox * {
+div#toolbar .mui-paper-container .mui-drop-down-menu {
   margin-left: 5%;
 }
 .mui-date-picker {
@@ -2668,8 +2667,19 @@ div#toolbar .mui-paper-container .mui-checkbox * {
   width: 100px;
   margin-left: 8%;
 }
-#vis-button {
+.tool-button {
   margin-left: 20%;
+}
+.mui-enhanced-switch-input {
+  text-align: left;
+}
+div#check1col {
+  width: 50%;
+  float: left;
+}
+div#check2col {
+  width: 50%;
+  float: right;
 }
 div#visualization {
   margin-top: 40px;
