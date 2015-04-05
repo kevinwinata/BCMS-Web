@@ -1,6 +1,7 @@
 var React = require('react'),
 	mui = require('material-ui'),
 	Paper = mui.Paper,
+	pieChart = require('../utils/piechart.js'),
 	mapChart = require('../utils/mapchart.js'),
 	streamChart = require('../utils/streamchart.js'),
 	wordChart = require('../utils/wordchart.js');
@@ -32,12 +33,15 @@ var Visualization = React.createClass({
 		}
 		switch(this.props.mode) {
 			case 0: 
-				mapChart(dom, this.props);
+				pieChart(dom, this.props);
 				break;
 			case 1: 
-				streamChart(dom, this.props);
+				mapChart(dom, this.props);
 				break;
 			case 2: 
+				streamChart(dom, this.props);
+				break;
+			case 3: 
 				wordChart(dom, this.props);
 				break;
 		}
@@ -54,12 +58,15 @@ var Visualization = React.createClass({
 		var dom =  this.getDOMNode();
 		switch(this.props.mode) {
 			case 0: 
-				mapChart(dom, this.props);
+				pieChart(dom, this.props);
 				break;
 			case 1: 
-				streamChart(dom, this.props);
+				mapChart(dom, this.props);
 				break;
 			case 2: 
+				streamChart(dom, this.props);
+				break;
+			case 3: 
 				wordChart(dom, this.props);
 				break;
 		}

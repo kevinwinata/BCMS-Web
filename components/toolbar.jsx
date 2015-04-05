@@ -9,13 +9,14 @@ var React = require('react'),
 	Checkbox = mui.Checkbox,
 	Dialog = mui.Dialog,
 	menuItems = [
+		{ payload: '0', text: 'Dinas' },
 		{ payload: '1', text: 'Peta' },
 		{ payload: '2', text: 'Arus' },
 		{ payload: '3', text: 'Kata' }
 	],
 	selectedItems = 0,
 	today = new Date(),
-	nextweek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+	prevweek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
 var Toolbar = React.createClass({
 
@@ -25,9 +26,9 @@ var Toolbar = React.createClass({
 				<p>Mode Visualisasi : </p>
 				<DropDownMenu menuItems={menuItems} onChange={this.modeChange}/>
 				<p>Dari Tanggal :  </p>
-				<DatePicker ref="dateFrom" defaultDate={today} formatDate={this.dformat}  />
+				<DatePicker ref="dateFrom" defaultDate={prevweek} formatDate={this.dformat} mode="landscape" />
 				<p>Hingga Tanggal : </p>
-				<DatePicker ref="dateTo" defaultDate={nextweek} formatDate={this.dformat} />
+				<DatePicker ref="dateTo" defaultDate={today} formatDate={this.dformat} mode="landscape" />
 				<p>Dinas : </p>
 				<div className="tool-button">
 				<FlatButton label="Pilih Dinas" onTouchTap={this.openCheckDialog}/>
@@ -114,18 +115,23 @@ var Toolbar = React.createClass({
 
 		switch(selectedItems) {
 			case 0:
-				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/agencies', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(<Visualization mode={0} data={data}/>, dom);
 				});
 				break;
 			case 1:
-				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(<Visualization mode={1} data={data}/>, dom);
 				});
 				break;
 			case 2:
-				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(<Visualization mode={2} data={data}/>, dom);
+				});
+				break;
+			case 3:
+				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+					React.render(<Visualization mode={3} data={data}/>, dom);
 				});
 				break;
 		}

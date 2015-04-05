@@ -23,29 +23,30 @@ var Home = React.createClass({displayName: "Home",
 		return (
 			React.createElement(Paper, {zDepth: 1}, 
 				React.createElement("div", {id: "home-text"}, 
-					React.createElement("h3", null, "Selamat datang di Bandung Complaint Management System!"), 
-					React.createElement("p", null, "Halaman web ini menyediakan visualisasi untuk keluhan yang masuk" + ' ' +
+					React.createElement("h3", null, "Selamat datang di layanan visualisasi BCMS!"), 
+					React.createElement("p", null, "Layanan ini menyediakan visualisasi untuk keluhan yang masuk" + ' ' +
 					"pada akun twitter dinas-dinas pemerintah kota Bandung."), 
 					React.createElement("p", null, "Akun-akun twitter pemerintah tersebut adalah : "), 
 					React.createElement("p", null, 
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
+						React.createElement("a", {href: "https://twitter.com/bkdkotabandung"}, "@bkdkotabandung"), ",",  
+						React.createElement("a", {href: "https://twitter.com/bplh_kotabdg"}, "@bplh_kotabdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/disbudpar_bdg"}, "@disbudpar_bdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/dbmpkotabdg"}, "@dbmpkotabdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/rescue_damkar"}, "@rescue_damkar"), ",",  
+						React.createElement("a", {href: "https://twitter.com/bandung_dinkes"}, "@bandung_dinkes"), ",",  
+						React.createElement("a", {href: "https://twitter.com/diskominfobdg"}, "@diskominfobdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/disyanjakkotbdg"}, "@disyanjakkotbdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/diskamtam"}, "@diskamtam"), ",",  
 						React.createElement("br", null), 
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl"), ",",  
-						React.createElement("a", {href: "https://twitter.com/asdfghjkl"}, "@asdfghjkl")
+						React.createElement("a", {href: "https://twitter.com/disdik_bandung"}, "@disdik_bandung"), ",",  
+						React.createElement("a", {href: "https://twitter.com/dishub_kotabdg"}, "@dishub_kotabdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/Dinsos_BDG"}, "@Dinsos_BDG"), ",",  
+						React.createElement("a", {href: "https://twitter.com/distarcipBDG"}, "@distarcipBDG"), ",",  
+						React.createElement("a", {href: "https://twitter.com/pdamtirtawening"}, "@pdamtirtawening"), ",",  
+						React.createElement("a", {href: "https://twitter.com/PDKEBERSIHAN"}, "@PDKEBERSIHAN"), ",",  
+						React.createElement("a", {href: "https://twitter.com/PD_PB_Bandung"}, "@PD_PB_Bandung"), ",",  
+						React.createElement("a", {href: "https://twitter.com/Satpolppbdg"}, "@Satpolppbdg"), ",",  
+						React.createElement("a", {href: "https://twitter.com/ridwankamil"}, "@ridwankamil")
 					), 
 					React.createElement("p", null, "Anda dapat memilih dari 3 mode visualisasi : "), 
 					React.createElement("ul", {id: "mode-list"}, 
@@ -156,13 +157,14 @@ var React = require('react'),
 	Checkbox = mui.Checkbox,
 	Dialog = mui.Dialog,
 	menuItems = [
+		{ payload: '0', text: 'Dinas' },
 		{ payload: '1', text: 'Peta' },
 		{ payload: '2', text: 'Arus' },
 		{ payload: '3', text: 'Kata' }
 	],
 	selectedItems = 0,
 	today = new Date(),
-	nextweek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+	prevweek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
 var Toolbar = React.createClass({displayName: "Toolbar",
 
@@ -172,9 +174,9 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 				React.createElement("p", null, "Mode Visualisasi : "), 
 				React.createElement(DropDownMenu, {menuItems: menuItems, onChange: this.modeChange}), 
 				React.createElement("p", null, "Dari Tanggal :  "), 
-				React.createElement(DatePicker, {ref: "dateFrom", defaultDate: today, formatDate: this.dformat}), 
+				React.createElement(DatePicker, {ref: "dateFrom", defaultDate: prevweek, formatDate: this.dformat, mode: "landscape"}), 
 				React.createElement("p", null, "Hingga Tanggal : "), 
-				React.createElement(DatePicker, {ref: "dateTo", defaultDate: nextweek, formatDate: this.dformat}), 
+				React.createElement(DatePicker, {ref: "dateTo", defaultDate: today, formatDate: this.dformat, mode: "landscape"}), 
 				React.createElement("p", null, "Dinas : "), 
 				React.createElement("div", {className: "tool-button"}, 
 				React.createElement(FlatButton, {label: "Pilih Dinas", onTouchTap: this.openCheckDialog})
@@ -261,18 +263,23 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 
 		switch(selectedItems) {
 			case 0:
-				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/agencies', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(React.createElement(Visualization, {mode: 0, data: data}), dom);
 				});
 				break;
 			case 1:
-				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(React.createElement(Visualization, {mode: 1, data: data}), dom);
 				});
 				break;
 			case 2:
-				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
 					React.render(React.createElement(Visualization, {mode: 2, data: data}), dom);
+				});
+				break;
+			case 3:
+				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
+					React.render(React.createElement(Visualization, {mode: 3, data: data}), dom);
 				});
 				break;
 		}
@@ -294,6 +301,7 @@ module.exports = Toolbar;
 var React = require('react'),
 	mui = require('material-ui'),
 	Paper = mui.Paper,
+	pieChart = require('../utils/piechart.js'),
 	mapChart = require('../utils/mapchart.js'),
 	streamChart = require('../utils/streamchart.js'),
 	wordChart = require('../utils/wordchart.js');
@@ -325,12 +333,15 @@ var Visualization = React.createClass({displayName: "Visualization",
 		}
 		switch(this.props.mode) {
 			case 0: 
-				mapChart(dom, this.props);
+				pieChart(dom, this.props);
 				break;
 			case 1: 
-				streamChart(dom, this.props);
+				mapChart(dom, this.props);
 				break;
 			case 2: 
+				streamChart(dom, this.props);
+				break;
+			case 3: 
 				wordChart(dom, this.props);
 				break;
 		}
@@ -347,12 +358,15 @@ var Visualization = React.createClass({displayName: "Visualization",
 		var dom =  this.getDOMNode();
 		switch(this.props.mode) {
 			case 0: 
-				mapChart(dom, this.props);
+				pieChart(dom, this.props);
 				break;
 			case 1: 
-				streamChart(dom, this.props);
+				mapChart(dom, this.props);
 				break;
 			case 2: 
+				streamChart(dom, this.props);
+				break;
+			case 3: 
 				wordChart(dom, this.props);
 				break;
 		}
@@ -367,7 +381,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../utils/mapchart.js":242,"../utils/streamchart.js":244,"../utils/wordchart.js":245,"material-ui":7,"react":240}],6:[function(require,module,exports){
+},{"../utils/mapchart.js":242,"../utils/piechart.js":244,"../utils/streamchart.js":245,"../utils/wordchart.js":246,"material-ui":7,"react":240}],6:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26881,7 +26895,7 @@ var palette = require('./palette.js'),
 
 var mapChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height =  width/1.457 - 50;
+	var height =  width/1.46 - 50;
 	var data = props.data;
 
 	d3.selection.prototype.moveToFront = function() {
@@ -26946,10 +26960,10 @@ var mapChart = function(dom, props) {
 				return "c"+i;
 			})
 			.attr("cx", function(d) {
-				return d[0];
+				return d[0]*width;
 			})
 			.attr("cy", function(d) {
-				return d[1];
+				return d[1]*height;
 			})
 			.attr("r", function(d) {
 				return d[2]/10;
@@ -26984,10 +26998,10 @@ var mapChart = function(dom, props) {
 			})
 			.attr("text-anchor", "middle")
 			.attr("x", function(d, i) {
-				return d[0];
+				return d[0]*width;
 			})
 			.attr("y", function(d) {
-				return d[1];
+				return d[1]*height;
 			})
 			.attr("font-family", "Roboto")
 			.attr("font-size", function(d) {
@@ -27194,6 +27208,91 @@ module.exports = palette;
 },{}],244:[function(require,module,exports){
 var palette = require('./palette.js');
 
+var pieChart = function(dom, props) {
+	var width = dom.offsetWidth;
+	var height =  width/1.46;
+	var data = props.data;
+
+	var color = d3.scale.ordinal()
+		.range(palette.getSwatch(7));
+	
+	var arc = d3.svg.arc()
+		.outerRadius(height/2 - 39)
+		.innerRadius(height/2 - 200);
+	
+	var pie = d3.layout.pie()
+		.sort(null)
+		.value(function(d) { return d[1]; });
+
+	var svg = d3.select(dom).append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+	var piechart = svg.append("g")
+		.attr("id", "piechart")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	
+	var g = piechart.selectAll(".arc")
+		.data(pie(data))
+		.enter().append("g")
+		.attr("class", "arc");
+
+	g.append("path")
+		.attr("d", arc)
+		.style("fill", function(d) { return color(d.data[0]); })
+		.attr("fill-opacity", 0);
+
+	g.selectAll("path")	
+		.transition()
+		.duration(1000)
+		.attr("fill-opacity", 1);
+
+	g.append("text")
+		.transition()
+		.duration(1000)
+		.attr("transform", function(d) { 
+			var c = arc.centroid(d);
+			return "translate(" + c[0]*1.3 +"," + c[1]*1.5 + ")"; 
+		})
+		.attr("dy", ".35em")
+		.style("text-anchor", function(d,i) {
+			if(i > data.length/2) return "end";
+			else return "start";
+		})
+		.text(function(d) { return getAgenciesName(d.data[0]); });
+
+
+	function getAgenciesName(i) {
+		switch(i) {
+			case 0: return "Badan Kepegawaian Daerah";
+			case 1: return "Badan Pengelolaan Lingkungan Hidup";
+			case 2: return "Dinas Bina Marga dan Pengairan";
+			case 3: return "Dinas Kebakaran";
+			case 4: return "Dinas Kebudayaan dan Pariwisata";
+			case 5: return "Dinas Kesehatan";
+			case 6: return "Dinas Komunikasi dan Informatika";
+			case 7: return "Dinas Pelayanan Pajak";
+			case 8: return "Dinas Pemakaman dan Pertamanan";
+			case 9: return "Dinas Pendidikan";
+			case 10: return "Dinas Perhubungan";
+			case 11: return "Dinas Sosial";
+			case 12: return "Dinas Tata Ruang dan Cipta Karya";
+			case 13: return "PDAM Tirtawening";
+			case 14: return "PD Kebersihan";
+			case 15: return "PD Pasar Bermartabat";
+			case 16: return "Satpol PP";
+		}
+	}
+}
+
+module.exports = pieChart;
+
+},{"./palette.js":243}],245:[function(require,module,exports){
+var palette = require('./palette.js');
+
 var streamChart = function(dom, props) {
 	var data = props.data;
 
@@ -27204,7 +27303,7 @@ var streamChart = function(dom, props) {
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
 	var width = dom.offsetWidth - margin.left - margin.right;
-	var height =  width/1.457 - margin.top - margin.bottom;
+	var height =  width/1.46 - margin.top - margin.bottom;
 
 	var mouseOffsetX = document.getElementById("toolbar").offsetWidth;
 	var mouseOffsetY = 100;
@@ -27353,21 +27452,22 @@ var streamChart = function(dom, props) {
 
 module.exports = streamChart;
 
-},{"./palette.js":243}],245:[function(require,module,exports){
+},{"./palette.js":243}],246:[function(require,module,exports){
 var palette = require('./palette.js'),
 	cloud = require('./d3.layout.cloud.js');
 
 var wordChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height =  width/1.457 - 50;
+	var height =  width/1.46 - 50;
 	var fill = d3.scale.category20();
 	var data = props.data;
 
 	cloud().size([width, height])
 			.words(data.map(function(d) {
-				return {text: d[0], size: d[1]*10 };
+				return {text: d[0], size: Math.log(d[1])*20 };
 			}))
 			.padding(5)
+			.rotate(function() { return ~~0; })
 			.font("Roboto")
 			.fontSize(function(d) { return d.size; })
 			.on("end", draw)
@@ -27401,100 +27501,9 @@ var wordChart = function(dom, props) {
 			})
 			.attr("text-anchor", "middle")
 			.attr("transform", function(d) {
-				return "translate(" + [d.x, d.y] + ")";
+				return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 			})
-			.text(function(d) { return d.text; });
-
-		g.selectAll("text")
-			.on("click", drawLines);
-
-		function drawLines() {
-			var self = d3.select(this);
-			var id = self.attr("id");
-			var clickedWord = parseInt(id.substring(1,id.length));
-			var dat = data[clickedWord][2];
-
-			svg.append("rect")
-				.attr("id", "rect")
-				.attr("width", width)
-				.attr("height", height)
-				.attr("x", 0)
-				.attr("y", 0)
-				.attr("fill", "#FFFFFF")
-				.attr("fill-opacity", 0.95)
-				.on("click", function(){ 
-					var xAxis = d3.select("#xAxis");
-					xAxis.transition()
-						.duration(500)
-						.attr("fill-opacity", 0)
-						.each('end', function(){ this.remove() });
-					var yAxis = d3.select("#yAxis");
-					yAxis.transition()
-						.duration(500)
-						.attr("fill-opacity", 0)
-						.each('end', function(){ this.remove() });
-					var path = d3.select("#path");
-					path.transition()
-						.duration(500)
-						.attr("fill-opacity", 0)
-						.each('end', function(){ this.remove() });
-					var rect = d3.select("#rect");
-					rect.transition()
-						.duration(500)
-						.attr("fill-opacity", 0)
-						.each('end', function(){ this.remove() });
-				});
-
-			var parseDate = d3.time.format("%m/%d/%y").parse;
-
-			var x = d3.time.scale()
-				.range([30, width-30]);
-
-			var y = d3.scale.linear()
-				.range([height-30, 30]);
-
-			var xAxis = d3.svg.axis()
-				.scale(x)
-				.orient("bottom");
-
-			var yAxis = d3.svg.axis()
-				.scale(y)
-				.orient("right");
-
-			var line = d3.svg.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return y(d.value); });
-
-			dat.forEach(function(d) {
-				d.date = parseDate(d.date);
-				d.value = +d.value;
-			});
-
-			x.domain(d3.extent(dat, function(d) { return d.date; }));
-			y.domain([0,d3.max(dat, function(d) { return d.value; })]);
-
-			svg.append("g")
-					.attr("id", "xAxis")
-					.attr("class", "x axis")
-					.call(xAxis);
-
-			svg.append("g")
-					.attr("id", "yAxis")
-					.attr("class", "y axis")
-					.call(yAxis)
-				.append("text")
-					.attr("transform", "rotate(-90)")
-					.attr("y", 6)
-					.attr("dy", ".71em")
-					.style("text-anchor", "end")
-
-			svg.append("path")
-					.datum(dat)
-					.attr("id", "path")
-					.attr("class", "line")
-					.attr("d", line);
-
-		}
+			.text(function(d) { return d.text; });	
 	}
 }
 

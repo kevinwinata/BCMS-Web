@@ -3,7 +3,7 @@ var palette = require('./palette.js'),
 
 var mapChart = function(dom, props) {
 	var width = dom.offsetWidth;
-	var height =  width/1.457 - 50;
+	var height =  width/1.46 - 50;
 	var data = props.data;
 
 	d3.selection.prototype.moveToFront = function() {
@@ -68,10 +68,10 @@ var mapChart = function(dom, props) {
 				return "c"+i;
 			})
 			.attr("cx", function(d) {
-				return d[0];
+				return d[0]*width;
 			})
 			.attr("cy", function(d) {
-				return d[1];
+				return d[1]*height;
 			})
 			.attr("r", function(d) {
 				return d[2]/10;
@@ -106,10 +106,10 @@ var mapChart = function(dom, props) {
 			})
 			.attr("text-anchor", "middle")
 			.attr("x", function(d, i) {
-				return d[0];
+				return d[0]*width;
 			})
 			.attr("y", function(d) {
-				return d[1];
+				return d[1]*height;
 			})
 			.attr("font-family", "Roboto")
 			.attr("font-size", function(d) {

@@ -10,7 +10,7 @@ var streamChart = function(dom, props) {
 	var format = d3.time.format("%m/%d/%y");
 	var margin = {top: 20, right: 40, bottom: 30, left: 30};
 	var width = dom.offsetWidth - margin.left - margin.right;
-	var height =  width/1.457 - margin.top - margin.bottom;
+	var height =  width/1.46 - margin.top - margin.bottom;
 
 	var mouseOffsetX = document.getElementById("toolbar").offsetWidth;
 	var mouseOffsetY = 100;
