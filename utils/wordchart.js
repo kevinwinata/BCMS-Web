@@ -9,7 +9,7 @@ var wordChart = function(dom, props) {
 
 	cloud().size([width, height])
 			.words(data.map(function(d) {
-				return {text: d[0], size: Math.log(d[1])*20 };
+				return {text: d._id, size: Math.log(d.count)*20 };
 			}))
 			.padding(5)
 			.rotate(function() { return ~~0; })
