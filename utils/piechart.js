@@ -14,7 +14,7 @@ var pieChart = function(dom, props) {
 	
 	var pie = d3.layout.pie()
 		.sort(null)
-		.value(function(d) { return d[1]; });
+		.value(function(d) { return d.count; });
 
 	var svg = d3.select(dom).append("svg")
 		.attr("width", width)
@@ -34,7 +34,7 @@ var pieChart = function(dom, props) {
 
 	g.append("path")
 		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data[0]); })
+		.style("fill", function(d) { return color(d.data._id); })
 		.attr("fill-opacity", 0);
 
 	g.selectAll("path")	
@@ -54,7 +54,7 @@ var pieChart = function(dom, props) {
 			if(i > data.length/2) return "end";
 			else return "start";
 		})
-		.text(function(d) { return getAgenciesName(d.data[0]); });
+		.text(function(d) { return getAgenciesName(d.data._id); });
 
 
 	function getAgenciesName(i) {

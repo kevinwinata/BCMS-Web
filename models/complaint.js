@@ -4,7 +4,7 @@ var complaintSchema = mongoose.Schema({
 	id: String,
 	text: String,
 	timestamp: Number,
-	destinations: [Boolean],
+	destinations: [Number],
 	entities: [
 		{ 
 			name: String, 

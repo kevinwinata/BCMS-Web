@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '#Bandung CMS' });
+	res.render('index', { title: '#Bandung CMS' });
 });
 
 module.exports = router;

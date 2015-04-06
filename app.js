@@ -13,8 +13,6 @@ var stream = require('./routes/stream');
 var word = require('./routes/word');
 
 mongoose.connect('mongodb://localhost/bcms');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
 
 var app = express();
 
@@ -29,12 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Make our db accessible to our router
-app.use(function(req,res,next){
-	req.db = db;
-	next();
-});
 
 app.use('/', routes);
 app.use('/agencies', agencies);
