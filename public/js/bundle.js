@@ -26960,13 +26960,17 @@ var mapChart = function(dom, props) {
 				return "c"+i;
 			})
 			.attr("cx", function(d) {
-				return d[0]*width;
+				return d._id.latitude/-6.9*width;
 			})
 			.attr("cy", function(d) {
-				return d[1]*height;
+				return d._id.longitude/107*height;
 			})
 			.attr("r", function(d) {
-				return d[2]/10;
+				var total = 0;
+				for (var i = 0; i < d.topics.length; i++)
+					total += d.topics[i].count;
+				alert(total);
+				return total;
 			})
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
@@ -26998,14 +27002,14 @@ var mapChart = function(dom, props) {
 			})
 			.attr("text-anchor", "middle")
 			.attr("x", function(d, i) {
-				return d[0]*width;
+				return d._id.latitude/-6.9*width;
 			})
 			.attr("y", function(d) {
-				return d[1]*height;
+				return d._id.longitude/107*height;
 			})
 			.attr("font-family", "Roboto")
 			.attr("font-size", function(d) {
-				return (20-(150/d[2]))+"px"
+				return 20+"px"
 			})
 			.attr("fill", "white");
 
@@ -27064,9 +27068,9 @@ var mapChart = function(dom, props) {
 			
 			var pie = d3.layout.pie()
 				.sort(null)
-				.value(function(d) { return d[1]; });
+				.value(function(d) { return d.topic; });
 
-			var dat = data[clickedCircle][4];
+			var dat = data[clickedCircle].topics;
 
 			var piechart = svg.append("g")
 				.attr("id", "piechart")
@@ -27082,13 +27086,13 @@ var mapChart = function(dom, props) {
 
 			pg.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) { return color(d.data[0]); });
+				.style("fill", function(d) { return color(d.data.count); });
 
 			pg.append("text")
 				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
 				.attr("dy", ".35em")
 				.style("text-anchor", "middle")
-				.text(function(d) { return d.data[0]; });
+				.text(function(d) { return d.data.count; });
 		 }
 
 		function circleOver() {
