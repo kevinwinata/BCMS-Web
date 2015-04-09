@@ -68,16 +68,15 @@ var mapChart = function(dom, props) {
 				return "c"+i;
 			})
 			.attr("cx", function(d) {
-				return d._id.latitude/-6.9*width;
+				return (d._id.latitude+6.834286) / (-0.141812) * width;
 			})
 			.attr("cy", function(d) {
-				return d._id.longitude/107*height;
+				return (d._id.longitude-107.501859) / (0.20846) * height;
 			})
 			.attr("r", function(d) {
 				var total = 0;
 				for (var i = 0; i < d.topics.length; i++)
 					total += d.topics[i].count;
-				alert(total);
 				return total;
 			})
 			.attr("fill", function(d,i) {
@@ -96,30 +95,33 @@ var mapChart = function(dom, props) {
 				return i * 300 / data.length;
 			})
 			.duration(1000)
-			.attr("r", function(d,i) {
-				return data[i][2];
+			.attr("r", function(d, i) {
+				return Math.log(d3.select("#c"+i).attr("r")*3)*20;
 			});
-
 
 		g.selectAll("t")
 			.data(data)
 			.enter()
 			.append("text")
 			.text(function(d) {
-				return d[3];
+				return d._id.name;
 			})
 			.attr("text-anchor", "middle")
-			.attr("x", function(d, i) {
-				return d._id.latitude/-6.9*width;
+			.attr("x", function(d) {
+				return (d._id.latitude+6.834286) / (-0.141812) * width;
 			})
 			.attr("y", function(d) {
-				return d._id.longitude/107*height;
+				return (d._id.longitude-107.501859) / (0.20846) * height;
 			})
 			.attr("font-family", "Roboto")
-			.attr("font-size", function(d) {
-				return 20+"px"
+			.attr("font-size", function(d,i) {
+				return d3.select("#c"+i).attr("r")+5+"px"
 			})
-			.attr("fill", "white");
+			.attr("fill", "white")
+			.style("text-shadow", "-1px -1px 0 #000")
+			.style("text-shadow", "1px -1px 0 #000")
+			.style("text-shadow", "-1px 1px 0 #000")
+			.style("text-shadow", "1px 1px 0 #000");
 
 		function zoomed() {
 			var t = d3.event.translate,
@@ -176,7 +178,7 @@ var mapChart = function(dom, props) {
 			
 			var pie = d3.layout.pie()
 				.sort(null)
-				.value(function(d) { return d.topic; });
+				.value(function(d) { return d.count; });
 
 			var dat = data[clickedCircle].topics;
 
@@ -200,7 +202,7 @@ var mapChart = function(dom, props) {
 				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
 				.attr("dy", ".35em")
 				.style("text-anchor", "middle")
-				.text(function(d) { return d.data.count; });
+				.text(function(d) { return d.data.topic; });
 		 }
 
 		function circleOver() {

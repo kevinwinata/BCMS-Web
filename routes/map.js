@@ -18,6 +18,7 @@ router.get('/', function(req, res) {
 		{
 			$match : { 
 				"topic" : { $ne: "" },
+				"location.name" : { $ne: "" },
 				$and : [
 					{ "timestamp": { $gte: from } },
 					{ "timestamp": { $lte: to } }
@@ -51,9 +52,6 @@ router.get('/', function(req, res) {
 					"count": "$count"  
 				} }
 			}
-		},
-		{
-			$limit : 10
 		}], 
 		function (err, result) {
 			if (err) return console.log(err);
