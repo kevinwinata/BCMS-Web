@@ -26960,16 +26960,23 @@ var mapChart = function(dom, props) {
 				return "c"+i;
 			})
 			.attr("cx", function(d) {
-				return (d._id.latitude+6.834286) / (-0.141812) * width;
+				if(d._id.latitude != 0 && d._id.longitude != 0) 
+					return (d._id.latitude+6.834286) / (-0.141812) * width;
+				else
+					return width-50;
 			})
 			.attr("cy", function(d) {
-				return (d._id.longitude-107.501859) / (0.20846) * height;
+				if(d._id.latitude != 0 && d._id.longitude != 0) 
+					return (d._id.longitude-107.501859) / (0.20846) * height;
+				else
+					return 50;
 			})
 			.attr("r", function(d) {
-				var total = 0;
-				for (var i = 0; i < d.topics.length; i++)
-					total += d.topics[i].count;
-				return total;
+				// var total = 0;
+				// for (var i = 0; i < d.topics.length; i++)
+				// 	total += d.topics[i].count;
+				// return total;
+				return d.total;
 			})
 			.attr("fill", function(d,i) {
 				return palette.getRandomMid(i);
@@ -26990,30 +26997,6 @@ var mapChart = function(dom, props) {
 			.attr("r", function(d, i) {
 				return Math.log(d3.select("#c"+i).attr("r")*3)*20;
 			});
-
-		g.selectAll("t")
-			.data(data)
-			.enter()
-			.append("text")
-			.text(function(d) {
-				return d._id.name;
-			})
-			.attr("text-anchor", "middle")
-			.attr("x", function(d) {
-				return (d._id.latitude+6.834286) / (-0.141812) * width;
-			})
-			.attr("y", function(d) {
-				return (d._id.longitude-107.501859) / (0.20846) * height;
-			})
-			.attr("font-family", "Roboto")
-			.attr("font-size", function(d,i) {
-				return d3.select("#c"+i).attr("r")+5+"px"
-			})
-			.attr("fill", "white")
-			.style("text-shadow", "-1px -1px 0 #000")
-			.style("text-shadow", "1px -1px 0 #000")
-			.style("text-shadow", "-1px 1px 0 #000")
-			.style("text-shadow", "1px 1px 0 #000");
 
 		function zoomed() {
 			var t = d3.event.translate,
@@ -27098,15 +27081,44 @@ var mapChart = function(dom, props) {
 		 }
 
 		function circleOver() {
-			d3.select(this)
-				.attr("fill-opacity", 1)
+			var self = d3.select(this),
+				id = self.attr("id"),
+				i = parseInt(id.substring(1,id.length));
+			self.attr("fill-opacity", 1)
 				.attr("stroke-width", "2px");
+			g.append("text")
+				.attr("id", "loctext")
+				.text(data[i]._id.name)
+				.attr("text-anchor", "middle")
+				.attr("x", function() {
+					if(data[i]._id.latitude != 0 && data[i]._id.longitude != 0) 
+						return (data[i]._id.latitude+6.834286) / (-0.141812) * width;
+					else
+						return width-50;
+				})
+				.attr("y", function() {
+					if(data[i]._id.latitude != 0 && data[i]._id.longitude != 0) 
+						return (data[i]._id.longitude-107.501859) / (0.20846) * height;
+					else
+						return 50;
+				})
+				.attr("font-family", "Roboto")
+				.attr("font-size", "15px")
+				.attr("fill", "white")
+				.style("pointer-events","none")
+				.style("-webkit-text-stroke-width","1px")
+   				.style("-webkit-text-stroke-color","black")
+				.style("text-shadow", "-1px -1px 0 #000")
+				.style("text-shadow", "1px -1px 0 #000")
+				.style("text-shadow", "-1px 1px 0 #000")
+				.style("text-shadow", "1px 1px 0 #000");
 		}
 
 		function circleOut() {
 			d3.select(this)
 				.attr("fill-opacity", 0.7)
 				.attr("stroke-width", "0px");
+			d3.select("#loctext").remove();
 		}
 
 		function rectClick() {
