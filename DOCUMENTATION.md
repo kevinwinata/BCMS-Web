@@ -47,39 +47,42 @@ That schema is corresponded with the schema of documents stored within `complain
 ## Routes
 
 * `/index` - Main page.
-```json
 * `/agencies` - Returns JSON file with the following schema : 
+```json
 {
-	"_id":<agencies number>,
-	"count":<number of complaints addressed to corresponding agencies> 
+	"_id": "<agencies number>",
+	"count": "<number of complaints addressed to corresponding agencies>" 
 }
 ```
 * `/map` - Returns JSON file with the following schema : 
+```json
 {
 	"_id": {
-		"name": <location name>,
-		"latitude":0,
-		"longitude":0
+		"name": "<location name>",
+		"latitude": "<location latitude>",
+		"longitude": "<location longitude>"
 	},
 	"topics": [
 		{
-			"topic":<topic name>,
-			"count":<number of the topic within a particular location>
+			"topic": "<topic name>",
+			"count": "<number of the topic within a particular location>"
 		}, ... 
 	]
 }
 ```
 * `/stream` - Returns JSON file with the following schema : 
+```json
 {
-	"_id": <topic name>,
-	"date": <a date that fall within requested date parameter>
-	"count":<how many times the topic has been addressed in the particular date>
+	"_id": "<topic name>",
+	"date": "<a date that fall within requested date parameter>"
+	"count":"<how many times the topic has been addressed in the particular date>"
 }
 ```
 * `/word` - Returns JSON file with the following schema : 
+```json
 {
-	"_id": <topic name>,
-	"count":<how many times the topic has been addressed>
+	"_id": "<topic name>",
+	"count":"<how many times the topic has been addressed>"
 }
 ```
 
