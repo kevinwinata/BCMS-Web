@@ -30,13 +30,21 @@ router.get('/', function(req, res) {
 		},
 		{
 			$group : {
-				"_id" : "$destinations",
+				"_id" : { 
+					"destinations": "$destinations",
+					"topic" : "$topic",
+				},
 				"count" : { "$sum" : 1 }
 			}
 		},
 		{
-			$match : { 
-				"_id": { $in: agencies } 
+			$group : {
+				"_id" : "$_id.destinations",
+				"topics" : { $push: { 
+					"topic": "$_id.topic", 
+					"count": "$count"  
+				} },
+				"total" : { "$sum" : "$count" }
 			}
 		}], 
 		function (err, result) {

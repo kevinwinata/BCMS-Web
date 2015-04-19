@@ -301,7 +301,7 @@ module.exports = Toolbar;
 var React = require('react'),
 	mui = require('material-ui'),
 	Paper = mui.Paper,
-	pieChart = require('../utils/piechart.js'),
+	agenciesChart = require('../utils/agencieschart.js'),
 	mapChart = require('../utils/mapchart.js'),
 	streamChart = require('../utils/streamchart.js'),
 	wordChart = require('../utils/wordchart.js');
@@ -333,7 +333,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 		}
 		switch(this.props.mode) {
 			case 0: 
-				pieChart(dom, this.props);
+				agenciesChart(dom, this.props);
 				break;
 			case 1: 
 				mapChart(dom, this.props);
@@ -358,7 +358,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 		var dom =  this.getDOMNode();
 		switch(this.props.mode) {
 			case 0: 
-				pieChart(dom, this.props);
+				agenciesChart(dom, this.props);
 				break;
 			case 1: 
 				mapChart(dom, this.props);
@@ -381,7 +381,7 @@ var Visualization = React.createClass({displayName: "Visualization",
 
 module.exports = Visualization;
 
-},{"../utils/mapchart.js":242,"../utils/piechart.js":244,"../utils/streamchart.js":245,"../utils/wordchart.js":246,"material-ui":7,"react":240}],6:[function(require,module,exports){
+},{"../utils/agencieschart.js":241,"../utils/mapchart.js":243,"../utils/streamchart.js":245,"../utils/wordchart.js":246,"material-ui":7,"react":240}],6:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -26485,6 +26485,66 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":109}],241:[function(require,module,exports){
+var palette = require('./palette.js');
+
+var agenciesChart = function(dom, props) {
+	var width = dom.offsetWidth;
+	var height = width/1.46;
+	var data = props.data;
+
+	var color = d3.scale.category20c();
+
+	var treemap = d3.layout.treemap()
+			.size([width, height])
+			.sticky(true)
+			.value(function(d) { return d.count; });
+
+	var div = d3.select("dom").append("div")
+			.attr("width", width)
+			.attr("height", height)
+			.style("position", "relative");
+
+	var node = div.datum(data).selectAll(".node")
+			.data(treemap.nodes)
+			.enter().append("div")
+			.attr("class", "node")
+			.call(position)
+			.style("background", function(d) { return d.topics ? color(d.topic) : null; })
+			.text(function(d) { return d.topics ? null : d.topic; });
+
+	function position() {
+		this.style("left", function(d) { return d.x + "px"; })
+			.style("top", function(d) { return d.y + "px"; })
+			.style("width", function(d) { return Math.max(0, d.dx-1) + "px"; })
+			.style("height", function(d) { return Math.max(0, d.dy-1) + "px"; });
+	}
+
+	function getAgenciesName(i) {
+		switch(i) {
+			case 0: return "Badan Kepegawaian Daerah";
+			case 1: return "Badan Pengelolaan Lingkungan Hidup";
+			case 2: return "Dinas Bina Marga dan Pengairan";
+			case 3: return "Dinas Kebakaran";
+			case 4: return "Dinas Kebudayaan dan Pariwisata";
+			case 5: return "Dinas Kesehatan";
+			case 6: return "Dinas Komunikasi dan Informatika";
+			case 7: return "Dinas Pelayanan Pajak";
+			case 8: return "Dinas Pemakaman dan Pertamanan";
+			case 9: return "Dinas Pendidikan";
+			case 10: return "Dinas Perhubungan";
+			case 11: return "Dinas Sosial";
+			case 12: return "Dinas Tata Ruang dan Cipta Karya";
+			case 13: return "PDAM Tirtawening";
+			case 14: return "PD Kebersihan";
+			case 15: return "PD Pasar Bermartabat";
+			case 16: return "Satpol PP";
+		}
+	}
+}
+
+module.exports = agenciesChart;
+
+},{"./palette.js":244}],242:[function(require,module,exports){
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
 
@@ -26889,7 +26949,7 @@ module.exports = require('./lib/React');
 })();
 
 
-},{}],242:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 var palette = require('./palette.js'),
 	img = new Image();
 
@@ -27145,7 +27205,7 @@ var mapChart = function(dom, props) {
 module.exports = mapChart;
 
 
-},{"./palette.js":243}],243:[function(require,module,exports){
+},{"./palette.js":244}],244:[function(require,module,exports){
 var palette = {
 	
 	colors: [
@@ -27223,92 +27283,7 @@ var palette = {
 };
 module.exports = palette;
 
-},{}],244:[function(require,module,exports){
-var palette = require('./palette.js');
-
-var pieChart = function(dom, props) {
-	var width = dom.offsetWidth;
-	var height =  width/1.46;
-	var data = props.data;
-
-	var color = d3.scale.ordinal()
-		.range(palette.getSwatch(7));
-	
-	var arc = d3.svg.arc()
-		.outerRadius(height/2 - 39)
-		.innerRadius(height/2 - 200);
-	
-	var pie = d3.layout.pie()
-		.sort(null)
-		.value(function(d) { return d.count; });
-
-	var svg = d3.select(dom).append("svg")
-		.attr("width", width)
-		.attr("height", height);
-
-	var piechart = svg.append("g")
-		.attr("id", "piechart")
-		.attr("width", width)
-		.attr("height", height)
-		.append("g")
-		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-	
-	var g = piechart.selectAll(".arc")
-		.data(pie(data))
-		.enter().append("g")
-		.attr("class", "arc");
-
-	g.append("path")
-		.attr("d", arc)
-		.style("fill", function(d) { return color(d.data._id); })
-		.attr("fill-opacity", 0);
-
-	g.selectAll("path")	
-		.transition()
-		.duration(1000)
-		.attr("fill-opacity", 1);
-
-	g.append("text")
-		.transition()
-		.duration(1000)
-		.attr("transform", function(d) { 
-			var c = arc.centroid(d);
-			return "translate(" + c[0]*1.3 +"," + c[1]*1.5 + ")"; 
-		})
-		.attr("dy", ".35em")
-		.style("text-anchor", function(d,i) {
-			if(i > data.length/2) return "end";
-			else return "start";
-		})
-		.text(function(d) { return getAgenciesName(d.data._id); });
-
-
-	function getAgenciesName(i) {
-		switch(i) {
-			case 0: return "Badan Kepegawaian Daerah";
-			case 1: return "Badan Pengelolaan Lingkungan Hidup";
-			case 2: return "Dinas Bina Marga dan Pengairan";
-			case 3: return "Dinas Kebakaran";
-			case 4: return "Dinas Kebudayaan dan Pariwisata";
-			case 5: return "Dinas Kesehatan";
-			case 6: return "Dinas Komunikasi dan Informatika";
-			case 7: return "Dinas Pelayanan Pajak";
-			case 8: return "Dinas Pemakaman dan Pertamanan";
-			case 9: return "Dinas Pendidikan";
-			case 10: return "Dinas Perhubungan";
-			case 11: return "Dinas Sosial";
-			case 12: return "Dinas Tata Ruang dan Cipta Karya";
-			case 13: return "PDAM Tirtawening";
-			case 14: return "PD Kebersihan";
-			case 15: return "PD Pasar Bermartabat";
-			case 16: return "Satpol PP";
-		}
-	}
-}
-
-module.exports = pieChart;
-
-},{"./palette.js":243}],245:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 var palette = require('./palette.js');
 
 var streamChart = function(dom, props) {
@@ -27470,7 +27445,7 @@ var streamChart = function(dom, props) {
 
 module.exports = streamChart;
 
-},{"./palette.js":243}],246:[function(require,module,exports){
+},{"./palette.js":244}],246:[function(require,module,exports){
 var palette = require('./palette.js'),
 	cloud = require('./d3.layout.cloud.js');
 
@@ -27528,4 +27503,4 @@ var wordChart = function(dom, props) {
 module.exports = wordChart;
 
 
-},{"./d3.layout.cloud.js":241,"./palette.js":243}]},{},[1]);
+},{"./d3.layout.cloud.js":242,"./palette.js":244}]},{},[1]);

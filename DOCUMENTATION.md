@@ -48,14 +48,14 @@ That schema is corresponded with the schema of documents stored within `complain
 
 * `/index` - Main page.
 * `/agencies` - Returns JSON file with the following schema : 
-```json
+```javascript
 {
 	"_id": "<agencies number>",
 	"count": "<number of complaints addressed to corresponding agencies>" 
 }
 ```
 * `/map` - Returns JSON file with the following schema : 
-```json
+```javascript
 {
 	"_id": {
 		"name": "<location name>",
@@ -65,13 +65,14 @@ That schema is corresponded with the schema of documents stored within `complain
 	"topics": [
 		{
 			"topic": "<topic name>",
-			"count": "<number of the topic within a particular location>"
+			"count": "<number of the topic within the particular location>"
 		}, ... 
-	]
+	],
+	"total": <number of all complaints within the particular location>
 }
 ```
 * `/stream` - Returns JSON file with the following schema : 
-```json
+```javascript
 {
 	"_id": "<topic name>",
 	"date": "<a date that fall within requested date parameter>"
@@ -79,7 +80,7 @@ That schema is corresponded with the schema of documents stored within `complain
 }
 ```
 * `/word` - Returns JSON file with the following schema : 
-```json
+```javascript
 {
 	"_id": "<topic name>",
 	"count":"<how many times the topic has been addressed>"
