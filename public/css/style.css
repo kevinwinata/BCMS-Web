@@ -2704,11 +2704,13 @@ ul#mode-list {
 }
 .node {
   border: solid 1px white;
-  font: 10px sans-serif;
-  line-height: 12px;
+  font: 15px Roboto;
+  line-height: 15px;
   overflow: hidden;
   position: absolute;
-  text-indent: 2px;
+  text-align: right;
+  display: table-cell;
+  vertical-align: text-bottom;
 }
 html,
 body,

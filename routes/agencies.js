@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
 		{
 			$group : {
 				"_id" : "$_id.destinations",
-				"topics" : { $push: { 
+				"children" : { $push: { 
 					"topic": "$_id.topic", 
 					"count": "$count"  
 				} },

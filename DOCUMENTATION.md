@@ -46,6 +46,7 @@ That schema is corresponded with the schema of documents stored within `complain
 
 ## Routes
 
+Route files are located in `/routes` directory.
 * `/index` - Main page.
 * `/agencies` - Returns JSON file with the following schema : 
 ```javascript
@@ -89,17 +90,19 @@ That schema is corresponded with the schema of documents stored within `complain
 
 ## React Components
 
-* Home - A div containing welcoming text.
-* Navbar - Navigation bar at the top.
-* Toolbar - Leftmost section, containing forms to change request parameter.
-* Visualization - Rightmost section, calls charting utilities to draw charts.
+Component files are located in `/components` directory as JSX files. They use `material-ui` components.
+* `Home` - A `Paper` containing welcoming text.
+* `Navbar` - Navigation bar at the top, containing a centered logo, 3 `FlatButton` - About, FAQ, and Contact -  that show `Dialog` with appropriate text, and a `FlatButton` that links to the source page.
+* `Toolbar` - Leftmost section, containing form to change request parameter. The form contains a `DropDown` to choose visualization modes, 2 `DatePicker` to choose interval, a `FlatButton` to show checkboxes for selecting agencies, and a `RaisedButton` that makes AJAX GET call to retrieve visualization data and then call `Visualization` component with corresponding `mode` propTypes. 
+* `Visualization` - Rightmost section, calls a corresponding charting function based on `mode` propTypes to draw charts.
 
-## Charting Utilities
+## Charting Functions
 
-* pieChart - A pie chart to visualize the distribution of complaints between agencies.
-* mapChart - A scatterplot placed on top of the map of Bandung to visualize the distribution of complaints based on mentioned location.
-* streamChart - A stream chart to visualize trends of most popular topics based on date.
-* wordChart - A word cloud to visualize popularity of various topics.
+These functions utilize D3.js library to build various visualizations based on queried data.
+* `pieChart` - A function located in `/utils/piechart.js`, is used to generate a pie chart to visualize the distribution of complaints between agencies.
+* `mapChart` - A function located in `/utils/mapchart.js`, is used to generate a scatterplot placed on top of the map of Bandung to visualize the distribution of complaints based on mentioned location.
+* `streamChart` - A function located in `/utils/streamchart.js`, is used to generate a stream chart to visualize trends of most popular topics based on date.
+* `wordChart` - A function located in `/utils/wordchart.js`, is used to generate a word cloud to visualize popularity of various topics.
 
 ## Views and Styles
 

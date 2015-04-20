@@ -22,7 +22,6 @@ var streamChart = function(dom, props) {
 		.style("background", "lightsteelblue")
 		.style("opacity", 0.8)
 		.style("border", "0px") 
- 		.style("border-radius", "8px")
 		.style("z-index", "20")
 		.style("visibility", "hidden");
 

@@ -26492,25 +26492,37 @@ var agenciesChart = function(dom, props) {
 	var height = width/1.46;
 	var data = props.data;
 
-	var color = d3.scale.category20c();
-
 	var treemap = d3.layout.treemap()
 			.size([width, height])
 			.sticky(true)
 			.value(function(d) { return d.count; });
 
-	var div = d3.select("dom").append("div")
-			.attr("width", width)
-			.attr("height", height)
-			.style("position", "relative");
+	var div = d3.select(dom).append("div")
+			.style("position", "relative")
+			.style("width", width + "px")
+			.style("height", height + "px");
 
-	var node = div.datum(data).selectAll(".node")
+	var root = { children : data };
+
+	var node = div.datum(root).selectAll(".node")
 			.data(treemap.nodes)
 			.enter().append("div")
 			.attr("class", "node")
 			.call(position)
-			.style("background", function(d) { return d.topics ? color(d.topic) : null; })
-			.text(function(d) { return d.topics ? null : d.topic; });
+			.style("background", function(d,i) { return d.children ? palette.getRandomMid(i) : null; })
+			.text(function(d) { return d.children ? getAgenciesName(d._id) : null; })
+			.on("mouseover", function(d) {
+				d3.select(this).append("text")
+					.attr("id", "tooltip")
+					.text(d.topic)
+					.attr("font-family", "Roboto")
+					.attr("font-size", "15px")
+					.attr("fill", "white")
+					.style("pointer-events","none");
+			})
+			.on("mouseout", function(d) {
+				d3.select("#tooltip").remove();
+			});
 
 	function position() {
 		this.style("left", function(d) { return d.x + "px"; })
@@ -27308,7 +27320,6 @@ var streamChart = function(dom, props) {
 		.style("background", "lightsteelblue")
 		.style("opacity", 0.8)
 		.style("border", "0px") 
- 		.style("border-radius", "8px")
 		.style("z-index", "20")
 		.style("visibility", "hidden");
 
