@@ -4,44 +4,76 @@ var agenciesChart = function(dom, props) {
 	var width = dom.offsetWidth;
 	var height = width/1.46;
 	var data = props.data;
+    var x = d3.scale.linear().range([0, width]);
+    var y = d3.scale.linear().range([0, height]);
 
-	var treemap = d3.layout.treemap()
-			.size([width, height])
-			.sticky(true)
+	var partition = d3.layout.partition()
+			//.size([width, height])
+			// .padding([10,0,0,0])
+			// .round(true)
+			// .sticky(true)
 			.value(function(d) { return d.count; });
 
-	var div = d3.select(dom).append("div")
+	var vis = d3.select(dom).append("div")
+			.attr("class", "chart")
 			.style("position", "relative")
 			.style("width", width + "px")
-			.style("height", height + "px");
+			.style("height", height + "px")
+			.append("svg:svg")
+			.attr("width", width)
+			.attr("height", height);
 
 	var root = { children : data };
 
-	var node = div.datum(root).selectAll(".node")
-			.data(treemap.nodes)
-			.enter().append("div")
-			.attr("class", "node")
-			.call(position)
-			.style("background", function(d,i) { return d.children ? palette.getRandomMid(i) : null; })
-			.text(function(d) { return d.children ? getAgenciesName(d._id) : null; })
-			.on("mouseover", function(d) {
-				d3.select(this).append("text")
-					.attr("id", "tooltip")
-					.text(d.topic)
-					.attr("font-family", "Roboto")
-					.attr("font-size", "15px")
-					.attr("fill", "white")
-					.style("pointer-events","none");
-			})
-			.on("mouseout", function(d) {
-				d3.select("#tooltip").remove();
-			});
+	var g = vis.selectAll("g")
+		.data(partition.nodes(root))
+		.enter().append("svg:g")
+		.attr("transform", function(d) { return "translate(" + x(d.y) + "," + y(d.x) + ")"; })
+		.on("click", click);
 
-	function position() {
-		this.style("left", function(d) { return d.x + "px"; })
-			.style("top", function(d) { return d.y + "px"; })
-			.style("width", function(d) { return Math.max(0, d.dx-1) + "px"; })
-			.style("height", function(d) { return Math.max(0, d.dy-1) + "px"; });
+	var kx = width / root.dx,
+	ky = height / 1;
+
+	g.append("svg:rect")
+		.attr("width", root.dy * kx)
+		.attr("height", function(d) { return d.dx * ky; })
+		.attr("fill", function(d,i) { return d.children ? palette.getRandomMid(i) : palette.getRandomFromSwatch(i); })
+		.attr("class", function(d) { return d.children ? "parent" : "child"; });
+
+	g.append("svg:text")
+		.attr("transform", transform)
+		.attr("dy", ".35em")
+		.style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; })
+		.text(function(d) { return d.children ? getAgenciesName(d._id) : d.topic; })
+
+	d3.select(window)
+		.on("click", function() { click(root); })
+
+	function click(d) {
+		if (!d.children) return;
+
+		kx = (d.y ? width - 40 : width) / (1 - d.y);
+		ky = height / d.dx;
+		x.domain([d.y, 1]).range([d.y ? 40 : 0, width]);
+		y.domain([d.x, d.x + d.dx]);
+
+		var t = g.transition()
+		.duration(d3.event.altKey ? 7500 : 750)
+		.attr("transform", function(d) { return "translate(" + x(d.y) + "," + y(d.x) + ")"; });
+
+		t.select("rect")
+		.attr("width", d.dy * kx)
+		.attr("height", function(d) { return d.dx * ky; });
+
+		t.select("text")
+		.attr("transform", transform)
+		.style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; });
+
+		d3.event.stopPropagation();
+	}
+
+	function transform(d) {
+		return "translate(8," + d.dx * ky / 2 + ")";
 	}
 
 	function getAgenciesName(i) {
