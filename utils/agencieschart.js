@@ -4,80 +4,80 @@ var agenciesChart = function(dom, props) {
 	var width = dom.offsetWidth;
 	var height = width/1.46;
 	var data = props.data;
-    var x = d3.scale.linear().range([0, width]);
-    var y = d3.scale.linear().range([0, height]);
+    var radius = Math.min(width, height) / 2;
+    var x = d3.scale.linear().range([0, 2 * Math.PI]);
+    var y = d3.scale.linear().range([0, radius]);
 
 	var partition = d3.layout.partition()
-			//.size([width, height])
-			// .padding([10,0,0,0])
-			// .round(true)
-			// .sticky(true)
 			.value(function(d) { return d.count; });
 
-	var vis = d3.select(dom).append("div")
-			.attr("class", "chart")
-			.style("position", "relative")
-			.style("width", width + "px")
-			.style("height", height + "px")
-			.append("svg:svg")
-			.attr("width", width)
-			.attr("height", height);
+	var root = { _id: -1, children : data };
 
-	var root = { children : data };
+	var svg = d3.select(dom).append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
-	var g = vis.selectAll("g")
+	var arc = d3.svg.arc()
+		.startAngle(function(d) {
+			return Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+		})
+		.endAngle(function(d) {
+			return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+		})
+		.innerRadius(function(d) {
+			return Math.max(0, y(d.y));
+		})
+		.outerRadius(function(d) {
+			return Math.max(0, y(d.y + d.dy));
+		});
+
+	var tooltip = d3.select(dom)
+		.append("div")
+		.attr("class", "tooltip")
+		.style("position", "absolute")
+		.style("z-index", "10")
+		.style("opacity", 0);
+
+	var path = svg.selectAll("path")
 		.data(partition.nodes(root))
-		.enter().append("svg:g")
-		.attr("transform", function(d) { return "translate(" + x(d.y) + "," + y(d.x) + ")"; })
-		.on("click", click);
-
-	var kx = width / root.dx,
-	ky = height / 1;
-
-	g.append("svg:rect")
-		.attr("width", root.dy * kx)
-		.attr("height", function(d) { return d.dx * ky; })
-		.attr("fill", function(d,i) { return d.children ? palette.getRandomMid(i) : palette.getRandomFromSwatch(i); })
-		.attr("class", function(d) { return d.children ? "parent" : "child"; });
-
-	g.append("svg:text")
-		.attr("transform", transform)
-		.attr("dy", ".35em")
-		.style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; })
-		.text(function(d) { return d.children ? getAgenciesName(d._id) : d.topic; })
-
-	d3.select(window)
-		.on("click", function() { click(root); })
+		.enter().append("path")
+		.attr("d", arc)
+		.style("fill", function(d,i) {
+			return palette.getRandomMid(i);
+		})
+		.on("click", click)
+		.on("mouseover", function(d) {
+			tooltip.html(function() {
+				if(d.children)
+					return '<b>' + getAgenciesName(d._id) + '</b><br>' + 
+						(d._id!=-1 ? '(' + d.total + ')' : '');
+				else 
+					return '<b>' + d.topic + '</b><br> (' + d.count + ')';
+			});
+			return tooltip.transition()
+				.duration(50)
+				.style("opacity", 0.9);
+		})
+		.on("mousemove", function(d) {
+			return tooltip
+				.style("top", (d3.event.pageY - 10) + "px")
+				.style("left", (d3.event.pageX + 10) + "px");
+		})
+		.on("mouseout", function() {
+			return tooltip.style("opacity", 0);
+		});
 
 	function click(d) {
-		if (!d.children) return;
-
-		kx = (d.y ? width - 40 : width) / (1 - d.y);
-		ky = height / d.dx;
-		x.domain([d.y, 1]).range([d.y ? 40 : 0, width]);
-		y.domain([d.x, d.x + d.dx]);
-
-		var t = g.transition()
-		.duration(d3.event.altKey ? 7500 : 750)
-		.attr("transform", function(d) { return "translate(" + x(d.y) + "," + y(d.x) + ")"; });
-
-		t.select("rect")
-		.attr("width", d.dy * kx)
-		.attr("height", function(d) { return d.dx * ky; });
-
-		t.select("text")
-		.attr("transform", transform)
-		.style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; });
-
-		d3.event.stopPropagation();
-	}
-
-	function transform(d) {
-		return "translate(8," + d.dx * ky / 2 + ")";
+		path.transition()
+			.duration(750)
+			.attrTween("d", arcTween(d));
 	}
 
 	function getAgenciesName(i) {
 		switch(i) {
+			case -1: return "Daftar Dinas";
 			case 0: return "Badan Kepegawaian Daerah";
 			case 1: return "Badan Pengelolaan Lingkungan Hidup";
 			case 2: return "Dinas Bina Marga dan Pengairan";
@@ -96,6 +96,24 @@ var agenciesChart = function(dom, props) {
 			case 15: return "PD Pasar Bermartabat";
 			case 16: return "Satpol PP";
 		}
+	}
+
+	d3.select(self.frameElement).style("height", height + "px");
+
+	// Interpolate the scales!
+	function arcTween(d) {
+		var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+			yd = d3.interpolate(y.domain(), [d.y, 1]),
+			yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+		return function(d, i) {
+			return i ? function(t) {
+				return arc(d);
+			} : function(t) {
+				x.domain(xd(t));
+				y.domain(yd(t)).range(yr(t));
+				return arc(d);
+			};
+		};
 	}
 }
 

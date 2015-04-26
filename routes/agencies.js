@@ -18,6 +18,7 @@ router.get('/', function(req, res) {
 	Complaint.aggregate([
 		{
 			$match : { 
+				"topic" : { $ne: "" } ,
 				$and : [
 					{ "timestamp": { $gte: from } },
 					{ "timestamp": { $lte: to } }
