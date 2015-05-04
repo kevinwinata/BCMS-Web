@@ -16,6 +16,8 @@ var Visualization = React.createClass({
 		width: React.PropTypes.number,
 		height: React.PropTypes.number,
 		data: React.PropTypes.array.isRequired,
+		from: React.PropTypes.number,
+		to: React.PropTypes.number,
 		mode: React.PropTypes.number
 	},
 	

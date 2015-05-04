@@ -274,7 +274,7 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 				break;
 			case 2:
 				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(React.createElement(Visualization, {mode: 2, data: data}), dom);
+					React.render(React.createElement(Visualization, {mode: 2, data: data, from: df, to: dt}), dom);
 				});
 				break;
 			case 3:
@@ -316,6 +316,8 @@ var Visualization = React.createClass({displayName: "Visualization",
 		width: React.PropTypes.number,
 		height: React.PropTypes.number,
 		data: React.PropTypes.array.isRequired,
+		from: React.PropTypes.number,
+		to: React.PropTypes.number,
 		mode: React.PropTypes.number
 	},
 	
@@ -26500,8 +26502,6 @@ var agenciesChart = function(dom, props) {
 
 	var root = { _id: -1, children : data };
 
-	var color = d3.scale.category20c();
-
 	var svg = d3.select(dom).append("svg")
 		.attr("width", width)
 		.attr("height", height)
@@ -27416,15 +27416,89 @@ var streamChart = function(dom, props) {
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	var paddedData = [];
+	var from = new Date(props.from);
+	var to = new Date(props.to);
+	var keys = [];
+
+
+	function findByKey(array, value) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] == value) {
+				return array[i];
+			}
+		}
+		return null;
+	}
+
+	function findByDate(array, key, date) {
+		for (var i = 0; i < array.length; i++) {
+			if (array[i].key == key && date &&
+				array[i].date.getDate() == date.getDate() && 
+				array[i].date.getMonth() == date.getMonth() && 
+				array[i].date.getFullYear() == date.getFullYear()) {
+				return array[i];
+			}
+		}
+		return null;
+	}
+
 	data.forEach(function(d) {
-		d.date = format.parse(d.date);
-		d.value = +d.value;
+		var date = format.parse(d.date);
+		
+		if(!findByKey(keys,d.key)) {
+			keys.push(d.key);
+			for (var di = new Date(from); di <= to; di.setDate(di.getDate() + 1)) {
+				paddedData.push({
+					key: d.key,
+					value: 0,
+					date: new Date(di)
+				});
+			}
+		}
+
+		var e = findByDate(paddedData,d.key,date);
+		if(e) e.value = +d.value;
 	});
+	// stack(nest.entries(paddedData));
+	// console.log(paddedData);
 
-	var layers = stack(nest.entries(data));
+	// data.forEach(function(d) {
+	// 	d.date = format.parse(d.date);
+	// 	d.value = +d.value;
+	// });
+	// stack(nest.entries(data));
+	// console.log(data);
 
-	x.domain(d3.extent(data, function(d) { return d.date; }));
-	y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+	var layers = stack(nest.entries(paddedData));
+
+	// var nestedarr = [];
+	// data.forEach(function(d) {
+	// 	var temp = findByKey(nestedarr,d.key);
+	// 	if(temp == null) {
+	// 		var arr = [];
+	// 		for (var di = new Date(from); di <= to; di.setDate(di.getDate() + 1)) {
+	// 			arr.push({
+	// 				key: d.key,
+	// 				value: 0,
+	// 				date: new Date(di)
+	// 			});
+	// 		}
+	// 		temp = {
+	// 			key: d.key,
+	// 			values: arr
+	// 		};
+	// 		nestedarr.push(temp);
+	// 	}
+	// 	var temp2 = findByDate(temp.values,d.date);
+	// 	if(temp2) temp2.value = d.value;
+	// });
+	// var layers = stack(nestedarr);
+	// console.log(layers);
+
+	//x.domain(d3.extent(data, function(d) { return d.date; }));
+	x.domain([from,to]);
+	y.domain([0, d3.max(paddedData, function(d) { return d.y0 + d.y; })]);
 
 	svg.selectAll(".layer")
 			.data(layers)

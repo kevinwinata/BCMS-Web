@@ -126,7 +126,7 @@ var Toolbar = React.createClass({
 				break;
 			case 2:
 				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(<Visualization mode={2} data={data}/>, dom);
+					React.render(<Visualization mode={2} data={data} from={df} to={dt}/>, dom);
 				});
 				break;
 			case 3:
