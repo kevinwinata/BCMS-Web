@@ -1,5 +1,6 @@
 var palette = require('./palette.js'),
-	cloud = require('./d3.layout.cloud.js');
+	cloud = require('./d3.layout.cloud.js'),
+	TweetListReq = require('./tweetlistreq.jsx');
 
 var wordChart = function(dom, props) {
 	var width = dom.offsetWidth;
@@ -26,7 +27,7 @@ var wordChart = function(dom, props) {
 		var g = svg.append("g")
 				.attr("transform", "translate("+width/2+","+height/2+")");
 
-		g.selectAll("t")
+		g.selectAll("text")
 			.data(words)
 			.enter().append("text")
 			.transition()
@@ -42,13 +43,19 @@ var wordChart = function(dom, props) {
 				return fill(i); 
 			})
 			.attr("id",function(d,i) {
-				return "c"+i;
+				return i;
 			})
 			.attr("text-anchor", "middle")
 			.attr("transform", function(d) {
 				return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 			})
-			.text(function(d) { return d.text; });	
+			.text(function(d) { return d.text; });
+
+		g.selectAll("text")
+			.on("click", function() {
+				var topic = data[parseInt(d3.select(this).attr("id"))]._id;
+				TweetListReq(dom, props.from, props.to, props.agencies, topic);
+			});
 	}
 }
 

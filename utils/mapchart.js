@@ -1,5 +1,6 @@
 var palette = require('./palette.js'),
-	img = new Image();
+	img = new Image(),
+	TweetListReq = require('./tweetlistreq.jsx');
 
 var mapChart = function(dom, props) {
 	var width = dom.offsetWidth;
@@ -94,7 +95,13 @@ var mapChart = function(dom, props) {
 			.attr("stroke", "#FFFFFF")
 			.on("click", circleClick)
 			.on("mouseover", circleOver)
-			.on("mouseout", circleOut);
+			.on("mouseout", circleOut)
+			.on("dblclick", function() {
+				alert();
+				var id = d3.select(this).attr("id");
+				var location = data[parseInt(id.substring(1,id.length))]._id.name;
+				TweetListReq(dom, props.from, props.to, props.agencies, "", location);
+			});
 
 		g.selectAll("circle")
 			.transition()

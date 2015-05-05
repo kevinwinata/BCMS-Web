@@ -1,4 +1,5 @@
-var palette = require('./palette.js');
+var palette = require('./palette.js'),
+	TweetListReq = require('./tweetlistreq.jsx');
 
 var agenciesChart = function(dom, props) {
 	var width = dom.offsetWidth;
@@ -67,6 +68,18 @@ var agenciesChart = function(dom, props) {
 		})
 		.on("mouseout", function() {
 			return tooltip.style("opacity", 0);
+		})
+		.on("dblclick", function(d) {
+			if(d.children) {
+				if(d._id > -1) {
+					var agencies = "";
+					for(var i = 0; i < 17; i++) agencies += (d._id==i) ? '1':'0';
+					TweetListReq(dom, props.from, props.to, agencies);
+				}
+			}
+			else {
+				TweetListReq(dom, props.from, props.to, props.agencies, d.topic);
+			}
 		});
 
 	function click(d) {

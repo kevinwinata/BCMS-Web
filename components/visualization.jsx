@@ -18,6 +18,7 @@ var Visualization = React.createClass({
 		data: React.PropTypes.array.isRequired,
 		from: React.PropTypes.number,
 		to: React.PropTypes.number,
+		agencies: React.PropTypes.string,
 		mode: React.PropTypes.number
 	},
 	

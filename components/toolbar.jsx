@@ -113,28 +113,28 @@ var Toolbar = React.createClass({
 		var dom = document.getElementById('visualization');
 		var c = this.checkboxesString();
 
+		var route;
 		switch(selectedItems) {
-			case 0:
-				$.get('/agencies', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(<Visualization mode={0} data={data}/>, dom);
-				});
-				break;
-			case 1:
-				$.get('/map', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(<Visualization mode={1} data={data}/>, dom);
-				});
-				break;
-			case 2:
-				$.get('/stream', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(<Visualization mode={2} data={data} from={df} to={dt}/>, dom);
-				});
-				break;
-			case 3:
-				$.get('/word', { datefrom: df, dateto: dt, agencies: c }, function(data) {
-					React.render(<Visualization mode={3} data={data}/>, dom);
-				});
-				break;
+			case 0: route = '/agencies'; break;
+			case 1: route = '/map'; break;
+			case 2: route = '/stream'; break;
+			case 3: route = '/word'; break;
 		}
+		
+		$.get(route, { 
+			datefrom: df, 
+			dateto: dt, 
+			agencies: c 
+		}, 
+		function(data) {
+			React.render(<Visualization 
+				mode = {selectedItems} 
+				data = {data}
+				from = {df}
+				to = {dt}
+				agencies = {c} />, 
+			dom);
+		});
 	},
 
 	openCheckDialog: function() {

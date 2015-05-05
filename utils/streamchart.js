@@ -206,16 +206,16 @@ var streamChart = function(dom, props) {
 			
 		})
 		.on("mouseout", function(d, i) {
-		 svg.selectAll(".layer")
-			.transition()
-			.duration(250)
-			.attr("opacity", "1");
-			d3.select(this)
-			.classed("hover", false)
-			.attr("stroke-width", "0px"), 
-			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
-			.style("visibility", "hidden");
-	})
+			 svg.selectAll(".layer")
+				.transition()
+				.duration(250)
+				.attr("opacity", "1");
+				d3.select(this)
+				.classed("hover", false)
+				.attr("stroke-width", "0px"), 
+				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				.style("visibility", "hidden");
+		})
 		
 	var rect = svg.append("rect")
 		.attr("id", "rect")
