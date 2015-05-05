@@ -11,6 +11,7 @@ var agencies = require('./routes/agencies');
 var map = require('./routes/map');
 var stream = require('./routes/stream');
 var word = require('./routes/word');
+var tweet = require('./routes/tweet');
 
 mongoose.connect('mongodb://localhost/bcms');
 
@@ -33,6 +34,7 @@ app.use('/agencies', agencies);
 app.use('/map', map);
 app.use('/stream', stream);
 app.use('/word', word);
+app.use('/tweet', tweet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

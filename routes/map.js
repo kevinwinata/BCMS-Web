@@ -5,7 +5,7 @@ var Complaint = require('../models/complaint.js');
 router.get('/', function(req, res) {
 	var agencies = [],
 		from = req.query.datefrom/1000,
-		to = req.query.dateto/100;
+		to = req.query.dateto/1000;
 
 	for(var i = 0; i < req.query.agencies.length; i++) {
 		if(req.query.agencies.substring(i,i+1) == "1") {

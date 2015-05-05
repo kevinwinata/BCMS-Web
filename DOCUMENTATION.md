@@ -52,6 +52,12 @@ Route files are located in `/routes` directory.
 ```javascript
 {
 	"_id": "<agencies number>",
+	"children": [
+		{
+			"topic": "<topic name>",
+			"count": "<number of the topic within the particular agency>"
+		}, ... 
+	],
 	"count": "<number of complaints addressed to corresponding agencies>" 
 }
 ```
@@ -75,9 +81,9 @@ Route files are located in `/routes` directory.
 * `/stream` - Returns JSON file with the following schema : 
 ```javascript
 {
-	"_id": "<topic name>",
+	"key": "<topic name>",
 	"date": "<a date that fall within requested date parameter>"
-	"count":"<how many times the topic has been addressed in the particular date>"
+	"value":"<how many times the topic has been addressed in the particular date>"
 }
 ```
 * `/word` - Returns JSON file with the following schema : 
@@ -103,6 +109,10 @@ These functions utilize D3.js library to build various visualizations based on q
 * `mapChart` - A function located in `/utils/mapchart.js`, is used to generate a scatterplot placed on top of the map of Bandung to visualize the distribution of complaints based on mentioned location.
 * `streamChart` - A function located in `/utils/streamchart.js`, is used to generate a stream chart to visualize trends of most popular topics based on date.
 * `wordChart` - A function located in `/utils/wordchart.js`, is used to generate a word cloud to visualize popularity of various topics.
+
+## Other Utilities
+
+* `palette` - A collection of colors in material palette and functions to pick them in various ways.
 
 ## Views and Styles
 

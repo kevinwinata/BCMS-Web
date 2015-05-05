@@ -27633,7 +27633,18 @@ var wordChart = function(dom, props) {
 			.attr("transform", function(d) {
 				return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 			})
-			.text(function(d) { return d.text; });	
+			.text(function(d) { return d.text; })
+			.on("click", function() {
+				// $.get('/tweet', { 
+				// 	datefrom: df, 
+				// 	dateto: dt, 
+				// 	agencies: c 
+				// }, 
+				// function(data) {
+				// 	React.render(<TweetList data={data}/>, dom);
+				// });
+				alert();
+			});	
 	}
 }
 
