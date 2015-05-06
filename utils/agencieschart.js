@@ -46,7 +46,16 @@ var agenciesChart = function(dom, props) {
 		.enter().append("path")
 		.attr("d", arc)
 		.style("fill", function(d,i) {
-			return palette.getRandomMid(i);
+			if(d.children) {
+				if(d._id > -1) 
+					return palette.getRandomMid(d._id);
+				else
+					return palette.getRandomColor();
+			}
+			else { 
+				var swatch = palette.getSwatch(d.parent._id);
+				return swatch[i%swatch.length];
+			}
 		})
 		.on("click", click)
 		.on("mouseover", function(d) {

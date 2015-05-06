@@ -26572,7 +26572,16 @@ var agenciesChart = function(dom, props) {
 		.enter().append("path")
 		.attr("d", arc)
 		.style("fill", function(d,i) {
-			return palette.getRandomMid(i);
+			if(d.children) {
+				if(d._id > -1) 
+					return palette.getRandomMid(d._id);
+				else
+					return palette.getRandomColor();
+			}
+			else { 
+				var swatch = palette.getSwatch(d.parent._id);
+				return swatch[i%swatch.length];
+			}
 		})
 		.on("click", click)
 		.on("mouseover", function(d) {
@@ -27162,12 +27171,6 @@ var mapChart = function(dom, props) {
 			.on("click", circleClick)
 			.on("mouseover", circleOver)
 			.on("mouseout", circleOut)
-			.on("dblclick", function() {
-				alert();
-				var id = d3.select(this).attr("id");
-				var location = data[parseInt(id.substring(1,id.length))]._id.name;
-				TweetListReq(dom, props.from, props.to, props.agencies, "", location);
-			});
 
 		g.selectAll("circle")
 			.transition()
@@ -27214,7 +27217,10 @@ var mapChart = function(dom, props) {
 				.attr("cx", self.attr("cx"))
 				.attr("cy", self.attr("cy"))
 				.attr("r", self.attr("r"))
-				.attr("fill", self.attr("fill"));
+				.attr("fill", self.attr("fill"))
+				.on("click", function() {
+					TweetListReq(dom, props.from, props.to, props.agencies, "", data[clickedCircle]._id.name);
+				});
 			clone.transition()
 				.duration(700)
 				.attr("cx", width/2)
@@ -27252,7 +27258,11 @@ var mapChart = function(dom, props) {
 
 			pg.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) { return color(d.data.count); });
+				.style("fill", function(d) { return color(d.data.count); })
+				.on("click", function(d) {
+					TweetListReq(dom, props.from, props.to, props.agencies, 
+						d.data.topic, data[clickedCircle]._id.name);
+				});
 
 			pg.append("text")
 				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
@@ -27405,7 +27415,8 @@ var palette = {
 module.exports = palette;
 
 },{}],246:[function(require,module,exports){
-var palette = require('./palette.js');
+var palette = require('./palette.js'),
+	TweetListReq = require('./tweetlistreq.jsx');
 
 var streamChart = function(dom, props) {
 	var data = props.data;
@@ -27613,33 +27624,36 @@ var streamChart = function(dom, props) {
 			
 		})
 		.on("mouseout", function(d, i) {
-		 svg.selectAll(".layer")
-			.transition()
-			.duration(250)
-			.attr("opacity", "1");
-			d3.select(this)
-			.classed("hover", false)
-			.attr("stroke-width", "0px"), 
-			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
-			.style("visibility", "hidden");
-	})
+			 svg.selectAll(".layer")
+				.transition()
+				.duration(250)
+				.attr("opacity", "1");
+				d3.select(this)
+				.classed("hover", false)
+				.attr("stroke-width", "0px"), 
+				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				.style("visibility", "hidden");
+		})
+		.on("click", function(d) {
+			TweetListReq(dom, props.from, props.to, props.agencies, d.key);
+		})
 		
 	var rect = svg.append("rect")
 		.attr("id", "rect")
 		.attr("width", width)
-		.attr("height", height)
+		.attr("height", height+20)
 		.attr("x", 0)
-		.attr("y", 0)
+		.attr("y", -20)
 		.attr("fill", "#FFFFFF");
 
 	rect.transition()
-		.duration(2000)
+		.duration(1000)
 		.attr("x", width + 200);
 };
 
 module.exports = streamChart;
 
-},{"./palette.js":245}],247:[function(require,module,exports){
+},{"./palette.js":245,"./tweetlistreq.jsx":247}],247:[function(require,module,exports){
 var TweetList = require('../components/tweetlist.jsx');
 
 var TweetListReq = function(dom, from, to, ag, tpc, loc) {

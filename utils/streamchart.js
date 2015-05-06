@@ -1,4 +1,5 @@
-var palette = require('./palette.js');
+var palette = require('./palette.js'),
+	TweetListReq = require('./tweetlistreq.jsx');
 
 var streamChart = function(dom, props) {
 	var data = props.data;
@@ -216,17 +217,20 @@ var streamChart = function(dom, props) {
 				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
 				.style("visibility", "hidden");
 		})
+		.on("click", function(d) {
+			TweetListReq(dom, props.from, props.to, props.agencies, d.key);
+		})
 		
 	var rect = svg.append("rect")
 		.attr("id", "rect")
 		.attr("width", width)
-		.attr("height", height)
+		.attr("height", height+20)
 		.attr("x", 0)
-		.attr("y", 0)
+		.attr("y", -20)
 		.attr("fill", "#FFFFFF");
 
 	rect.transition()
-		.duration(2000)
+		.duration(1000)
 		.attr("x", width + 200);
 };
 

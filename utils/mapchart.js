@@ -96,12 +96,6 @@ var mapChart = function(dom, props) {
 			.on("click", circleClick)
 			.on("mouseover", circleOver)
 			.on("mouseout", circleOut)
-			.on("dblclick", function() {
-				alert();
-				var id = d3.select(this).attr("id");
-				var location = data[parseInt(id.substring(1,id.length))]._id.name;
-				TweetListReq(dom, props.from, props.to, props.agencies, "", location);
-			});
 
 		g.selectAll("circle")
 			.transition()
@@ -148,7 +142,10 @@ var mapChart = function(dom, props) {
 				.attr("cx", self.attr("cx"))
 				.attr("cy", self.attr("cy"))
 				.attr("r", self.attr("r"))
-				.attr("fill", self.attr("fill"));
+				.attr("fill", self.attr("fill"))
+				.on("click", function() {
+					TweetListReq(dom, props.from, props.to, props.agencies, "", data[clickedCircle]._id.name);
+				});
 			clone.transition()
 				.duration(700)
 				.attr("cx", width/2)
@@ -186,7 +183,11 @@ var mapChart = function(dom, props) {
 
 			pg.append("path")
 				.attr("d", arc)
-				.style("fill", function(d) { return color(d.data.count); });
+				.style("fill", function(d) { return color(d.data.count); })
+				.on("click", function(d) {
+					TweetListReq(dom, props.from, props.to, props.agencies, 
+						d.data.topic, data[clickedCircle]._id.name);
+				});
 
 			pg.append("text")
 				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
