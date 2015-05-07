@@ -2704,17 +2704,8 @@ ul#mode-list {
 }
 .tooltip {
   font-size: 14px;
-  font-family: Roboto, sans-serif;
-}
-.node {
-  border: solid 1px white;
-  font: 15px Roboto;
-  line-height: 15px;
-  overflow: hidden;
-  position: absolute;
-  text-align: right;
-  display: table-cell;
-  vertical-align: text-bottom;
+  font-family: Roboto;
+  pointer-events: none;
 }
 html,
 body,

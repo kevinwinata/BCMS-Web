@@ -19,10 +19,8 @@ var streamChart = function(dom, props) {
 	var tooltip = d3.select(dom)
 		.append("div")
 		.attr("class", "remove")
+		.attr("class", "tooltip")
 		.style("position", "absolute")
-		.style("background", "lightsteelblue")
-		.style("opacity", 0.8)
-		.style("border", "0px") 
 		.style("z-index", "20")
 		.style("visibility", "hidden");
 
@@ -111,43 +109,9 @@ var streamChart = function(dom, props) {
 		var e = findByDate(paddedData,d.key,date);
 		if(e) e.value = +d.value;
 	});
-	// stack(nest.entries(paddedData));
-	// console.log(paddedData);
-
-	// data.forEach(function(d) {
-	// 	d.date = format.parse(d.date);
-	// 	d.value = +d.value;
-	// });
-	// stack(nest.entries(data));
-	// console.log(data);
 
 	var layers = stack(nest.entries(paddedData));
 
-	// var nestedarr = [];
-	// data.forEach(function(d) {
-	// 	var temp = findByKey(nestedarr,d.key);
-	// 	if(temp == null) {
-	// 		var arr = [];
-	// 		for (var di = new Date(from); di <= to; di.setDate(di.getDate() + 1)) {
-	// 			arr.push({
-	// 				key: d.key,
-	// 				value: 0,
-	// 				date: new Date(di)
-	// 			});
-	// 		}
-	// 		temp = {
-	// 			key: d.key,
-	// 			values: arr
-	// 		};
-	// 		nestedarr.push(temp);
-	// 	}
-	// 	var temp2 = findByDate(temp.values,d.date);
-	// 	if(temp2) temp2.value = d.value;
-	// });
-	// var layers = stack(nestedarr);
-	// console.log(layers);
-
-	//x.domain(d3.extent(data, function(d) { return d.date; }));
 	x.domain([from,to]);
 	y.domain([0, d3.max(paddedData, function(d) { return d.y0 + d.y; })]);
 
@@ -197,25 +161,25 @@ var streamChart = function(dom, props) {
 			pro = d.values[mousedate].value;
 
 			d3.select(this)
-			.classed("hover", true)
-			.attr("stroke", strokecolor)
-			.attr("stroke-width", "0.5px"), 
-			tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
-			.style("visibility", "visible")
-			.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
-			.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
+				.classed("hover", true)
+				.attr("stroke", strokecolor)
+				.attr("stroke-width", "0.5px"), 
+				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+					.style("visibility", "visible")
+					.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
+					.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
 			
 		})
 		.on("mouseout", function(d, i) {
-			 svg.selectAll(".layer")
+			svg.selectAll(".layer")
 				.transition()
 				.duration(250)
 				.attr("opacity", "1");
-				d3.select(this)
+			d3.select(this)
 				.classed("hover", false)
 				.attr("stroke-width", "0px"), 
 				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
-				.style("visibility", "hidden");
+					.style("visibility", "hidden");
 		})
 		.on("click", function(d) {
 			TweetListReq(dom, props.from, props.to, props.agencies, d.key);

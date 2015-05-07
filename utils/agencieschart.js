@@ -45,26 +45,27 @@ var agenciesChart = function(dom, props) {
 		.data(partition.nodes(root))
 		.enter().append("path")
 		.attr("d", arc)
-		.style("fill", function(d,i) {
+		.style("fill", function(d) {
 			if(d.children) {
 				if(d._id > -1) 
 					return palette.getRandomMid(d._id);
 				else
-					return palette.getRandomColor();
+					return '#26C6DA';
 			}
 			else { 
 				var swatch = palette.getSwatch(d.parent._id);
-				return swatch[i%swatch.length];
+				var i = Math.ceil(d.count/d.parent.total*swatch.length);
+				return swatch[i];
 			}
 		})
 		.on("click", click)
 		.on("mouseover", function(d) {
 			tooltip.html(function() {
 				if(d.children)
-					return '<b>' + getAgenciesName(d._id) + '</b><br>' + 
+					return getAgenciesName(d._id) + '<br>' + 
 						(d._id!=-1 ? '(' + d.total + ')' : '');
 				else 
-					return '<b>' + d.topic + '</b><br> (' + d.count + ')';
+					return d.topic + '<br> (' + d.count + ')';
 			});
 			return tooltip.transition()
 				.duration(50)
