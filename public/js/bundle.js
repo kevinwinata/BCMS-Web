@@ -300,8 +300,7 @@ module.exports = Toolbar;
 },{"./visualization.jsx":6,"material-ui":8,"react":241}],5:[function(require,module,exports){
 var React = require('react'),
 	mui = require('material-ui'),
-	Paper = mui.Paper,
-	Menu = mui.Menu;
+	Paper = mui.Paper;
 
 var TweetList = React.createClass({displayName: "TweetList",	
 	
@@ -316,15 +315,16 @@ var TweetList = React.createClass({displayName: "TweetList",
 		for(var i = 0; i < this.props.data.length; i++) {
 			var tweet = this.props.data[i];
 			var date = new Date(tweet.timestamp*1000);
-			tweetTexts[i] = { 
-				payload : (i+1).toString(),
-				text: date.toLocaleDateString('id'),
-				data : tweet.text
-			}
+			tweetTexts.push(
+				React.createElement("p", null, 
+					React.createElement("b", null,  date.toLocaleDateString('id'), ",  ", 
+					 date.toLocaleTimeString('id') ), 
+					React.createElement("br", null),  tweet.text
+				));
 		}
 		return ( 
 			React.createElement(Paper, {zDepth: 1}, 
-				React.createElement(Menu, {menuItems: tweetTexts})
+				React.createElement("div", null, tweetTexts)
 			)
 		);
 	}
@@ -27089,10 +27089,6 @@ var mapChart = function(dom, props) {
 		});
 	};
 
-
-	// d3.xml("/images/bandung.svg", "image/svg+xml", function(xml) {
-	// 	var importedNode = document.importNode(xml.documentElement, true);
-	// 	d3.select("#map").node().appendChild(importedNode);
 	img.src = '/images/bandung.jpg';
 	var loaded = false;
 	function loadHandler() {
@@ -27106,6 +27102,13 @@ var mapChart = function(dom, props) {
 		loadHandler();
 	}
 
+	var tooltip = d3.select(dom)
+		.append("div")
+		.attr("class", "tooltip")
+		.style("position", "absolute")
+		.style("z-index", "10")
+		.style("opacity", 0);
+
 	function drawMap() {
 		var canvas = d3.select(dom)
 			.append("canvas")
@@ -27115,9 +27118,9 @@ var mapChart = function(dom, props) {
 
 		canvas.drawImage(img, 0, 0, width, height);
 
-		var zoom = d3.behavior.zoom()
-			.scaleExtent([1, 8])
-			.on("zoom", zoomed);
+		// var zoom = d3.behavior.zoom()
+		// 	.scaleExtent([1, 8])
+		// 	.on("zoom", zoomed);
 
 		var rect = dom.getBoundingClientRect();
 
@@ -27126,14 +27129,14 @@ var mapChart = function(dom, props) {
 			.attr("width", width)
 			.attr("height", height)
 			.attr("id", "mapvisualization")
-			.call(zoom)
+			// .call(zoom)
 			.style("position","absolute")
 			.style("top",rect.top)
 			.style("left",rect.left);
 
 		var g = svg.append("g")
-			.attr("id", "map")
-			.call(zoom);
+			.attr("id", "map");
+			// .call(zoom);
 
 		var clickedCircle;
 
@@ -27263,13 +27266,23 @@ var mapChart = function(dom, props) {
 				.on("click", function(d) {
 					TweetListReq(dom, props.from, props.to, props.agencies, 
 						d.data.topic, data[clickedCircle]._id.name);
+				})
+				.on("mouseover", function(d) {
+					tooltip.html(function() {
+						return d.data.topic + '<br> (' + d.data.count + ')';
+					});
+					return tooltip.transition()
+						.duration(50)
+						.style("opacity", 0.9);
+				})
+				.on("mousemove", function(d) {
+					return tooltip
+						.style("top", (d3.event.pageY - 10) + "px")
+						.style("left", (d3.event.pageX + 10) + "px");
+				})
+				.on("mouseout", function() {
+					return tooltip.style("opacity", 0);
 				});
-
-			pg.append("text")
-				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-				.attr("dy", ".35em")
-				.style("text-anchor", "middle")
-				.text(function(d) { return d.data.topic; });
 		 }
 
 		function circleOver() {
@@ -27582,7 +27595,7 @@ var streamChart = function(dom, props) {
 				.classed("hover", true)
 				.attr("stroke", strokecolor)
 				.attr("stroke-width", "0.5px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				tooltip.html( "<p>" + d.key + "<br/>(" + pro + ")</p>" )
 					.style("visibility", "visible")
 					.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
 					.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
@@ -27596,7 +27609,7 @@ var streamChart = function(dom, props) {
 			d3.select(this)
 				.classed("hover", false)
 				.attr("stroke-width", "0px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				tooltip.html( "<p>" + d.key + "<br/>(" + pro + ")</p>" )
 					.style("visibility", "hidden");
 		})
 		.on("click", function(d) {

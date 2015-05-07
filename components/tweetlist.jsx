@@ -1,7 +1,6 @@
 var React = require('react'),
 	mui = require('material-ui'),
-	Paper = mui.Paper,
-	Menu = mui.Menu;
+	Paper = mui.Paper;
 
 var TweetList = React.createClass({	
 	
@@ -16,15 +15,16 @@ var TweetList = React.createClass({
 		for(var i = 0; i < this.props.data.length; i++) {
 			var tweet = this.props.data[i];
 			var date = new Date(tweet.timestamp*1000);
-			tweetTexts[i] = { 
-				payload : (i+1).toString(),
-				text: date.toLocaleDateString('id'),
-				data : tweet.text
-			}
+			tweetTexts.push(
+				<p>
+					<b>{ date.toLocaleDateString('id') }, &nbsp;
+					{ date.toLocaleTimeString('id') }</b>
+					<br/>{ tweet.text }
+				</p>);
 		}
 		return ( 
 			<Paper zDepth={1} >
-				<Menu menuItems={tweetTexts} />
+				<div>{tweetTexts}</div>
 			</Paper>
 		);
 	}

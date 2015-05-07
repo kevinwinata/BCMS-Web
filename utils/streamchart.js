@@ -164,7 +164,7 @@ var streamChart = function(dom, props) {
 				.classed("hover", true)
 				.attr("stroke", strokecolor)
 				.attr("stroke-width", "0.5px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				tooltip.html( "<p>" + d.key + "<br/>(" + pro + ")</p>" )
 					.style("visibility", "visible")
 					.style("left", d3.mouse(this)[0] + mouseOffsetX + "px")
 					.style("top", d3.mouse(this)[1] + mouseOffsetY + "px");
@@ -178,7 +178,7 @@ var streamChart = function(dom, props) {
 			d3.select(this)
 				.classed("hover", false)
 				.attr("stroke-width", "0px"), 
-				tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" )
+				tooltip.html( "<p>" + d.key + "<br/>(" + pro + ")</p>" )
 					.style("visibility", "hidden");
 		})
 		.on("click", function(d) {
